@@ -1,0 +1,174 @@
+:root {
+	--primary-color: #c35e26;
+	--primary-complement: #45362f;
+	--plain: #f1f1f1;
+
+	--white: #ffffff;
+
+	--transition: 0.25s;
+}
+
+html {
+	font-size: calc(62.5% * 0.75); /* 1rem = 10px */
+}
+
+body {
+	font-family: 'Poppins', sans-serif;
+	color: var(--primary-complement);
+	background-color: var(--plain);
+}
+
+* {
+	margin: 0;
+	padding: 0;
+
+	font-size: 2rem;
+	line-height: 1.25;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	line-height: 1;
+}
+h1 {
+	font-size: 6rem;
+}
+h2 {
+	font-size: 4.5rem;
+}
+h3 {
+	font-size: 3.5rem;
+}
+h4 {
+	font-size: 3rem;
+}
+h5 {
+	font-size: 2.5rem;
+}
+h6 {
+	font-size: 2rem;
+}
+a,
+span {
+	text-decoration: none;
+	color: inherit;
+	font-size: inherit;
+}
+
+::-webkit-scrollbar {
+	width: 1.75rem;
+}
+::-webkit-scrollbar-track {
+	background-color: var(--primary-complement);
+}
+::-webkit-scrollbar-thumb {
+	background-color: var(--plain);
+	border: solid 0.5rem var(--primary-complement);
+	border-radius: 1rem;
+	transition: background-color var(--transition);
+}
+::-webkit-scrollbar-thumb:hover {
+	background-color: var(--primary-color);
+}
+
+.button {
+	padding: 1rem 4rem;
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	border: none;
+	border-radius: 10rem;
+	background-color: var(--primary-color);
+
+	font-weight: 800;
+	color: var(--plain);
+
+	transition: background-color var(--transition) color var(--transition);
+}
+.button:hover {
+	background-color: var(--primary-complement);
+}
+.button.outlined {
+	border: solid 0.5rem var(--primary-complement);
+	background-color: unset;
+	color: var(--primary-complement);
+}
+.button.outlined:hover {
+	border: solid 0.5rem var(--primary-color);
+	color: var(--primary-color);
+}
+.button.dark {
+	color: var(--plain);
+	background-color: var(--primary-complement);
+}
+.button.dark:hover {
+	background-color: var(--primary-color);
+}
+
+.input {
+	padding: 1rem 2rem;
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	border: solid 0.5rem var(--primary-complement);
+	border-radius: 10rem;
+	background-color: var(--white);
+
+	transition: background-color var(--transition) color var(--transition);
+}
+.input:active,
+.input:focus {
+	border: solid 0.5rem var(--primary-color);
+}
+
+.petCard {
+	width: 24rem;
+	padding-bottom: 2rem;
+	border: solid 0.5rem var(--white);
+	border-radius: 1rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-direction: column;
+	background-color: var(--white);
+	gap: 2rem;
+	overflow: hidden;
+}
+.petCard > img {
+	width: 24rem;
+	height: 20rem;
+	object-fit: cover;
+}
+.petCard > h5 {
+	width: 100%;
+	color: var(--primary-color);
+	word-wrap: break-word;
+	text-align: center;
+}
+.petCard > p {
+	width: 100%;
+	color: var(--primary-complement);
+	word-wrap: break-word;
+	text-align: center;
+}
+.petCard.dark {
+	border: solid 0.5rem var(--primary-complement);
+	background-color: var(--primary-complement);
+}
+.petCard.dark > h5,
+.petCard.dark > p {
+	color: var(--plain);
+}
+.petCard.dark > .button {
+	background-color: var(--primary-complement);
+	color: var(--plain);
+	border: solid 0.5rem var(--plain);
+}
+.petCard.dark > .button:hover {
+	color: var(--primary-color);
+	border: solid 0.5rem var(--primary-color);
+}
