@@ -39,7 +39,14 @@ class Login extends React.Component {
 						/>
 					</div>
 
-					<Button type='submit' theme='dark'>Login</Button>
+					<Button
+						type='button'
+						theme='dark'
+						onClick={() => {
+							console.log(window.location.origin);
+							window.location.href = `${window.location.href}#/dashboard`;
+						}}
+					>Login</Button>
 
 					<svg viewBox='0 0 943 1015' id='pawBackground'>
 						<path d='M891.353 638.114C912.994 717.216 873.044 822.788 821.273 834.888C715.504 887.059 679.07 796.346 596.209 819.016C513.348 841.685 558.279 906.839 427.292 965.908C371.714 986.843 222.774 911.903 199.642 827.353C147.385 636.342 233.595 357.26 424.606 305.003C615.617 252.746 839.096 447.103 891.353 638.114Z' fill='var(--primary-color)' />

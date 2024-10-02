@@ -1,5 +1,6 @@
 const { app, BrowserWindow } = require('electron');
 const path = require('node:path');
+const isDev = require('electron-is-dev');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -12,7 +13,8 @@ const createWindow = () => {
 		width: 800,
 		height: 600,
 		webPreferences: {
-			preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY
+			preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
+			nodeIntegration: true
 		},
 		icon: path.join(__dirname, 'assets', 'icon.ico'),
 		title: 'Compawnion',
@@ -21,6 +23,9 @@ const createWindow = () => {
 
 	// and load the index.html of the app.
 	mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
+
+	const icon = path.join(__dirname, 'assets', 'icon.ico');
+	mainWindow.setIcon(icon);
 };
 
 // This method will be called when Electron has finished

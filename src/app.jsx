@@ -1,22 +1,31 @@
 import * as React from 'react';
-import * as ReactClient from 'react-dom/client';
+import * as ReactDOM from 'react-dom';
 import {
-	createHashRouter,
-	RouterProvider
+	HashRouter,
+	Route,
+	Routes
 } from 'react-router-dom';
 
 import './css/global.css';
 
 import Login from './pages/Login';
+import Dashboard from './pages/Dashboard';
 
-const router = createHashRouter([
-	{
-		path: '/',
-		element: <Login />,
-		loader: () => import('./pages/Login')
-	}
-]);
+class App extends
+	React.Component {
+	render() {
+		return (
+			<HashRouter>
+				<Routes>
+					<Route path='/' element={<Login />} />
+					<Route path='/dashboard' element={<Dashboard />} />
+				</Routes>
+			</HashRouter>
+		);
+	};
+};
 
-ReactClient.createRoot(document.getElementById('root')).render(
-	<RouterProvider router={router} />
+ReactDOM.render(
+	<App />,
+	document.getElementById('root')
 );

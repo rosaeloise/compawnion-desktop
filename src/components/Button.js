@@ -21,6 +21,8 @@ class Button extends React.Component {
 		return (
 			<button
 				className={`button ${this.props.fill === 'outline' ? 'outline' : 'fill'} ${this.props.theme === 'dark' ? 'dark' : 'light'}`}
+				type={this.props.type || 'button'}
+				onClick={this.props.onClick}
 			>
 				{
 					this.props.size === 'small' ?
