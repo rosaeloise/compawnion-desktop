@@ -43,7 +43,6 @@ class Login extends React.Component {
 						type='button'
 						theme='dark'
 						onClick={() => {
-							console.log(window.location.origin);
 							window.location.href = `${window.location.href}#/dashboard`;
 						}}
 					>Login</Button>
