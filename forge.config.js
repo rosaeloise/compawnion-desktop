@@ -41,6 +41,7 @@ module.exports = {
 		{
 			name: '@electron-forge/plugin-webpack',
 			config: {
+				devContentSecurityPolicy: `img-src https: data:;`,
 				mainConfig: './webpack.main.config.js',
 				renderer: {
 					config: './webpack.renderer.config.js',
@@ -67,6 +68,6 @@ module.exports = {
 			[FuseV1Options.EnableNodeCliInspectArguments]: false,
 			[FuseV1Options.EnableEmbeddedAsarIntegrityValidation]: true,
 			[FuseV1Options.OnlyLoadAppFromAsar]: true
-		}),
-	],
+		})
+	]
 };

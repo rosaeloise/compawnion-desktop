@@ -172,3 +172,20 @@ span {
 	color: var(--primary-color);
 	border: solid 0.5rem var(--primary-color);
 }
+
+#sidebar {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 40rem;
+	height: 100vh;
+	background-color: var(--primary-color);
+}
+#sidebar > div > #logo {
+	width: 12rem;
+	height: 100%;
+}
+#sidebar > div > img {
+	height: 14rem;
+	width: 14rem;
+}

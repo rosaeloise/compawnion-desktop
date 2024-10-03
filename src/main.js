@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, protocol } = require('electron');
 const path = require('node:path');
 const isDev = require('electron-is-dev');
 
@@ -27,6 +27,30 @@ const createWindow = () => {
 	const icon = path.join(__dirname, 'assets', 'icon.ico');
 	mainWindow.setIcon(icon);
 };
+
+// Make the app be able to load files from internet
+protocol.registerSchemesAsPrivileged([
+	{
+		scheme: 'http',
+		privileges: {
+			standard: true,
+			secure: true,
+			allowServiceWorkers: true,
+			supportFetchAPI: true,
+			corsEnabled: true
+		}
+	},
+	{
+		scheme: 'https',
+		privileges: {
+			standard: true,
+			secure: true,
+			allowServiceWorkers: true,
+			supportFetchAPI: true,
+			corsEnabled: true
+		}
+	}
+]);
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
