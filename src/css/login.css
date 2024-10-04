@@ -18,7 +18,7 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	gap: 1rem;
+	gap: 2rem;
 }
 #loginForm > div > h5 {
 	text-align: center;

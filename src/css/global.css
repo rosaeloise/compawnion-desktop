@@ -83,6 +83,7 @@ span {
 	border: none;
 	border-radius: 10rem;
 	background-color: var(--primary-color);
+	filter: drop-shadow(0px 0px 0.5rem rgba(0, 0, 0, 0.5));
 
 	font-weight: 800;
 	color: var(--plain);
@@ -114,15 +115,13 @@ span {
 	display: inline-flex;
 	justify-content: center;
 	align-items: center;
-	border: solid 0.5rem var(--primary-complement);
+	border: none;
+	outline: none;
 	border-radius: 10rem;
 	background-color: var(--white);
+	filter: drop-shadow(0px 0px 0.5rem rgba(0, 0, 0, 0.5));
 
 	transition: background-color var(--transition) color var(--transition);
-}
-.input:active,
-.input:focus {
-	border: solid 0.5rem var(--primary-color);
 }
 
 .petCard {
