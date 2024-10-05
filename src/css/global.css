@@ -172,6 +172,9 @@ span {
 	border: solid 0.5rem var(--primary-color);
 }
 
+#sidebarToggle {
+	display: none;
+}
 #sidebar {
 	position: absolute;
 	top: 0;
