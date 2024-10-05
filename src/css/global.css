@@ -35,22 +35,22 @@ h6 {
 	line-height: 1;
 }
 h1 {
-	font-size: 6rem;
+	font-size: 7.5rem;
 }
 h2 {
-	font-size: 4.5rem;
+	font-size: 6rem;
 }
 h3 {
-	font-size: 3.5rem;
+	font-size: 5rem;
 }
 h4 {
-	font-size: 3rem;
+	font-size: 4.25rem;
 }
 h5 {
-	font-size: 2.5rem;
+	font-size: 3.5rem;
 }
 h6 {
-	font-size: 2rem;
+	font-size: 2.5rem;
 }
 a,
 span {
@@ -182,6 +182,7 @@ span {
 	width: 40rem;
 	height: calc(100vh - 16rem);
 	background-color: var(--primary-color);
+	filter: drop-shadow(0px 0px 0.5rem rgba(0, 0, 0, 0.5));
 	color: var(--white);
 	text-align: center;
 	display: flex;
@@ -189,6 +190,7 @@ span {
 	padding: 8rem 0;
 	align-items: center;
 	flex-direction: column;
+	z-index: 5;
 
 	transition: width var(--transition);
 }
@@ -212,6 +214,7 @@ span {
 	height: 14rem;
 	width: 14rem;
 	border-radius: 50%;
+	background-color: var(--plain);
 	filter: drop-shadow(0px 0px 0.5rem rgba(0, 0, 0, 0.5));
 }
 #sidebar > #user > div {
@@ -229,14 +232,14 @@ span {
 	flex-direction: column;
 	gap: 4rem;
 }
-#sidebar > #pages > h5 {
+#sidebar > #pages > h6 {
 	cursor: pointer;
 }
-#sidebar > #pages > h5.active {
+#sidebar > #pages > h6.active {
 	color: var(--primary-complement);
 	filter: drop-shadow(0px 0px 0.5rem rgba(0, 0, 0, 0.5));
 }
-#sidebar > #pages > h5 > svg {
+#sidebar > #pages > h6 > svg {
 	width: 4rem;
 	height: 4rem;
 	display: none;
@@ -262,6 +265,7 @@ span {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	cursor: pointer;
 	z-index: 10;
 	transition: left var(--transition), transform var(--transition);
 }
@@ -289,10 +293,10 @@ span {
 #sidebarToggle:checked ~ #sidebar > #user > div {
 	display: none;
 }
-#sidebarToggle:checked ~ #sidebar > #pages > h5 > span {
+#sidebarToggle:checked ~ #sidebar > #pages > h6 > span {
 	display: none;
 }
-#sidebarToggle:checked ~ #sidebar > #pages > h5 > svg {
+#sidebarToggle:checked ~ #sidebar > #pages > h6 > svg {
 	display: block;
 }
 #sidebarToggle:checked ~ #sidebar > #logout > svg {

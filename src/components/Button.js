@@ -26,8 +26,8 @@ class Button extends React.Component {
 			>
 				{
 					this.props.size === 'small' ?
-						<h6>{this.props.children || this.props.title}</h6> :
-						<h5>{this.props.children || this.props.title}</h5>
+						<p>{this.props.children || this.props.title}</p> :
+						<h6>{this.props.children || this.props.title}</h6>
 				}
 			</button>
 		)
