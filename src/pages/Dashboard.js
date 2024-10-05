@@ -26,17 +26,17 @@ class Dashboard extends React.Component {
 				day: 29
 			},
 			shedule: {
-				totalPending: 0,
 				total: []
-			}
+			},
+			pending: []
 		};
 	};
 	componentDidMount() {
 		setInterval(() => {
 			this.setState({
 				time: {
-					hours: (new Date().getHours() % 12 || 12) < 10 ? `0${new Date().getHours() % 12 || 12}` : new Date().getHours() % 12 || 12,
-					minutes: new Date().getMinutes() < 10 ? `0${new Date().getMinutes()}` : new Date().getMinutes(),
+					hours: ('00' + (new Date().getHours() % 12 || 12) % 12 || 12).slice(-2),
+					minutes: ('00' + new Date().getMinutes()).slice(-2),
 					period: new Date().getHours() >= 12 ? 'PM' : 'AM',
 					month: new Date().toLocaleString('default', { month: 'long' }).toUpperCase(),
 					day: new Date().getDate()
@@ -60,7 +60,6 @@ class Dashboard extends React.Component {
 		setTimeout(() => {
 			this.setState({
 				shedule: {
-					totalPending: 3,
 					total: [
 						{
 							id: 1,
@@ -81,6 +80,52 @@ class Dashboard extends React.Component {
 				}
 			});
 		}, 2000);
+		setTimeout(() => {
+			this.setState({
+				pending: [
+					{
+						id: 1,
+						time: '8:00 PM',
+						type: 'Onsite Interview'
+					},
+					{
+						id: 2,
+						time: '8:30 PM',
+						type: 'Online Interview'
+					},
+					{
+						id: 3,
+						time: '9:00 PM',
+						type: 'Onsite Interview'
+					},
+					{
+						id: 4,
+						time: '9:30 PM',
+						type: 'Online Interview'
+					},
+					{
+						id: 5,
+						time: '10:00 PM',
+						type: 'Onsite Interview'
+					},
+					{
+						id: 6,
+						time: '10:30 PM',
+						type: 'Online Interview'
+					},
+					{
+						id: 7,
+						time: '11:00 PM',
+						type: 'Onsite Interview'
+					},
+					{
+						id: 8,
+						time: '11:30 PM',
+						type: 'Online Interview'
+					}
+				]
+			});
+		}, 3000);
 	};
 	render() {
 		return (
@@ -136,8 +181,35 @@ class Dashboard extends React.Component {
 						</svg>
 					</div>
 
-					<div id='total'></div>
-					<div id='pending'></div>
+					<div id='total'>
+						<h4>Total Pending</h4>
+						<h1>{('000' + this.state.pending.length).slice(-3)}</h1>
+					</div>
+
+					<div id='pending'>
+						<h4>Pending Applications</h4>
+						<table>
+							<thead>
+								<tr>
+									<th>Time</th>
+									<th>Application Type</th>
+								</tr>
+							</thead>
+							<tbody>
+								{
+									this.state.pending.map((pending, index) => {
+										if (index >= 5) return;
+										return (
+											<tr key={index}>
+												<td>{pending.time}</td>
+												<td>{pending.type}</td>
+											</tr>
+										)
+									})
+								}
+							</tbody>
+						</table>
+					</div>
 				</main>
 			</>
 		)

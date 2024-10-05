@@ -176,7 +176,7 @@ span {
 	display: none;
 }
 #sidebar {
-	position: absolute;
+	position: fixed;
 	top: 0;
 	left: 0;
 	width: 40rem;
@@ -257,7 +257,7 @@ span {
 	height: 3rem;
 }
 #sidebarToggleLabel {
-	position: absolute;
+	position: fixed;
 	top: 2rem;
 	left: calc(40rem - 4rem - 2rem);
 	width: 4rem;

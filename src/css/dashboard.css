@@ -7,7 +7,7 @@
 #main {
 	position: absolute;
 	width: calc(100% - 40rem - 16rem);
-	height: calc(100% - 16rem);
+	min-height: calc(100% - 16rem);
 	top: 0;
 	left: 40rem;
 	padding: 8rem;
@@ -19,6 +19,7 @@
 	transition: width var(--transition), left var(--transition);
 }
 #main > div {
+	display: inline-block;
 	overflow: hidden;
 }
 
@@ -27,6 +28,46 @@
 #main > #schedule { grid-area: 2 / 1 / 3 / 3; }
 #main > #total { grid-area: 2 / 3 / 3 / 4; }
 #main > #pending { grid-area: 3 / 1 / 4 / 4; }
+
+@media (max-width: 75rem) {
+	#sidebarToggle:checked ~ #main {
+		width: calc(100% - 8rem - 8rem);
+		left: 8rem;
+	}
+
+	#main {
+		width: calc(100% - 16rem - 8rem);
+		left: 8rem;
+	}
+}
+@media (max-width: 60rem) {
+	#main {
+		width: calc(100% - 8rem - 8rem);
+		padding: 4rem;
+		grid-template-columns: repeat(2, 1fr);
+		grid-template-rows: repeat(4, 1fr);
+	}
+
+	#main > #helloUser { grid-area: 1 / 1 / 2 / 2; }
+	#main > #time { grid-area: 1 / 2 / 2 / 3; }
+	#main > #schedule { grid-area: 2 / 1 / 3 / 3; }
+	#main > #total { grid-area: 3 / 1 / 4 / 3; }
+	#main > #pending { grid-area: 4 / 1 / 5 / 3; }
+}
+@media (max-width: 40rem) {
+	#main {
+		width: calc(100% - 8rem - 8rem);
+		padding: 2rem;
+		grid-template-columns: 1fr;
+		grid-template-rows: repeat(4, 1fr);
+	}
+
+	#main > #helloUser { grid-area: 1 / 1 / 2 / 2; }
+	#main > #schedule { grid-area: 2 / 1 / 3 / 2; }
+	#main > #total { grid-area: 3 / 1 / 4 / 2; }
+	#main > #pending { grid-area: 4 / 1 / 5 / 2; }
+	#main > #time { display: none; }
+}
 
 #main > #helloUser > p {
 	color: var(--primary-color);
@@ -47,6 +88,9 @@
 	border-radius: 2rem;
 	background-color: var(--white);
 	filter: drop-shadow(0px 0px 0.5rem rgba(0, 0, 0, 0.5));
+	gap: 2rem;
+	display: flex;
+	flex-direction: column;
 }
 
 #main > #schedule {
@@ -65,4 +109,24 @@
 	left: 100%;
 	transform: translate(-50%, -50%);
 	position: absolute;
+	z-index: -1;
+}
+
+#main > #total {
+	display: flex;
+	justify-content: space-between;
+	align-items: left;
+	flex-direction: column;
+}
+#main > #total > h1 {
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: var(--primary-color);
+}
+
+#main > #pending > table {
+	width: 100%;
+	text-align: left;
 }
