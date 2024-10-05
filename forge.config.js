@@ -18,7 +18,12 @@ module.exports = {
 	makers: [
 		{
 			name: '@electron-forge/maker-squirrel',
-			config: {}
+			config: {
+				name: 'compawnion',
+				setupIcon: './src/assets/icon.ico',
+				setupExe: 'compawnion.exe',
+				setupMsi: 'compawnion.msi'
+			}
 		},
 		{
 			name: '@electron-forge/maker-zip',
@@ -26,11 +31,29 @@ module.exports = {
 		},
 		{
 			name: '@electron-forge/maker-deb',
-			config: {}
+			config: {
+				options: {
+					name: 'compawnion',
+					productDescription: 'A desktop application for managing shelter adoption process',
+					productName: 'Compawnion',
+					arch: 'amd64',
+					icon: './src/assets/icon.png',
+					maintainer: 'Barkcode Development team'
+				}
+			}
 		},
 		{
 			name: '@electron-forge/maker-rpm',
-			config: {}
+			config: {
+				options: {
+					name: 'compawnion',
+					productDescription: 'A desktop application for managing shelter adoption process',
+					productName: 'Compawnion',
+					arch: 'x86_64',
+					icon: './src/assets/icon.png',
+					maintainer: 'Barkcode Development team'
+				}
+			}
 		}
 	],
 	plugins: [

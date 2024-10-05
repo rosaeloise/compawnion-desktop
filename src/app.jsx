@@ -18,6 +18,7 @@ class App extends
 			<HashRouter>
 				<Routes>
 					<Route path='/' element={<Login />} />
+					<Route path='/login' element={<Login />} />
 					<Route path='/dashboard' element={<Dashboard />} />
 				</Routes>
 			</HashRouter>

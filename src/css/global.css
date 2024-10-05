@@ -9,7 +9,7 @@
 }
 
 html {
-	font-size: calc(62.5% * 0.75); /* 1rem = 10px */
+	font-size: calc(62.5% * 0.75); /* 1rem = 7.5px */
 }
 
 body {
@@ -88,7 +88,7 @@ span {
 	font-weight: 800;
 	color: var(--plain);
 
-	transition: background-color var(--transition) color var(--transition);
+	transition: background-color var(--transition), color var(--transition);
 }
 .button:hover {
 	background-color: var(--primary-complement);
@@ -121,7 +121,7 @@ span {
 	background-color: var(--white);
 	filter: drop-shadow(0px 0px 0.5rem rgba(0, 0, 0, 0.5));
 
-	transition: background-color var(--transition) color var(--transition);
+	transition: background-color var(--transition), color var(--transition);
 }
 
 .petCard {
@@ -177,14 +177,124 @@ span {
 	top: 0;
 	left: 0;
 	width: 40rem;
-	height: 100vh;
+	height: calc(100vh - 16rem);
 	background-color: var(--primary-color);
+	color: var(--white);
+	text-align: center;
+	display: flex;
+	justify-content: space-between;
+	padding: 8rem 0;
+	align-items: center;
+	flex-direction: column;
+
+	transition: width var(--transition);
 }
-#sidebar > div > #logo {
+#sidebar > div > #cpwLogo {
 	width: 12rem;
 	height: 100%;
 }
-#sidebar > div > img {
+#sidebar > div > #logo {
+	width: 4rem;
+	display: none;
+}
+#sidebar > #user {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	gap: 4rem;
+}
+#sidebar > #user > img {
 	height: 14rem;
 	width: 14rem;
+	border-radius: 50%;
+	filter: drop-shadow(0px 0px 0.5rem rgba(0, 0, 0, 0.5));
+}
+#sidebar > #user > div {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	gap: 2rem;
+}
+#sidebar > #pages {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	gap: 4rem;
+}
+#sidebar > #pages > h5 {
+	cursor: pointer;
+}
+#sidebar > #pages > h5.active {
+	color: var(--primary-complement);
+	filter: drop-shadow(0px 0px 0.5rem rgba(0, 0, 0, 0.5));
+}
+#sidebar > #pages > h5 > svg {
+	width: 4rem;
+	height: 4rem;
+	display: none;
+}
+#sidebar > #logout {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: row;
+	gap: 2rem;
+}
+#sidebar > #logout > svg {
+	width: 3rem;
+	height: 3rem;
+}
+#sidebarToggleLabel {
+	position: absolute;
+	top: 2rem;
+	left: calc(40rem - 4rem - 2rem);
+	width: 4rem;
+	height: 4rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 10;
+	transition: left var(--transition), transform var(--transition);
+}
+#sidebarToggleLabel > svg {
+	width: 4rem;
+	height: 4rem;
+}
+#sidebarToggle:checked ~ #sidebarToggleLabel {
+	left: 2rem;
+	transform: rotate(180deg);
+}
+#sidebarToggle:checked ~ #sidebar {
+	width: 8rem;
+}
+#sidebarToggle:checked ~ #sidebar > div > #cpwLogo {
+	display: none;
+}
+#sidebarToggle:checked ~ #sidebar > div > #logo {
+	display: block;
+}
+#sidebarToggle:checked ~ #sidebar > #user > img {
+	height: 4rem;
+	width: 4rem;
+}
+#sidebarToggle:checked ~ #sidebar > #user > div {
+	display: none;
+}
+#sidebarToggle:checked ~ #sidebar > #pages > h5 > span {
+	display: none;
+}
+#sidebarToggle:checked ~ #sidebar > #pages > h5 > svg {
+	display: block;
+}
+#sidebarToggle:checked ~ #sidebar > #logout > svg {
+	width: 4rem;
+	height: 4rem;
+}
+#sidebarToggle:checked ~ #sidebar > #logout > p {
+	display: none;
 }
