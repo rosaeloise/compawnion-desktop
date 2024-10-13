@@ -13,7 +13,7 @@ const createWindow = () => {
 		width: 800,
 		height: 600,
 
-		minWidth: 400,
+		minWidth: 500,
 		minHeight: 600,
 
 		webPreferences: {

@@ -96,6 +96,7 @@ span {
 .button.outlined {
 	border: solid 0.5rem var(--primary-complement);
 	background-color: unset;
+	filter: unset;
 	color: var(--primary-complement);
 }
 .button.outlined:hover {
@@ -110,6 +111,21 @@ span {
 	background-color: var(--primary-color);
 }
 
+.inputDiv {
+	position: relative;
+}
+.inputDiv > svg {
+	position: absolute;
+	width: 2rem;
+	height: 2rem;
+	top: 50%;
+	left: 2rem;
+	transform: translateY(-50%);
+	z-index: 1;
+}
+.inputDiv > input {
+	padding-left: 6rem;
+}
 .input {
 	padding: 1rem 2rem;
 	display: inline-flex;
@@ -134,6 +150,7 @@ span {
 	align-items: center;
 	flex-direction: column;
 	background-color: var(--white);
+	filter: drop-shadow(0px 0px 0.5rem rgba(0, 0, 0, 0.5));
 	gap: 2rem;
 	overflow: hidden;
 }

@@ -1,0 +1,176 @@
+
+#sidebarToggle:checked ~ #rescuesMain {
+	width: calc(100% - 8rem - 16rem);
+	left: 8rem;
+}
+
+#rescuesMain {
+	position: absolute;
+	width: calc(100% - 40rem - 16rem);
+	min-height: calc(100% - 16rem);
+	top: 0;
+	left: 40rem;
+	padding: 8rem;
+
+	display: flex;
+	justify-content: left;
+	align-items: start;
+	flex-direction: column;
+	gap: 8rem;
+
+	transition: width var(--transition), left var(--transition);
+}
+
+@media (max-width: 75rem) {
+	#sidebarToggle:checked ~ #rescuesMain {
+		width: calc(100% - 16rem - 8rem);
+		left: 8rem;
+	}
+
+	#rescuesMain {
+		width: calc(100% - 40rem - 16rem);
+		left: 40rem;
+	}
+}
+@media (max-width: 60rem) {
+	#sidebarToggle:checked ~ #rescuesMain {
+		width: calc(100% - 8rem - 8rem);
+		left: 8rem;
+	}
+
+	#rescuesMain {
+		width: calc(100% - 8rem - 8rem);
+		left: 8rem;
+		padding: 4rem;
+		gap: 4rem;
+	}
+}
+@media (max-width: 40rem) {
+	#rescuesMain {
+		width: calc(100% - 8rem - 8rem);
+		padding: 2rem;
+		gap: 2rem;
+	}
+}
+
+#rescuesMain > #filter {
+	position: relative;
+	width: calc(100% - 8rem);
+	padding: 2rem 4rem;
+	border-radius: 2rem;
+	background-color: var(--white);
+	filter: drop-shadow(0px 0px 0.5rem rgba(0, 0, 0, 0.5));
+	display: flex;
+	justify-content: left;
+	align-items: start;
+	flex-direction: column;
+	gap: 2rem;
+
+	overflow: hidden;
+}
+#rescuesMain > #filter > svg {
+	position: absolute;
+	width: 40rem;
+	height: 40rem;
+	top: 0;
+	left: 75%;
+	z-index: -1;
+}
+#rescuesMain > #filter > div {
+	width: 75%;
+	display: flex;
+	justify-content: left;
+	align-items: center;
+	flex-direction: row;
+	gap: 2rem;
+}
+#rescuesMain > #filter > div > * {
+	width: 100%;
+	display: block;
+}
+#rescuesMain > #filter > div > input {
+	display: none;
+}
+#rescuesMain > #filter > div > label {
+	padding: 0.5rem 4rem;
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	border: solid 0.5rem var(--primary-complement);
+	color: var(--primary-complement);
+	background-color: var(--white);
+	border-radius: 10rem;
+}
+#rescuesMain > #filter > div > label:hover {
+	background-color: var(--primary-complement);
+	color: var(--white);
+}
+#rescuesMain > #filter > div > input:checked + label {
+	background-color: var(--primary-complement);
+	color: var(--white);
+}
+#rescuesMain > #filter > div > input:checked + label:hover {
+	background-color: var(--primary-complement);
+	color: var(--white);
+}
+@media (max-width: 60rem) {
+	#rescuesMain > #filter {
+		flex-direction: row;
+	}
+	#rescuesMain > #filter > div {
+		flex-direction: column;
+		text-align: center;
+	}
+	#rescuesMain > #filter > div > label {
+		width: calc(100% - 8rem);
+	}
+}
+
+#rescuesMain > #rescues {
+	width: 100%;
+	display: flex;
+	justify-content: left;
+	align-items: center;
+	flex-direction: column;
+	gap: 4rem;
+}
+@media (max-width: 60rem) {
+	#rescuesMain > #rescues {
+		gap: 2rem;
+	}
+}
+
+#rescuesMain > #rescues > #header {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-direction: row;
+}
+#rescuesMain > #rescues > #header > form {
+	display: flex;
+	justify-content: left;
+	align-items: center;
+	flex-direction: row;
+	gap: 2rem;
+}
+@media (max-width: 60rem) {
+	#rescuesMain > #rescues > #header {
+		gap: 2rem;
+		flex-direction: column;
+	}
+	#rescuesMain > #rescues > #header > form {
+		width: 100%;
+		justify-content: space-between;
+	}
+}
+#rescuesMain > #rescues > #petCards {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-direction: row;
+	flex-wrap: wrap;
+	gap: 4rem;
+}

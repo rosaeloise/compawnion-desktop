@@ -14,10 +14,9 @@ class PetCard extends React.Component {
 				<Button
 					href={this.props.href}
 					size='small'
-					fill='outline'
 					title='aboutMe'
 				>
-					About Me
+					Edit Info
 				</Button>
 			</div>
 		)
