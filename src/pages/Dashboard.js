@@ -138,7 +138,7 @@ class Dashboard extends React.Component {
 					active='dashboard'
 				/>
 
-				<main id='main'>
+				<main id='dashboardMain'>
 					<div id='helloUser'>
 						<h1>Hello,<br />{this.state.user.name.first}!</h1>
 						<p>{`@${this.state.user.username}`}</p>
