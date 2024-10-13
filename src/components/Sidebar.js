@@ -35,7 +35,11 @@ class Sidebar extends React.Component {
 		};
 
 		const sidebarToggle = document.getElementById('sidebarToggle');
+		sidebarToggle.addEventListener('change', () => {
+			window.localStorage.setItem('sidebar', sidebarToggle.checked);
+		});
 
+		sidebarToggle.checked = window.localStorage.getItem('sidebar') === 'true';
 	};
 
 	render() {
