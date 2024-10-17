@@ -22,8 +22,38 @@ class Rescues extends React.Component {
 				role: '',
 				username: ''
 			},
-			popupContent: <></>
+			popupContent: <></>,
+			rescues: [
+				{
+					image: 'https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/221587_v9_bc.jpg',
+					name: 'Beyonce',
+					description: 'Goddess',
+					href: '/rescues/gumoan'
+				}
+			]
 		};
+
+		fetch('http://localhost:3000/ra', {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+			.then(res => res.json())
+			.then(res => {
+				const rescues = [];
+				for (const of in res) {
+					rescues.push({
+						image: 'https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/221587_v9_bc.jpg',
+						name: res[of].name,
+						description: res[of].backgroundStory,
+						href: '/rescues/' + res[of].petId
+					});
+				};
+				this.setState({
+					rescues: rescues
+				});
+			});
 	};
 	componentDidMount() {
 		setTimeout(() => {
@@ -184,36 +214,15 @@ class Rescues extends React.Component {
 						</div>
 
 						<div id='petCards'>
-							<PetCard
-								image='https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/221587_v9_bc.jpg'
-								name='Beyonce'
-								description='Goddess'
-								href='/rescues/gumoan'
-							/>
-							<PetCard
-								image='https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/221587_v9_bc.jpg'
-								name='Beyonce'
-								description='Goddess'
-								href='/rescues/gumoan'
-							/>
-							<PetCard
-								image='https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/221587_v9_bc.jpg'
-								name='Beyonce'
-								description='Goddess'
-								href='/rescues/gumoan'
-							/>
-							<PetCard
-								image='https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/221587_v9_bc.jpg'
-								name='Beyonce'
-								description='Goddess'
-								href='/rescues/gumoan'
-							/>
-							<PetCard
-								image='https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/221587_v9_bc.jpg'
-								name='Beyonce'
-								description='Goddess'
-								href='/rescues/gumoan'
-							/>
+							{this.state.rescues.map((rescue, index) => (
+								<PetCard
+									key={index}
+									image={rescue.image}
+									name={rescue.name}
+									description={rescue.description}
+									href={rescue.href}
+								/>
+							))}
 						</div>
 					</div>
 				</main>
