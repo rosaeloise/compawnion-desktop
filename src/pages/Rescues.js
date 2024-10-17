@@ -4,6 +4,7 @@ import Sidebar from '../components/Sidebar';
 import Input from '../components/Input';
 import Button from '../components/Button';
 import PetCard from '../components/PetCard';
+import Popup from '../components/Popup';
 
 import '../css/applications.css';
 
@@ -20,7 +21,8 @@ class Rescues extends React.Component {
 				},
 				role: '',
 				username: ''
-			}
+			},
+			popupContent: <></>
 		};
 	};
 	componentDidMount() {
@@ -42,6 +44,10 @@ class Rescues extends React.Component {
 	render() {
 		return (
 			<>
+				<Popup>
+					{this.state.popupContent}
+				</Popup>
+
 				<Sidebar
 					avatar={this.state.user.avatar}
 					name={this.state.user.name.first + ' ' + this.state.user.name.last}
@@ -125,6 +131,54 @@ class Rescues extends React.Component {
 								/>
 								<Button
 									title='Add New'
+
+									onClick={(e) => {
+										e.preventDefault();
+										window.location.hash = '/rescues/add';
+									}}
+								/>
+								<Button
+									title='Scan RFID'
+									theme='dark'
+
+									onClick={(e) => {
+										e.preventDefault();
+										this.setState({
+											popupContent: (
+												<>
+													<h1>Scan RFID</h1>
+													<Input
+														type='password'
+														placeholder='RFID'
+														id='rfid'
+													/>
+													<Button
+														title='Cancel'
+														theme='dark'
+														onClick={() => {
+															const popup = document.getElementById('popup');
+															popup.style.top = '-50%';
+
+															setTimeout(() => {
+																this.setState({
+																	popupContent: <></>
+																});
+															}, 250);
+														}}
+													/>
+												</>
+											)
+										});
+
+										const popup = document.getElementById('popup');
+										popup.style.top = '50%';
+										try {
+											setTimeout(() => {
+												const input = popup.querySelector('#rfid');
+												input.focus();
+											}, 250);
+										} catch (error) { console.log(error) };
+									}}
 								/>
 							</form>
 						</div>

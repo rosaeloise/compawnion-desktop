@@ -11,6 +11,7 @@ class Input extends React.Component {
 						className={`input ${this.props.icon ? 'icon' : ''}`}
 						placeholder={this.props.placeholder}
 						type={this.props.type}
+						id={this.props.id}
 					/>
 				</div>
 			);
@@ -21,6 +22,7 @@ class Input extends React.Component {
 				className={`input ${this.props.icon ? 'icon' : ''}`}
 				placeholder={this.props.placeholder}
 				type={this.props.type}
+				id={this.props.id}
 			/>
 		);
 	};

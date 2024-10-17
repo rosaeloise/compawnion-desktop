@@ -163,8 +163,17 @@
 	#rescuesMain > #rescues > #header > form {
 		width: 100%;
 		justify-content: space-between;
+		flex-wrap: wrap;
+	}
+	#rescuesMain > #rescues > #header > form > .inputDiv,
+	#rescuesMain > #rescues > #header > form > .inputDiv > input {
+		width: 100%;
+	}
+	#rescuesMain > #rescues > #header > form > .button {
+		width: calc(50% - 2rem);
 	}
 }
+
 #rescuesMain > #rescues > #petCards {
 	width: 100%;
 	display: flex;
@@ -173,4 +182,9 @@
 	flex-direction: row;
 	flex-wrap: wrap;
 	gap: 4rem;
+}
+@media (max-width: 60rem) {
+	#rescuesMain > #rescues > #petCards {
+		gap: 2rem;
+	}
 }

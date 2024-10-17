@@ -11,6 +11,7 @@ import './css/global.css';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Rescues from './pages/Rescues';
+import AddRescuedPet from './pages/AddRescuedPet';
 import Applications from './pages/Applications';
 import Compawnions from './pages/Compawnions';
 
@@ -25,6 +26,7 @@ class App extends
 
 					<Route path='/dashboard' element={<Dashboard />} />
 					<Route path='/rescues' element={<Rescues />} />
+					<Route path='/rescues/add' element={<AddRescuedPet />} />
 					<Route path='/applications' element={<Applications />} />
 					<Route path='/compawnions' element={<Compawnions />} />
 				</Routes>
