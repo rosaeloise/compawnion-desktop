@@ -37,7 +37,8 @@ class AddRescuedPet extends React.Component {
 					procedure: null,
 					notes: null
 				}
-			]
+			],
+			petID: 0
 		};
 	};
 	componentDidMount() {
@@ -55,6 +56,136 @@ class AddRescuedPet extends React.Component {
 				}
 			});
 		}, 1000);
+
+		const saveButton = document.getElementById('save');
+		saveButton.addEventListener('click', () => {
+			const petID = document.getElementById('petID').value;
+			const name = document.getElementById('name').value;
+			const type = document.getElementById('type').value;
+			const ageYear = document.getElementById('age').value;
+			const yearOrMonth = document.getElementById('yearOrMonth').value;
+			const weight = document.getElementById('weight').value;
+			const breed = document.getElementById('breed').value;
+
+			const attributes = document.getElementById('attributes').value;
+			const rescueStory = document.getElementById('rescueStory').value;
+
+			if (!petID || !name || !type || !ageYear || !yearOrMonth || !weight || !breed || !attributes || !rescueStory) {
+				alert('Please fill out all fields.');
+				return
+			};
+
+			const vaccination = [];
+			for (let i = 0; i < this.state.vaccinationCount; i++) {
+				const vaccinationName = document.getElementsByName('vaccinationName')[i].value;
+				const vaccinationDate = document.getElementsByName('vaccinationDate')[i].value;
+				const vaccinationExpiry = document.getElementsByName('vaccinationExpiry')[i].value;
+				vaccination.push({
+					name: vaccinationName,
+					date: vaccinationDate,
+					expiry: vaccinationExpiry
+				});
+			};
+
+			const medicalHistory = [];
+			for (let i = 0; i < this.state.medicalHistoryCount; i++) {
+				const medicalHistoryProcedure = document.getElementsByName('medicalHistoryProcedure')[i].value;
+				const medicalHistoryDate = document.getElementsByName('medicalHistoryDate')[i].value;
+				const medicalHistoryNotes = document.getElementsByName('medicalHistoryNotes')[i].value;
+				medicalHistory.push({
+					procedure: medicalHistoryProcedure,
+					date: medicalHistoryDate,
+					notes: medicalHistoryNotes
+				});
+			};
+
+			const rfidTag = document.getElementById('rfidTag').value;
+
+			if (!rfidTag) {
+				alert('Please scan RFID.');
+				return;
+			};
+
+			const image = document.getElementById('imageInput').files[0];
+			// Convert image to base64
+			const reader = new FileReader();
+			reader.readAsDataURL(image);
+			reader.onload = () => {
+				const imageBase64 = reader.result;
+
+				const data = {
+					petId: petID,
+					vaccination: vaccination,
+					size: weight,
+					personality: attributes,
+					name: name,
+					rfidTag: rfidTag,
+					type: type,
+					backgroundStory: rescueStory,
+					medicalHistory: medicalHistory,
+					picture: imageBase64,
+					breed: breed,
+					age: ageYear
+				};
+
+				for (const key in data) {
+					if (data[key] === null) {
+						alert('Please fill out all fields.');
+						return;
+					};
+					if (typeof data[key] === 'object') {
+						for (const k in data[key]) {
+							if (data[key][k] === null) {
+								alert('Please fill out all fields.');
+								return;
+							};
+						};
+					};
+				};
+
+				console.log(data);
+
+				fetch('http://localhost:3000/ra', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify(data)
+				}).then(res => res.json()).then(res => {
+					if (res.status === 'success') {
+						this.setState({
+							popupContent: (
+								<div>
+									<h5>Success</h5>
+									<p>Rescued pet has been added successfully.</p>
+									<Button
+										title='OK'
+										theme='dark'
+
+										onClick={() => {
+											window.location.hash = '/rescues';
+										}}
+									/>
+								</div>
+							)
+						});
+					};
+				});
+			};
+		});
+
+		fetch('http://localhost:3000/ra', {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		}).then(res => res.json()).then(res => {
+			const petID = document.getElementById('petID');
+			const petIDValue = (res.length + 1).toString().padStart(4, '0');
+			this.setState({
+				petID: petIDValue
+			});
+		});
 	};
 	render() {
 		return (
@@ -77,6 +208,7 @@ class AddRescuedPet extends React.Component {
 						<div>
 							<Button
 								title='Save'
+								id='save'
 							/>
 							<Button
 								title='Cancel'
@@ -204,8 +336,8 @@ class AddRescuedPet extends React.Component {
 								type='text'
 								id='petID'
 								name='petID'
-								value='000-001'
-								placeholder='000-001'
+								value={this.state.petID}
+								placeholder={this.state.petID}
 								disabled={true}
 							/>
 							<FormInput
