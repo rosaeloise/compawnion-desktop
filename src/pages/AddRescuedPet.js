@@ -152,24 +152,7 @@ class AddRescuedPet extends React.Component {
 					},
 					body: JSON.stringify(data)
 				}).then(res => res.json()).then(res => {
-					if (res.status === 'success') {
-						this.setState({
-							popupContent: (
-								<div>
-									<h5>Success</h5>
-									<p>Rescued pet has been added successfully.</p>
-									<Button
-										title='OK'
-										theme='dark'
-
-										onClick={() => {
-											window.location.hash = '/rescues';
-										}}
-									/>
-								</div>
-							)
-						});
-					};
+					window.location.hash = '/rescues';
 				});
 			};
 		});
