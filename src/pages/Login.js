@@ -63,6 +63,12 @@ class Login extends React.Component {
 							type='text'
 							id='Username'
 							name='Username'
+							onKeyDown={(e) => {
+								if (e.key === 'Enter') {
+									const passwordElement = document.getElementById('Password');
+									passwordElement.focus();
+								};
+							}}
 						/>
 
 						<Input
@@ -70,6 +76,11 @@ class Login extends React.Component {
 							type='password'
 							id='Password'
 							name='Password'
+							onKeyDown={(e) => {
+								if (e.key === 'Enter') {
+									this.handleLogin();
+								};
+							}}
 						/>
 					</div>
 
