@@ -63,13 +63,17 @@ class AddRescuedPet extends React.Component {
 			const petID = document.getElementById('petID').value;
 			const name = document.getElementById('name').value;
 			const type = document.getElementById('type').value;
-			const ageYear = document.getElementById('age').value;
-			const yearOrMonth = document.getElementById('yearOrMonth').value;
-			const weight = document.getElementById('weight').value;
+			const ageYear = document.getElementById('ageYear').value;
+			const ageMonth = document.getElementById('ageMonth').value;
 			const breed = document.getElementById('breed').value;
+			const weight = document.getElementById('weight').value;
+			const size = document.getElementById('size').value;
+			const gender = document.getElementById('gender').value;
 
-			const attributes = document.getElementById('attributes').value;
+			const personality = document.getElementById('personality').value;
 			const rescueStory = document.getElementById('rescueStory').value;
+
+
 
 			if (!petID || !name || !type || !ageYear || !yearOrMonth || !weight || !breed || !attributes || !rescueStory) {
 				alert('Please fill out all fields.');
@@ -270,48 +274,15 @@ class AddRescuedPet extends React.Component {
 									name='ageYear'
 									placeholder=''
 								/>
-								<FormInput
-									label=''
-									type='dropdown'
-									id='yearOrMonth'
-									name='yearOrMonth'
-									placeholder='Year or Month'
+								<h6>Yr.</h6>
 
-									options={[
-										{
-											value: 'year',
-											label: 'Years'
-										},
-										{
-											value: 'month',
-											label: 'Months'
-										}
-									]}
-
-									onChange={() => {
-										try {
-											const age = document.getElementById('age');
-											const yearOrMonth = document.getElementById('yearOrMonth');
-											if (yearOrMonth.value === 'year') {
-												age.setAttribute('name', 'ageYear');
-												age.value = Math.floor(age.value / 12);
-											};
-											if (yearOrMonth.value === 'month') {
-												age.setAttribute('name', 'ageMonth');
-												age.value = age.value * 12;
-											};
-										} catch (error) {
-											console.log(error);
-										};
-									}}
-								/>
 								<FormInput
-									label='Weight'
 									type='number'
-									id='weight'
-									name='weight'
-									placeholder='Kilograms'
+									id='age'
+									name='ageYear'
+									placeholder=''
 								/>
+								<h6>Months</h6>
 							</span>
 						</div>
 						<div>
@@ -320,8 +291,7 @@ class AddRescuedPet extends React.Component {
 								type='text'
 								id='petID'
 								name='petID'
-								value={this.state.petID}
-								placeholder={this.state.petID}
+								value='###-###'
 								disabled={true}
 							/>
 							<FormInput
@@ -465,6 +435,45 @@ class AddRescuedPet extends React.Component {
 								name='rescueStory'
 								placeholder='Enter rescue story'
 							/>
+							<FormInput
+								label='Rescue Date'
+								type='date'
+								id='weight'
+								name='weight'
+							/>
+						</div>
+
+						<h6>Medical Information</h6>
+						<div>
+							<FormInput
+								label='Weight'
+								type='number'
+								id='weight'
+								name='weight'
+							/>
+							<h6>Kg</h6>
+							<FormInput
+								label='Size'
+								type='dropdown'
+								id='size'
+								name='size'
+								placeholder='Kilograms'
+
+								options={[
+									{
+										value: 'small',
+										label: 'Small'
+									},
+									{
+										value: 'medium',
+										label: 'Medium'
+									},
+									{
+										value: 'large',
+										label: 'Large'
+									}
+								]}
+							/>
 						</div>
 
 						<h6>Vaccination</h6>
@@ -474,11 +483,26 @@ class AddRescuedPet extends React.Component {
 									<div key={index}>
 										<FormInput
 											label='Name'
-											type='text'
+											type='dropdown'
 											id='vaccinationName'
 											name='vaccinationName'
 											placeholder='Enter vaccination name'
 											value={vaccination.name}
+
+											options={[
+												{
+													value: 'antiRabies',
+													label: 'Anti-Rabies'
+												},
+												{
+													value: 'da2ppVaccine',
+													label: 'DA2PP'
+												},
+												{
+													value: 'leptospiraVaccine',
+													label: 'Leptospira Vaccine  (Leptospirosis)'
+												}
+											]}
 										/>
 										<FormInput
 											label='Date'
