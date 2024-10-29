@@ -74,8 +74,9 @@
 	#dashboardMain > #time { display: none; }
 }
 
-#dashboardMain > #helloUser > p {
+#dashboardMain > #helloUser > h6 {
 	color: var(--primary-color);
+	font-weight: normal;
 }
 
 #dashboardMain > #time {

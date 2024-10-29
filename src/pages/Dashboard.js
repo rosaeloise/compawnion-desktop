@@ -144,7 +144,7 @@ class Dashboard extends React.Component {
 				<main id='dashboardMain'>
 					<div id='helloUser'>
 						<h1>Hello,<br />{this.state.user.name}!</h1>
-						<p>{`@${this.state.user.username}`}</p>
+						<h6>{`@${this.state.user.username}`}</h6>
 					</div>
 
 					<div id='time'>
