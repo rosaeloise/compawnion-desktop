@@ -6,6 +6,36 @@ import Input from '../components/Input';
 import '../css/login.css';
 
 class Login extends React.Component {
+	constructor(props) {
+		super(props);
+	}
+	handleLogin = () => {
+		const usernameElement = document.getElementById('Username');
+		const Username = usernameElement.value;
+		const passwordElement = document.getElementById('Password');
+		const password = passwordElement.value;
+		fetch('http://localhost:3000/admins/login', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				Username,
+				Password: password
+			})
+		})
+			.then(res => res.json())
+			.then(response => {
+				const token = response.token;
+				if (token) {
+					localStorage.setItem('token', token);
+					window.location.hash = '/dashboard';
+				} else {
+					alert('Invalid username or password');
+				};
+			})
+			.catch(err => console.error)
+	};
 	render() {
 		return (
 			<>
@@ -31,11 +61,15 @@ class Login extends React.Component {
 						<Input
 							placeholder='Username'
 							type='text'
+							id='Username'
+							name='Username'
 						/>
 
 						<Input
 							placeholder='Password'
 							type='password'
+							id='Password'
+							name='Password'
 						/>
 					</div>
 
@@ -43,7 +77,7 @@ class Login extends React.Component {
 						type='button'
 						theme='dark'
 						onClick={() => {
-							window.location.hash = '/dashboard';
+							this.handleLogin();
 						}}
 					>Login</Button>
 
