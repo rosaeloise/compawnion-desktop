@@ -205,6 +205,25 @@ class Rescues extends React.Component {
 														id='rfid'
 														onKeyDown={(e) => {
 															if (e.key === 'Enter') {
+																const rescues = this.state.rescues;
+																const search = e.target.value.toLowerCase();
+
+																const filteredRescues = rescues.filter(rescue => {
+																	return rescue.rfid.toLowerCase().includes(search);
+																});
+
+																const petCardsElement = document.getElementById('petCards');
+																const petCards = petCardsElement.querySelectorAll('.petCard');
+
+																petCards.forEach(card => {
+																	const cardId = card.getAttribute('id');
+																	if (filteredRescues.some(rescue => rescue.petId === cardId)) {
+																		card.style.display = 'flex';
+																	} else {
+																		card.style.display = 'none';
+																	}
+																});
+
 																const popup = document.getElementById('popup');
 																popup.style.top = '-50%';
 
