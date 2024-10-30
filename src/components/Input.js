@@ -13,6 +13,7 @@ class Input extends React.Component {
 						type={this.props.type}
 						id={this.props.id}
 						onKeyDown={this.props.onKeyDown}
+						onChange={this.props.onChange}
 					/>
 				</div>
 			);
@@ -25,6 +26,7 @@ class Input extends React.Component {
 				type={this.props.type}
 				id={this.props.id}
 				onKeyDown={this.props.onKeyDown}
+				onChange={this.props.onChange}
 			/>
 		);
 	};

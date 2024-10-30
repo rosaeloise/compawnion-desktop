@@ -20,14 +20,7 @@ class Rescues extends React.Component {
 				username: ''
 			},
 			popupContent: <></>,
-			rescues: [
-				{
-					image: 'https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/221587_v9_bc.jpg',
-					name: 'Beyonce',
-					description: 'Goddess',
-					href: '/rescues/gumoan'
-				}
-			]
+			rescues: []
 		};
 
 		fetch('http://localhost:3000/ra', {
@@ -44,9 +37,13 @@ class Rescues extends React.Component {
 						image: res[of].personal.picture,
 						name: res[of].personal.name,
 						description: res[of].background.rescueStory,
-						href: '/rescues/' + res[of].petId
+						href: '/rescues/' + res[of].petId,
+						rfid: res[of].rfidTag,
+						petId: res[of].id
 					});
 				};
+				console.log(rescues);
+
 				this.setState({
 					rescues: rescues
 				});
@@ -159,6 +156,30 @@ class Rescues extends React.Component {
 											<path d='M11.5485 8.68585C11.839 8.01588 12 7.27674 12 6.5C12 3.46243 9.53757 1 6.5 1C3.46243 1 1 3.46243 1 6.5C1 9.53757 3.46243 12 6.5 12C7.72958 12 8.86493 11.5965 9.78085 10.9147M11.5485 8.68585L14.8235 10.8921C15.4731 11.3297 15.6449 12.2109 15.2073 12.8605C14.7698 13.51 13.8885 13.6819 13.239 13.2443L9.78085 10.9147M11.5485 8.68585C11.1629 9.57534 10.549 10.3429 9.78085 10.9147' stroke='var(--primary-complement)' strokeWidth='2' />
 										</svg>
 									}
+
+									onChange={(e) => {
+										const rescues = this.state.rescues;
+										const search = e.target.value.toLowerCase();
+
+										const filteredRescues = rescues.filter(rescue => {
+											return rescue.name.toLowerCase().includes(search)
+												|| rescue.petId.toLowerCase().includes(search)
+												|| rescue.description.toLowerCase().includes(search)
+												|| rescue.href.toLowerCase().includes(search);
+										});
+
+										const petCardsElement = document.getElementById('petCards');
+										const petCards = petCardsElement.querySelectorAll('.petCard');
+
+										petCards.forEach(card => {
+											const cardId = card.getAttribute('id');
+											if (filteredRescues.some(rescue => rescue.petId === cardId)) {
+												card.style.display = 'flex';
+											} else {
+												card.style.display = 'none';
+											}
+										});
+									}}
 								/>
 								<Button
 									title='Add New'
@@ -182,6 +203,18 @@ class Rescues extends React.Component {
 														type='password'
 														placeholder='RFID'
 														id='rfid'
+														onKeyDown={(e) => {
+															if (e.key === 'Enter') {
+																const popup = document.getElementById('popup');
+																popup.style.top = '-50%';
+
+																setTimeout(() => {
+																	this.setState({
+																		popupContent: <></>
+																	});
+																}, 250);
+															};
+														}}
 													/>
 													<Button
 														title='Cancel'
@@ -218,6 +251,7 @@ class Rescues extends React.Component {
 							{this.state.rescues.map((rescue, index) => (
 								<PetCard
 									key={index}
+									id={rescue.petId}
 									image={rescue.image}
 									name={rescue.name}
 									description={rescue.description}

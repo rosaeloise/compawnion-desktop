@@ -119,7 +119,6 @@ class AddRescuedPet extends React.Component {
 
 				const data = {
 					personal: {
-						petID: petID,
 						name: name,
 						type: type,
 						breed: breed,

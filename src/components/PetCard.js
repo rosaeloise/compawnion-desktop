@@ -6,6 +6,7 @@ class PetCard extends React.Component {
 	render() {
 		return (
 			<div
+				id={this.props.id}
 				className={`petCard ${this.props.className} ${this.props.dark === 'true' ? 'dark' : ''}`}
 			>
 				<img src={this.props.image} alt={this.props.name} />
