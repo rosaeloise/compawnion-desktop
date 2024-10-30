@@ -63,22 +63,21 @@ class AddRescuedPet extends React.Component {
 			const petID = document.getElementById('petID').value;
 			const name = document.getElementById('name').value;
 			const type = document.getElementById('type').value;
+			const breed = document.getElementById('breed').value;
 			const ageYear = document.getElementById('ageYear').value;
 			const ageMonth = document.getElementById('ageMonth').value;
-			const breed = document.getElementById('breed').value;
+
+			const attributes = document.getElementById('personality').value;
+			const rescueStory = document.getElementById('backgroundStory').value;
+			const rescueDate = document.getElementById('rescueDate').value;
+
 			const weight = document.getElementById('weight').value;
 			const size = document.getElementById('size').value;
-			const gender = document.getElementById('gender').value;
 
-			const personality = document.getElementById('personality').value;
-			const rescueStory = document.getElementById('rescueStory').value;
-
-
-
-			if (!petID || !name || !type || !ageYear || !yearOrMonth || !weight || !breed || !attributes || !rescueStory) {
+			if (!petID || !name || !type || !breed || !ageYear || !ageMonth || !attributes || !rescueStory || !rescueDate || !weight || !size) {
 				alert('Please fill out all fields.');
-				return
-			};
+				return;
+			}
 
 			const vaccination = [];
 			for (let i = 0; i < this.state.vaccinationCount; i++) {
@@ -119,18 +118,27 @@ class AddRescuedPet extends React.Component {
 				const imageBase64 = reader.result;
 
 				const data = {
-					petId: petID,
-					vaccination: vaccination,
-					size: weight,
-					personality: attributes,
-					name: name,
+					personal: {
+						petID: petID,
+						name: name,
+						type: type,
+						breed: breed,
+						age: {
+							year: ageYear,
+							month: ageMonth
+						},
+						picture: imageBase64
+					},
+					background: {
+						attributes: attributes,
+						rescueStory: rescueStory,
+						rescueDate: rescueDate,
+						weight: weight,
+						size: size,
+						vaccination: vaccination,
+						medicalHistory: medicalHistory
+					},
 					rfidTag: rfidTag,
-					type: type,
-					backgroundStory: rescueStory,
-					medicalHistory: medicalHistory,
-					picture: imageBase64,
-					breed: breed,
-					age: ageYear
 				};
 
 				for (const key in data) {
@@ -270,17 +278,15 @@ class AddRescuedPet extends React.Component {
 								<FormInput
 									label='Age'
 									type='number'
-									id='age'
+									id='ageYear'
 									name='ageYear'
-									placeholder=''
 								/>
 								<h6>Yr.</h6>
 
 								<FormInput
 									type='number'
-									id='age'
-									name='ageYear'
-									placeholder=''
+									id='ageMonth'
+									name='ageMonth'
 								/>
 								<h6>Months</h6>
 							</span>
@@ -422,24 +428,24 @@ class AddRescuedPet extends React.Component {
 						<h6>Background</h6>
 						<div>
 							<FormInput
-								label='Attributes/Description'
+								label='Attributes/Personality'
 								type='textarea'
-								id='attributes'
-								name='attributes'
+								id='personality'
+								name='personality'
 								placeholder='Enter attributes or description'
 							/>
 							<FormInput
 								label='Rescue Story'
 								type='textarea'
-								id='rescueStory'
-								name='rescueStory'
+								id='backgroundStory'
+								name='backgroundStory'
 								placeholder='Enter rescue story'
 							/>
 							<FormInput
 								label='Rescue Date'
 								type='date'
-								id='weight'
-								name='weight'
+								id='rescueDate'
+								name='rescueDate'
 							/>
 						</div>
 
@@ -457,7 +463,6 @@ class AddRescuedPet extends React.Component {
 								type='dropdown'
 								id='size'
 								name='size'
-								placeholder='Kilograms'
 
 								options={[
 									{
@@ -490,6 +495,10 @@ class AddRescuedPet extends React.Component {
 											value={vaccination.name}
 
 											options={[
+												{
+													value: '',
+													label: ''
+												},
 												{
 													value: 'antiRabies',
 													label: 'Anti-Rabies'

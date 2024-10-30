@@ -41,9 +41,9 @@ class Rescues extends React.Component {
 				const rescues = [];
 				for (const of in res) {
 					rescues.push({
-						image: res[of].picture,
-						name: res[of].name,
-						description: res[of].backgroundStory,
+						image: res[of].personal.picture,
+						name: res[of].personal.name,
+						description: res[of].background.rescueStory,
 						href: '/rescues/' + res[of].petId
 					});
 				};

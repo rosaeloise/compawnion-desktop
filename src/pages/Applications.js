@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Sidebar from '../components/Sidebar';
+import Button from '../components/Button';
 
 import '../css/rescues.css';
 
@@ -47,6 +48,30 @@ class Applications extends React.Component {
 
 					active='applications'
 				/>
+				<main id='applicationsMain'>
+					<header id='header'>
+						<h4>Applications</h4>
+						<div>
+							<Button
+								title='Online'
+								id='online'
+								size='small'
+								onClick={() => {
+									window.location.hash = '/admins/add';
+								}}
+							/>
+							<Button
+								title='Onsite'
+								id='onsite'
+								size='small'
+								theme='dark'
+								onClick={() => {
+									window.location.hash = '/admins/add';
+								}}
+							/>
+						</div>
+					</header>
+				</main>
 			</>
 		)
 	};
