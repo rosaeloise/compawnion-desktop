@@ -64,7 +64,8 @@ module.exports = {
 		{
 			name: '@electron-forge/plugin-webpack',
 			config: {
-				port: 3001,
+				port: 3029,
+				loggerPort: 3030,
 				devContentSecurityPolicy: `img-src https: data:; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline';`,
 				mainConfig: './webpack.main.config.js',
 				renderer: {
