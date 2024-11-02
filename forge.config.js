@@ -66,7 +66,7 @@ module.exports = {
 			config: {
 				port: 3029,
 				loggerPort: 3030,
-				devContentSecurityPolicy: `img-src https: data:; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline';`,
+				devContentSecurityPolicy: `img-src http: https: data:; script-src http: https: 'unsafe-inline' 'unsafe-eval'; style-src http: https: 'unsafe-inline'; connect-src http: https: ws:; frame-src http: https:; object-src http: https:; media-src http: https:; font-src http: https:;`,
 				mainConfig: './webpack.main.config.js',
 				renderer: {
 					config: './webpack.renderer.config.js',
