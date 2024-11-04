@@ -2,8 +2,9 @@ import React from 'react';
 
 import Sidebar from '../components/Sidebar';
 import Button from '../components/Button';
+import Input from '../components/Input';
 
-import '../css/rescues.css';
+import '../css/applications.css';
 
 class Applications extends React.Component {
 	constructor(props) {
@@ -18,7 +19,7 @@ class Applications extends React.Component {
 			},
 		};
 	};
-	componentDidMount() {
+	async componentDidMount() {
 		fetch('http://localhost:3000/admins/me', {
 			method: 'GET',
 			headers: {
@@ -37,7 +38,25 @@ class Applications extends React.Component {
 					}
 				});
 			});
+
+		await this.fetchApp();
 	};
+
+	fetchApp = async () => {
+		try {
+			const response = await fetch('http://localhost:3000/application'); // Replace with your actual API URL
+			if (!response.ok) {
+				throw new Error('Network response was not ok');
+			}
+			const data = await response.json();
+			console.log(data);
+
+			this.setState({ admins: data });
+		} catch (error) {
+			console.error('Error fetching applications:', error);
+		}
+	};
+
 	render() {
 		return (
 			<>
@@ -50,27 +69,31 @@ class Applications extends React.Component {
 				/>
 				<main id='applicationsMain'>
 					<header id='header'>
-						<h4>Applications</h4>
-						<div>
-							<Button
-								title='Online'
-								id='online'
-								size='small'
-								onClick={() => {
-									window.location.hash = '/admins/add';
-								}}
-							/>
-							<Button
-								title='Onsite'
-								id='onsite'
-								size='small'
-								theme='dark'
-								onClick={() => {
-									window.location.hash = '/admins/add';
-								}}
-							/>
-						</div>
+						<h4>Online Applications</h4>
 					</header>
+
+					<section id='applications'>
+						<Input
+							type='search'
+							placeholder='Search for Name or ID'
+							onChange={this.handleSearch}
+							icon={
+								<svg viewBox='0 0 17 15' fill='transparent'>
+									<path d='M11.5485 8.68585C11.839 8.01588 12 7.27674 12 6.5C12 3.46243 9.53757 1 6.5 1C3.46243 1 1 3.46243 1 6.5C1 9.53757 3.46243 12 6.5 12C7.72958 12 8.86493 11.5965 9.78085 10.9147M11.5485 8.68585L14.8235 10.8921C15.4731 11.3297 15.6449 12.2109 15.2073 12.8605C14.7698 13.51 13.8885 13.6819 13.239 13.2443L9.78085 10.9147M11.5485 8.68585C11.1629 9.57534 10.549 10.3429 9.78085 10.9147' stroke='var(--primary-complement)' strokeWidth='2' />
+								</svg>
+							}
+						/>
+						<table id='applicationList'>
+							<tr>
+								<th>ID</th>
+								<th>Date & Time</th>
+								<th>Name</th>
+								<th>Pet Type</th>
+								<th>Status</th>
+								<th>Actions</th>
+							</tr>
+						</table>
+					</section>
 				</main>
 			</>
 		)

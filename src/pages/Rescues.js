@@ -6,7 +6,7 @@ import Button from '../components/Button';
 import PetCard from '../components/PetCard';
 import Popup from '../components/Popup';
 
-import '../css/applications.css';
+import '../css/rescues.css';
 
 class Rescues extends React.Component {
 	constructor(props) {

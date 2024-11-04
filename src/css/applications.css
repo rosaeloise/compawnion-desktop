@@ -1,0 +1,319 @@
+
+#sidebarToggle:checked ~ #applicationsMain {
+	width: calc(100% - 8rem - 16rem);
+	left: 8rem;
+}
+
+#applicationsMain {
+	position: absolute;
+	width: calc(100% - 40rem - 16rem);
+	min-height: calc(100% - 16rem);
+	top: 0;
+	left: 40rem;
+	padding: 8rem;
+
+	display: flex;
+	justify-content: left;
+	align-items: start;
+	flex-direction: column;
+	gap: 8rem;
+
+	transition: width var(--transition), left var(--transition);
+}
+
+@media (max-width: 75rem) {
+	#sidebarToggle:checked ~ #applicationsMain {
+		width: calc(100% - 16rem - 8rem);
+		left: 8rem;
+	}
+
+	#applicationsMain {
+		width: calc(100% - 40rem - 16rem);
+		left: 40rem;
+	}
+}
+@media (max-width: 60rem) {
+	#sidebarToggle:checked ~ #applicationsMain {
+		width: calc(100% - 8rem - 8rem);
+		left: 8rem;
+	}
+
+	#applicationsMain {
+		width: calc(100% - 8rem - 8rem);
+		left: 8rem;
+		padding: 4rem;
+		gap: 4rem;
+	}
+}
+@media (max-width: 40rem) {
+	#applicationsMain {
+		width: calc(100% - 8rem - 8rem);
+		padding: 2rem;
+		gap: 2rem;
+	}
+}
+
+#applicationsMain > #rescues {
+	width: 100%;
+	display: flex;
+	justify-content: left;
+	align-items: center;
+	flex-direction: column;
+	gap: 4rem;
+}
+@media (max-width: 60rem) {
+	#applicationsMain > #rescues {
+		gap: 2rem;
+	}
+}
+
+#applicationsMain > #rescues > #header {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-direction: row;
+}
+#applicationsMain > #rescues > #header > form {
+	display: flex;
+	justify-content: left;
+	align-items: center;
+	flex-direction: row;
+	gap: 2rem;
+}
+@media (max-width: 60rem) {
+	#applicationsMain > #rescues > #header {
+		gap: 2rem;
+		flex-direction: column;
+	}
+	#applicationsMain > #rescues > #header > form {
+		width: 100%;
+		justify-content: space-between;
+	}
+	#applicationsMain > #rescues > #header > form > .inputDiv,
+	#applicationsMain > #rescues > #header > form > .inputDiv > input {
+		width: 100%;
+	}
+}
+#applicationsMain > #rescues > #petCards {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-direction: row;
+	flex-wrap: wrap;
+	gap: 4rem;
+}
+
+#applicationsMain {
+	display: flex;
+	justify-content: left;
+	align-items: center;
+	flex-direction: column;
+	gap: 4rem;
+}
+
+#applicationsMain > * {
+	width: calc(100% - 8rem);
+	padding: 2rem 4rem;
+	border-radius: 2rem;
+	background-color: var(--white);
+	filter: drop-shadow(0px 0px 0.5rem rgba(0, 0, 0, 0.5));
+}
+
+#applicationsMain > #header {
+	width: calc(100% - 8rem);
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-direction: row;
+}
+#applicationsMain > #header > div {
+	display: flex;
+	justify-content: left;
+	align-items: center;
+	flex-direction: row;
+	gap: 2rem;
+}
+@media (max-width: 60rem) {
+	#applicationsMain > #header {
+		flex-direction: column;
+		gap: 2rem;
+		text-align: center;
+	}
+	#applicationsMain > #header > div {
+		width: 100%;
+		justify-content: space-between;
+	}
+	#applicationsMain > #header > div > .button {
+		width: 100%;
+	}
+}
+
+#applicationsMain > #basicInfo {
+	width: calc(100% - 8rem);
+	padding: 4rem 4rem;
+	display: flex;
+	justify-content: left;
+	align-items: flex-start;
+	flex-direction: row;
+	gap: 4rem;
+}
+#applicationsMain > #basicInfo > div {
+	width: 100%;
+	display: flex;
+	justify-content: left;
+	align-items: center;
+	flex-direction: column;
+	gap: 2rem;
+}
+#applicationsMain > #basicInfo > #image {
+	width: unset;
+}
+#applicationsMain > #basicInfo > #image > #img {
+	width: 24rem;
+	height: 24rem;
+	border-radius: 2rem;
+	border: solid 0.5rem var(--semi-primary-complement);
+	background-color: var(--plain);
+	background-size: cover;
+	background-position: center;
+	filter: drop-shadow(0px 0px 0.5rem rgba(0, 0, 0, 0.5));
+}
+#applicationsMain > #basicInfo > #image > input {
+	display: none;
+}
+#applicationsMain > #basicInfo > div > span {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-direction: row;
+	gap: 2rem;
+}
+@media (max-width: 60rem) {
+	#applicationsMain > #basicInfo {
+		flex-direction: column;
+		gap: 4rem;
+	}
+	#applicationsMain > #basicInfo > div {
+		width: 100%;
+	}
+	#applicationsMain > #basicInfo > #image {
+		width: 100%;
+	}
+}
+
+#applicationsMain > #backgroundInfo {
+	padding: 4rem 4rem;
+	display: flex;
+	justify-content: left;
+	align-items: flex-start;
+	flex-direction: column;
+	gap: 2rem;
+}
+@media (max-width: 60rem) {
+	#applicationsMain > #backgroundInfo {
+		gap: 4rem;
+	}
+}
+#applicationsMain > #backgroundInfo > div .formInput {
+	width: max-content;
+	min-width: 20rem;
+	flex: 1;
+}
+@media (max-width: 60rem) {
+	#applicationsMain > #backgroundInfo > div .formInput:has(textarea) {
+		width: 100%;
+		min-width: 100%;
+	}
+}
+#applicationsMain > #backgroundInfo > div {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	flex-direction: row;
+	gap: 4rem;
+	margin-bottom: 4rem;
+}
+#applicationsMain > #backgroundInfo > div:first-child,
+#applicationsMain > #backgroundInfo > #vaccination,
+#applicationsMain > #backgroundInfo > #medicalHistory {
+	width: 100%;
+	display: flex;
+	justify-content: left;
+	align-items: flex-start;
+	flex-direction: column;
+	gap: 4rem;
+}
+#applicationsMain > #backgroundInfo > :nth-child(2),
+#applicationsMain > #backgroundInfo > #vaccination > div,
+#applicationsMain > #backgroundInfo > #medicalHistory > div {
+	width: 100%;
+	display: flex;
+	justify-content: stretch;
+	align-items: flex-start;
+	flex-direction: row;
+	flex-wrap: wrap;
+	gap: 4rem;
+}
+#applicationsMain > #backgroundInfo > #vaccination > div > .button,
+#applicationsMain > #backgroundInfo > #medicalHistory > div > .button {
+	margin-top: 4rem;
+}
+#applicationsMain > #backgroundInfo > #medicalHistory span {
+	width: 100%;
+	display: flex;
+	justify-content: left;
+	align-items: center;
+	flex-direction: row;
+	gap: 2rem;
+}
+@media (max-width: 60rem) {
+	#applicationsMain > #backgroundInfo > #medicalHistory .formInput:has(textarea) {
+		width: 100%;
+		min-width: unset;
+	}
+}
+
+@media (max-width: 60rem) {
+	#applicationsMain > #backgroundInfo > :nth-child(2),
+	#applicationsMain > #backgroundInfo > #vaccination > div,
+	#applicationsMain > #backgroundInfo > #medicalHistory > div {
+		gap: 4rem;
+	}
+}
+
+#applicationsMain > #rfid {
+	padding: 4rem 4rem;
+	display: flex;
+	justify-content: left;
+	align-items: flex-start;
+	flex-direction: column;
+	gap: 4rem;
+}
+#applicationsMain > #rfid > div {
+	width: 100%;
+	display: flex;
+	justify-content: left;
+	align-items: center;
+	flex-direction: row;
+	gap: 2rem;
+}
+#applicationsMain > #rfid > div .button {
+	margin-top: 4rem;
+}
+@media (max-width: 60rem) {
+	#applicationsMain > #rfid {
+		gap: 4rem;
+	}
+	#applicationsMain > #rfid > div {
+		flex-direction: column;
+		gap: 2rem;
+	}
+	#applicationsMain > #rfid > div .button {
+		width: 100%;
+		margin: unset;
+	}
+}
