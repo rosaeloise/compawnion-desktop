@@ -10,7 +10,7 @@ class PetCard extends React.Component {
 				className={`petCard ${this.props.className} ${this.props.dark === 'true' ? 'dark' : ''}`}
 			>
 				<img src={this.props.image} alt={this.props.name} />
-				<h5>{this.props.name}</h5>
+				<h6>{this.props.name}</h6>
 				<p>{this.props.description}</p>
 				<Button
 					href={this.props.href}
