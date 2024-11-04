@@ -39,7 +39,10 @@ class Rescues extends React.Component {
 						description: res[of].background.rescueStory,
 						href: '#/rescues/' + res[of].petId,
 						rfid: res[of].rfidTag,
-						petId: res[of].id
+						petId: res[of].id,
+						type: res[of].personal.type,
+						size: res[of].background.size,
+						age: parseInt(res[of].personal.age.year) * parseInt(res[of].personal.age.month) // Age in months
 					});
 				};
 				console.log(rescues);
@@ -68,6 +71,255 @@ class Rescues extends React.Component {
 					}
 				});
 			});
+
+		// Type
+		const cat = document.getElementById('cat');
+		const dog = document.getElementById('dog');
+		const both = document.getElementById('both');
+
+		cat.addEventListener('change', () => {
+			const petCardsElement = document.getElementById('petCards');
+			const petCards = petCardsElement.querySelectorAll('.petCard');
+
+			this.state.rescues.forEach(rescue => {
+				if (rescue.type === 'cat') {
+					petCards.forEach(card => {
+						const cardId = card.getAttribute('id');
+						if (rescue.petId === cardId) {
+							card.style.display = 'flex';
+						};
+					});
+				} else {
+					petCards.forEach(card => {
+						const cardId = card.getAttribute('id');
+						if (rescue.petId === cardId) {
+							card.style.display = 'none';
+						};
+					});
+				};
+			});
+		});
+		dog.addEventListener('change', () => {
+			const petCardsElement = document.getElementById('petCards');
+			const petCards = petCardsElement.querySelectorAll('.petCard');
+
+			this.state.rescues.forEach(rescue => {
+				if (rescue.type === 'dog') {
+					petCards.forEach(card => {
+						const cardId = card.getAttribute('id');
+						if (rescue.petId === cardId) {
+							card.style.display = 'flex';
+						};
+					});
+				} else {
+					petCards.forEach(card => {
+						const cardId = card.getAttribute('id');
+						if (rescue.petId === cardId) {
+							card.style.display = 'none';
+						};
+					});
+				};
+			});
+		});
+		both.addEventListener('change', () => {
+			const petCardsElement = document.getElementById('petCards');
+			const petCards = petCardsElement.querySelectorAll('.petCard');
+
+			this.state.rescues.forEach(rescue => {
+				petCards.forEach(card => {
+					const cardId = card.getAttribute('id');
+					if (rescue.petId === cardId) {
+						card.style.display = 'flex';
+					};
+				});
+			});
+		});
+
+		// Size
+		const small = document.getElementById('small');
+		const medium = document.getElementById('medium');
+		const large = document.getElementById('large');
+		small.checked = true;
+		medium.checked = true;
+		large.checked = true;
+
+		small.addEventListener('change', () => {
+			const petCardsElement = document.getElementById('petCards');
+			const petCards = petCardsElement.querySelectorAll('.petCard');
+
+			if (small.checked) {
+				this.state.rescues.forEach(rescue => {
+					if (rescue.size === 'small') {
+						petCards.forEach(card => {
+							const cardId = card.getAttribute('id');
+							if (rescue.petId === cardId) {
+								card.style.display = 'flex';
+							};
+						});
+					};
+				});
+			} else {
+				this.state.rescues.forEach(rescue => {
+					if (rescue.size === 'small') {
+						petCards.forEach(card => {
+							const cardId = card.getAttribute('id');
+							if (rescue.petId === cardId) {
+								card.style.display = 'none';
+							};
+						});
+					};
+				});
+			};
+		});
+		medium.addEventListener('change', () => {
+			const petCardsElement = document.getElementById('petCards');
+			const petCards = petCardsElement.querySelectorAll('.petCard');
+
+			if (medium.checked) {
+				this.state.rescues.forEach(rescue => {
+					if (rescue.size === 'medium') {
+						petCards.forEach(card => {
+							const cardId = card.getAttribute('id');
+							if (rescue.petId === cardId) {
+								card.style.display = 'flex';
+							};
+						});
+					};
+				});
+			} else {
+				this.state.rescues.forEach(rescue => {
+					if (rescue.size === 'medium') {
+						petCards.forEach(card => {
+							const cardId = card.getAttribute('id');
+							if (rescue.petId === cardId) {
+								card.style.display = 'none';
+							};
+						});
+					};
+				});
+			};
+		});
+		large.addEventListener('change', () => {
+			const petCardsElement = document.getElementById('petCards');
+			const petCards = petCardsElement.querySelectorAll('.petCard');
+
+			if (large.checked) {
+				this.state.rescues.forEach(rescue => {
+					if (rescue.size === 'large') {
+						petCards.forEach(card => {
+							const cardId = card.getAttribute('id');
+							if (rescue.petId === cardId) {
+								card.style.display = 'flex';
+							};
+						});
+					};
+				});
+			} else {
+				this.state.rescues.forEach(rescue => {
+					if (rescue.size === 'large') {
+						petCards.forEach(card => {
+							const cardId = card.getAttribute('id');
+							if (rescue.petId === cardId) {
+								card.style.display = 'none';
+							};
+						});
+					};
+				});
+			};
+		});
+
+		// Age
+		const months = document.getElementById('months');
+		const oneToFiveYears = document.getElementById('1-5years');
+		const fivePlusYears = document.getElementById('5+years');
+		months.checked = true;
+		oneToFiveYears.checked = true;
+		fivePlusYears.checked = true;
+
+		months.addEventListener('change', () => {
+			const petCardsElement = document.getElementById('petCards');
+			const petCards = petCardsElement.querySelectorAll('.petCard');
+
+			if (months.checked) {
+				this.state.rescues.forEach(rescue => {
+					if (rescue.age < 12) {
+						petCards.forEach(card => {
+							const cardId = card.getAttribute('id');
+							if (rescue.petId === cardId) {
+								card.style.display = 'flex';
+							};
+						});
+					};
+				});
+			} else {
+				this.state.rescues.forEach(rescue => {
+					if (rescue.age < 12) {
+						petCards.forEach(card => {
+							const cardId = card.getAttribute('id');
+							if (rescue.petId === cardId) {
+								card.style.display = 'none';
+							};
+						});
+					};
+				});
+			};
+		});
+		oneToFiveYears.addEventListener('change', () => {
+			const petCardsElement = document.getElementById('petCards');
+			const petCards = petCardsElement.querySelectorAll('.petCard');
+
+			if (oneToFiveYears.checked) {
+				this.state.rescues.forEach(rescue => {
+					if (rescue.age >= 12 && rescue.age < 60) {
+						petCards.forEach(card => {
+							const cardId = card.getAttribute('id');
+							if (rescue.petId === cardId) {
+								card.style.display = 'flex';
+							};
+						});
+					};
+				});
+			} else {
+				this.state.rescues.forEach(rescue => {
+					if (rescue.age >= 12 && rescue.age < 60) {
+						petCards.forEach(card => {
+							const cardId = card.getAttribute('id');
+							if (rescue.petId === cardId) {
+								card.style.display = 'none';
+							};
+						});
+					};
+				});
+			};
+		});
+		fivePlusYears.addEventListener('change', () => {
+			const petCardsElement = document.getElementById('petCards');
+			const petCards = petCardsElement.querySelectorAll('.petCard');
+
+			if (fivePlusYears.checked) {
+				this.state.rescues.forEach(rescue => {
+					if (rescue.age >= 60) {
+						petCards.forEach(card => {
+							const cardId = card.getAttribute('id');
+							if (rescue.petId === cardId) {
+								card.style.display = 'flex';
+							};
+						});
+					};
+				});
+			} else {
+				this.state.rescues.forEach(rescue => {
+					if (rescue.age >= 60) {
+						petCards.forEach(card => {
+							const cardId = card.getAttribute('id');
+							if (rescue.petId === cardId) {
+								card.style.display = 'none';
+							};
+						});
+					};
+				});
+			};
+		});
 	};
 	render() {
 		return (
@@ -177,7 +429,7 @@ class Rescues extends React.Component {
 												card.style.display = 'flex';
 											} else {
 												card.style.display = 'none';
-											}
+											};
 										});
 									}}
 								/>
