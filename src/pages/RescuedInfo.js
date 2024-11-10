@@ -279,10 +279,10 @@ class AddRescuedPet extends React.Component {
 
 				<form id='addRescuedPetMain'>
 					<header id='header'>
-						<h4>Add New Rescued Pet</h4>
+						<h4>Rescued Pet Infotmation</h4>
 						<div>
 							<Button
-								title='Save'
+								title='Update'
 								id='save'
 							/>
 							<Button
