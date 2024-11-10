@@ -73,8 +73,8 @@ class AddRescuedPet extends React.Component {
 		});
 		
 
-		const saveButton = document.getElementById('save');
-		saveButton.addEventListener('click', () => {
+		const updateButton = document.getElementById('update');
+		updateButton.addEventListener('click', () => {
 			const petID = document.getElementById('petID').value;
 			const name = document.getElementById('name').value;
 			const type = document.getElementById('type').value;
@@ -277,13 +277,13 @@ class AddRescuedPet extends React.Component {
 					active='rescues'
 				/>
 
-				<form id='addRescuedPetMain'>
+				<form id='rescuedInfoMain'>
 					<header id='header'>
 						<h4>Rescued Pet Infotmation</h4>
 						<div>
 							<Button
 								title='Update'
-								id='save'
+								id='update'
 							/>
 							<Button
 								title='Cancel'

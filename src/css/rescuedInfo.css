@@ -1,10 +1,10 @@
 
-#sidebarToggle:checked ~ #addRescuedPetMain {
+#sidebarToggle:checked ~ #rescuedInfoMain {
 	width: calc(100% - 8rem - 16rem);
 	left: 8rem;
 }
 
-#addRescuedPetMain {
+#rescuedInfoMain {
 	position: absolute;
 	width: calc(100% - 40rem - 16rem);
 	min-height: calc(100% - 16rem);
@@ -22,23 +22,23 @@
 }
 
 @media (max-width: 75rem) {
-	#sidebarToggle:checked ~ #addRescuedPetMain {
+	#sidebarToggle:checked ~ #rescuedInfoMain {
 		width: calc(100% - 16rem - 8rem);
 		left: 8rem;
 	}
 
-	#addRescuedPetMain {
+	#rescuedInfoMain {
 		width: calc(100% - 40rem - 16rem);
 		left: 40rem;
 	}
 }
 @media (max-width: 60rem) {
-	#sidebarToggle:checked ~ #addRescuedPetMain {
+	#sidebarToggle:checked ~ #rescuedInfoMain {
 		width: calc(100% - 8rem - 8rem);
 		left: 8rem;
 	}
 
-	#addRescuedPetMain {
+	#rescuedInfoMain {
 		width: calc(100% - 8rem - 8rem);
 		left: 8rem;
 		padding: 4rem;
@@ -46,14 +46,14 @@
 	}
 }
 @media (max-width: 40rem) {
-	#addRescuedPetMain {
+	#rescuedInfoMain {
 		width: calc(100% - 8rem - 8rem);
 		padding: 2rem;
 		gap: 2rem;
 	}
 }
 
-#addRescuedPetMain > #filter {
+#rescuedInfoMain > #filter {
 	position: relative;
 	width: calc(100% - 8rem);
 	padding: 2rem 4rem;
@@ -68,7 +68,7 @@
 
 	overflow: hidden;
 }
-#addRescuedPetMain > #filter > svg {
+#rescuedInfoMain > #filter > svg {
 	position: absolute;
 	width: 40rem;
 	height: 40rem;
@@ -76,7 +76,7 @@
 	left: 75%;
 	z-index: -1;
 }
-#addRescuedPetMain > #filter > div {
+#rescuedInfoMain > #filter > div {
 	width: 75%;
 	display: flex;
 	justify-content: left;
@@ -84,14 +84,14 @@
 	flex-direction: row;
 	gap: 2rem;
 }
-#addRescuedPetMain > #filter > div > * {
+#rescuedInfoMain > #filter > div > * {
 	width: 100%;
 	display: block;
 }
-#addRescuedPetMain > #filter > div > input {
+#rescuedInfoMain > #filter > div > input {
 	display: none;
 }
-#addRescuedPetMain > #filter > div > label {
+#rescuedInfoMain > #filter > div > label {
 	padding: 0.5rem 4rem;
 	display: inline-flex;
 	justify-content: center;
@@ -102,32 +102,32 @@
 	background-color: var(--white);
 	border-radius: 10rem;
 }
-#addRescuedPetMain > #filter > div > label:hover {
+#rescuedInfoMain > #filter > div > label:hover {
 	background-color: var(--primary-complement);
 	color: var(--white);
 }
-#addRescuedPetMain > #filter > div > input:checked + label {
+#rescuedInfoMain > #filter > div > input:checked + label {
 	background-color: var(--primary-complement);
 	color: var(--white);
 }
-#addRescuedPetMain > #filter > div > input:checked + label:hover {
+#rescuedInfoMain > #filter > div > input:checked + label:hover {
 	background-color: var(--primary-complement);
 	color: var(--white);
 }
 @media (max-width: 60rem) {
-	#addRescuedPetMain > #filter {
+	#rescuedInfoMain > #filter {
 		flex-direction: row;
 	}
-	#addRescuedPetMain > #filter > div {
+	#rescuedInfoMain > #filter > div {
 		flex-direction: column;
 		text-align: center;
 	}
-	#addRescuedPetMain > #filter > div > label {
+	#rescuedInfoMain > #filter > div > label {
 		width: calc(100% - 8rem);
 	}
 }
 
-#addRescuedPetMain > #rescues {
+#rescuedInfoMain > #rescues {
 	width: 100%;
 	display: flex;
 	justify-content: left;
@@ -136,19 +136,19 @@
 	gap: 4rem;
 }
 @media (max-width: 60rem) {
-	#addRescuedPetMain > #rescues {
+	#rescuedInfoMain > #rescues {
 		gap: 2rem;
 	}
 }
 
-#addRescuedPetMain > #rescues > #header {
+#rescuedInfoMain > #rescues > #header {
 	width: 100%;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	flex-direction: row;
 }
-#addRescuedPetMain > #rescues > #header > form {
+#rescuedInfoMain > #rescues > #header > form {
 	display: flex;
 	justify-content: left;
 	align-items: center;
@@ -156,20 +156,20 @@
 	gap: 2rem;
 }
 @media (max-width: 60rem) {
-	#addRescuedPetMain > #rescues > #header {
+	#rescuedInfoMain > #rescues > #header {
 		gap: 2rem;
 		flex-direction: column;
 	}
-	#addRescuedPetMain > #rescues > #header > form {
+	#rescuedInfoMain > #rescues > #header > form {
 		width: 100%;
 		justify-content: space-between;
 	}
-	#addRescuedPetMain > #rescues > #header > form > .inputDiv,
-	#addRescuedPetMain > #rescues > #header > form > .inputDiv > input {
+	#rescuedInfoMain > #rescues > #header > form > .inputDiv,
+	#rescuedInfoMain > #rescues > #header > form > .inputDiv > input {
 		width: 100%;
 	}
 }
-#addRescuedPetMain > #rescues > #petCards {
+#rescuedInfoMain > #rescues > #petCards {
 	width: 100%;
 	display: flex;
 	justify-content: space-between;
@@ -179,7 +179,7 @@
 	gap: 4rem;
 }
 
-#addRescuedPetMain {
+#rescuedInfoMain {
 	display: flex;
 	justify-content: left;
 	align-items: center;
@@ -187,7 +187,7 @@
 	gap: 4rem;
 }
 
-#addRescuedPetMain > * {
+#rescuedInfoMain > * {
 	width: calc(100% - 8rem);
 	padding: 2rem 4rem;
 	border-radius: 2rem;
@@ -195,14 +195,14 @@
 	filter: drop-shadow(0px 0px 0.5rem rgba(0, 0, 0, 0.5));
 }
 
-#addRescuedPetMain > #header {
+#rescuedInfoMain > #header {
 	width: calc(100% - 8rem);
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	flex-direction: row;
 }
-#addRescuedPetMain > #header > div {
+#rescuedInfoMain > #header > div {
 	display: flex;
 	justify-content: left;
 	align-items: center;
@@ -210,21 +210,21 @@
 	gap: 2rem;
 }
 @media (max-width: 60rem) {
-	#addRescuedPetMain > #header {
+	#rescuedInfoMain > #header {
 		flex-direction: column;
 		gap: 2rem;
 		text-align: center;
 	}
-	#addRescuedPetMain > #header > div {
+	#rescuedInfoMain > #header > div {
 		width: 100%;
 		justify-content: space-between;
 	}
-	#addRescuedPetMain > #header > div > .button {
+	#rescuedInfoMain > #header > div > .button {
 		width: 100%;
 	}
 }
 
-#addRescuedPetMain > #basicInfo {
+#rescuedInfoMain > #basicInfo {
 	width: calc(100% - 8rem);
 	padding: 4rem 4rem;
 	display: flex;
@@ -233,7 +233,7 @@
 	flex-direction: row;
 	gap: 4rem;
 }
-#addRescuedPetMain > #basicInfo > div {
+#rescuedInfoMain > #basicInfo > div {
 	width: 100%;
 	display: flex;
 	justify-content: left;
@@ -241,10 +241,10 @@
 	flex-direction: column;
 	gap: 2rem;
 }
-#addRescuedPetMain > #basicInfo > #image {
+#rescuedInfoMain > #basicInfo > #image {
 	width: unset;
 }
-#addRescuedPetMain > #basicInfo > #image > #img {
+#rescuedInfoMain > #basicInfo > #image > #img {
 	width: 24rem;
 	height: 24rem;
 	border-radius: 2rem;
@@ -254,10 +254,10 @@
 	background-position: center;
 	filter: drop-shadow(0px 0px 0.5rem rgba(0, 0, 0, 0.5));
 }
-#addRescuedPetMain > #basicInfo > #image > input {
+#rescuedInfoMain > #basicInfo > #image > input {
 	display: none;
 }
-#addRescuedPetMain > #basicInfo > div > span {
+#rescuedInfoMain > #basicInfo > div > span {
 	width: 100%;
 	display: flex;
 	justify-content: space-between;
@@ -266,19 +266,19 @@
 	gap: 2rem;
 }
 @media (max-width: 60rem) {
-	#addRescuedPetMain > #basicInfo {
+	#rescuedInfoMain > #basicInfo {
 		flex-direction: column;
 		gap: 4rem;
 	}
-	#addRescuedPetMain > #basicInfo > div {
+	#rescuedInfoMain > #basicInfo > div {
 		width: 100%;
 	}
-	#addRescuedPetMain > #basicInfo > #image {
+	#rescuedInfoMain > #basicInfo > #image {
 		width: 100%;
 	}
 }
 
-#addRescuedPetMain > #backgroundInfo {
+#rescuedInfoMain > #backgroundInfo {
 	padding: 4rem 4rem;
 	display: flex;
 	justify-content: left;
@@ -287,22 +287,22 @@
 	gap: 2rem;
 }
 @media (max-width: 60rem) {
-	#addRescuedPetMain > #backgroundInfo {
+	#rescuedInfoMain > #backgroundInfo {
 		gap: 4rem;
 	}
 }
-#addRescuedPetMain > #backgroundInfo > div .formInput {
+#rescuedInfoMain > #backgroundInfo > div .formInput {
 	width: max-content;
 	min-width: 20rem;
 	flex: 1;
 }
 @media (max-width: 60rem) {
-	#addRescuedPetMain > #backgroundInfo > div .formInput:has(textarea) {
+	#rescuedInfoMain > #backgroundInfo > div .formInput:has(textarea) {
 		width: 100%;
 		min-width: 100%;
 	}
 }
-#addRescuedPetMain > #backgroundInfo > div {
+#rescuedInfoMain > #backgroundInfo > div {
 	width: 100%;
 	display: flex;
 	justify-content: space-between;
@@ -311,9 +311,9 @@
 	gap: 4rem;
 	margin-bottom: 4rem;
 }
-#addRescuedPetMain > #backgroundInfo > div:first-child,
-#addRescuedPetMain > #backgroundInfo > #vaccination,
-#addRescuedPetMain > #backgroundInfo > #medicalHistory {
+#rescuedInfoMain > #backgroundInfo > div:first-child,
+#rescuedInfoMain > #backgroundInfo > #vaccination,
+#rescuedInfoMain > #backgroundInfo > #medicalHistory {
 	width: 100%;
 	display: flex;
 	justify-content: left;
@@ -321,9 +321,9 @@
 	flex-direction: column;
 	gap: 4rem;
 }
-#addRescuedPetMain > #backgroundInfo > :nth-child(2),
-#addRescuedPetMain > #backgroundInfo > #vaccination > div,
-#addRescuedPetMain > #backgroundInfo > #medicalHistory > div {
+#rescuedInfoMain > #backgroundInfo > :nth-child(2),
+#rescuedInfoMain > #backgroundInfo > #vaccination > div,
+#rescuedInfoMain > #backgroundInfo > #medicalHistory > div {
 	width: 100%;
 	display: flex;
 	justify-content: stretch;
@@ -332,11 +332,11 @@
 	flex-wrap: wrap;
 	gap: 4rem;
 }
-#addRescuedPetMain > #backgroundInfo > #vaccination > div > .button,
-#addRescuedPetMain > #backgroundInfo > #medicalHistory > div > .button {
+#rescuedInfoMain > #backgroundInfo > #vaccination > div > .button,
+#rescuedInfoMain > #backgroundInfo > #medicalHistory > div > .button {
 	margin-top: 4rem;
 }
-#addRescuedPetMain > #backgroundInfo > #medicalHistory span {
+#rescuedInfoMain > #backgroundInfo > #medicalHistory span {
 	width: 100%;
 	display: flex;
 	justify-content: left;
@@ -345,21 +345,21 @@
 	gap: 2rem;
 }
 @media (max-width: 60rem) {
-	#addRescuedPetMain > #backgroundInfo > #medicalHistory .formInput:has(textarea) {
+	#rescuedInfoMain > #backgroundInfo > #medicalHistory .formInput:has(textarea) {
 		width: 100%;
 		min-width: unset;
 	}
 }
 
 @media (max-width: 60rem) {
-	#addRescuedPetMain > #backgroundInfo > :nth-child(2),
-	#addRescuedPetMain > #backgroundInfo > #vaccination > div,
-	#addRescuedPetMain > #backgroundInfo > #medicalHistory > div {
+	#rescuedInfoMain > #backgroundInfo > :nth-child(2),
+	#rescuedInfoMain > #backgroundInfo > #vaccination > div,
+	#rescuedInfoMain > #backgroundInfo > #medicalHistory > div {
 		gap: 4rem;
 	}
 }
 
-#addRescuedPetMain > #rfid {
+#rescuedInfoMain > #rfid {
 	padding: 4rem 4rem;
 	display: flex;
 	justify-content: left;
@@ -367,7 +367,7 @@
 	flex-direction: column;
 	gap: 4rem;
 }
-#addRescuedPetMain > #rfid > div {
+#rescuedInfoMain > #rfid > div {
 	width: 100%;
 	display: flex;
 	justify-content: left;
@@ -375,18 +375,18 @@
 	flex-direction: row;
 	gap: 2rem;
 }
-#addRescuedPetMain > #rfid > div .button {
+#rescuedInfoMain > #rfid > div .button {
 	margin-top: 4rem;
 }
 @media (max-width: 60rem) {
-	#addRescuedPetMain > #rfid {
+	#rescuedInfoMain > #rfid {
 		gap: 4rem;
 	}
-	#addRescuedPetMain > #rfid > div {
+	#rescuedInfoMain > #rfid > div {
 		flex-direction: column;
 		gap: 2rem;
 	}
-	#addRescuedPetMain > #rfid > div .button {
+	#rescuedInfoMain > #rfid > div .button {
 		width: 100%;
 		margin: unset;
 	}
