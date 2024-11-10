@@ -5,7 +5,7 @@ import Button from '../components/Button';
 import Popup from '../components/Popup';
 import FormInput from '../components/FormInput';
 
-import '../css/addRescuedPet.css';
+import '../css/rescuedInfo.css';
 
 class AddRescuedPet extends React.Component {
 	constructor(props) {
