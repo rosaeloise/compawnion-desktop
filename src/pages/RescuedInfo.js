@@ -38,6 +38,7 @@ class AddRescuedPet extends React.Component {
 			petID: 0
 		};
 	};
+
 	componentDidMount() {
 		fetch('http://localhost:3000/admins/me', {
 			method: 'GET',
@@ -58,132 +59,7 @@ class AddRescuedPet extends React.Component {
 				});
 			});
 
-
-		fetch('http://localhost:3000/ra', {
-			method: 'GET',
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		}).then(res => res.json()).then(res => {
-			const petID = document.getElementById('petID');
-			const petIDValue = (res.length + 1).toString().padStart(4, '0');
-			this.setState({
-				petID: petIDValue
-			});
-		});
-		
-
-		const updateButton = document.getElementById('update');
-		updateButton.addEventListener('click', () => {
-			const petID = document.getElementById('petID').value;
-			const name = document.getElementById('name').value;
-			const type = document.getElementById('type').value;
-			const breed = document.getElementById('breed').value;
-			const ageYear = document.getElementById('ageYear').value;
-			const ageMonth = document.getElementById('ageMonth').value;
-
-			const attributes = document.getElementById('personality').value;
-			const rescueStory = document.getElementById('backgroundStory').value;
-			const rescueDate = document.getElementById('rescueDate').value;
-
-			const weight = document.getElementById('weight').value;
-			const size = document.getElementById('size').value;
-
-			if (!petID || !name || !type || !breed || !ageYear || !ageMonth || !attributes || !rescueStory || !rescueDate || !weight || !size) {
-				alert('Please fill out all fields.');
-				return;
-			}
-
-			const vaccination = [];
-			for (let i = 0; i < this.state.vaccinationCount; i++) {
-				const vaccinationName = document.getElementsByName('vaccinationName')[i].value;
-				const vaccinationDate = document.getElementsByName('vaccinationDate')[i].value;
-				const vaccinationExpiry = document.getElementsByName('vaccinationExpiry')[i].value;
-				vaccination.push({
-					name: vaccinationName,
-					date: vaccinationDate,
-					expiry: vaccinationExpiry
-				});
-			};
-
-			const medicalHistory = [];
-			for (let i = 0; i < this.state.medicalHistoryCount; i++) {
-				const medicalHistoryProcedure = document.getElementsByName('medicalHistoryProcedure')[i].value;
-				const medicalHistoryDate = document.getElementsByName('medicalHistoryDate')[i].value;
-				const medicalHistoryNotes = document.getElementsByName('medicalHistoryNotes')[i].value;
-				medicalHistory.push({
-					procedure: medicalHistoryProcedure,
-					date: medicalHistoryDate,
-					notes: medicalHistoryNotes
-				});
-			};
-
-			const rfidTag = document.getElementById('rfidTag').value;
-
-			if (!rfidTag) {
-				alert('Please scan RFID.');
-				return;
-			};
-
-			const image = document.getElementById('imageInput').files[0];
-			// Convert image to base64
-			const reader = new FileReader();
-			reader.readAsDataURL(image);
-			reader.onload = () => {
-				const imageBase64 = reader.result;
-
-				const data = {
-					personal: {
-						name: name,
-						type: type,
-						breed: breed,
-						age: {
-							year: ageYear,
-							month: ageMonth
-						},
-						picture: imageBase64
-					},
-					background: {
-						attributes: attributes,
-						rescueStory: rescueStory,
-						rescueDate: rescueDate,
-						weight: weight,
-						size: size,
-						vaccination: vaccination,
-						medicalHistory: medicalHistory
-					},
-					rfidTag: rfidTag,
-				};
-
-				for (const key in data) {
-					if (data[key] === null) {
-						alert('Please fill out all fields.');
-						return;
-					};
-					if (typeof data[key] === 'object') {
-						for (const k in data[key]) {
-							if (data[key][k] === null) {
-								alert('Please fill out all fields.');
-								return;
-							};
-						};
-					};
-				};
-
-				console.log(data);
-
-				// fetch('http://localhost:3000/ra', {
-				// 	method: 'POST',
-				// 	headers: {
-				// 		'Content-Type': 'application/json'
-				// 	},
-				// 	body: JSON.stringify(data)
-				// }).then(res => res.json()).then(res => {
-				// 	window.location.hash = '/rescues';
-				// });
-			};
-		});
-
+		// Get pet ID from URL
 		const petIDFromURL = window.location.hash.split('/').pop();
 		if (petIDFromURL) {
 			fetch(`http://localhost:3000/ra/${petIDFromURL}`, {
@@ -192,42 +68,6 @@ class AddRescuedPet extends React.Component {
 					'Content-Type': 'application/json'
 				}
 			}).then(res => res.json()).then(res => {
-				// {
-				// 	"id": "010",
-				// 	"personal": {
-				// 		"name": "Deku",
-				// 		"type": "cat",
-				// 		"breed": "siamese",
-				// 		"age": {
-				// 			"year": "17",
-				// 			"month": "9"
-				// 		},
-				// 		"picture": "http://localhost:3000/media/RescuedAnimals/010.png"
-				// 	},
-				// 	"background": {
-				// 		"attributes": "Lulu Quirk",
-				// 		"rescueStory": "Natagpuang naglulu",
-				// 		"rescueDate": "2024-02-29",
-				// 		"weight": "59",
-				// 		"size": "small",
-				// 		"vaccination": [
-				// 			{
-				// 				"name": "",
-				// 				"date": "",
-				// 				"expiry": ""
-				// 			}
-				// 		],
-				// 		"medicalHistory": [
-				// 			{
-				// 				"procedure": "",
-				// 				"date": "",
-				// 				"notes": ""
-				// 			}
-				// 		]
-				// 	},
-				// 	"rfidTag": "1234567890",
-				// 	"petId": "010"
-				// }
 				const personal = res.personal;
 				const background = res.background;
 
@@ -238,7 +78,7 @@ class AddRescuedPet extends React.Component {
 				document.getElementById('ageYear').value = personal.age.year;
 				document.getElementById('ageMonth').value = personal.age.month;
 				document.getElementById('img').style.backgroundImage = `url(${personal.picture})`;
-				
+
 				document.getElementById('personality').value = background.attributes;
 				document.getElementById('backgroundStory').value = background.rescueStory;
 				document.getElementById('rescueDate').value = background.rescueDate;
@@ -258,9 +98,144 @@ class AddRescuedPet extends React.Component {
 				});
 
 				document.getElementById('rfidTag').value = res.rfidTag;
+
+				// Update breed options based on type
+				const typeElement = document.getElementById('type');
+				const breedElement = document.getElementById('breed');
+				const breedOptions = {
+					cat: [
+						{ value: 'siamese', label: 'Siamese' },
+						{ value: 'persian', label: 'Persian' },
+						{ value: 'ragdoll', label: 'Ragdoll' }
+					],
+					dog: [
+						{ value: 'beagle', label: 'Beagle' },
+						{ value: 'bulldog', label: 'Bulldog' },
+						{ value: 'poodle', label: 'Poodle' }
+					]
+				};
+
+				const updateBreedOptions = () => {
+					const selectedType = typeElement.value;
+					const options = breedOptions[selectedType] || [];
+					breedElement.innerHTML = '';
+					options.forEach(option => {
+						const opt = document.createElement('option');
+						opt.value = option.value;
+						opt.textContent = option.label;
+						breedElement.appendChild(opt);
+					});
+					breedElement.value = personal.breed;
+				};
+
+				typeElement.addEventListener('change', updateBreedOptions);
+				updateBreedOptions();
 			});
 		};
-		
+
+		// Update rescued info
+		const updateButton = document.getElementById('update');
+		updateButton.addEventListener('click', async () => {
+			const petID = document.getElementById('petID').value;
+			const name = document.getElementById('name').value;
+			const type = document.getElementById('type').value;
+			const breed = document.getElementById('breed').value;
+			const ageYear = document.getElementById('ageYear').value;
+			const ageMonth = document.getElementById('ageMonth').value;
+
+			const attributes = document.getElementById('personality').value;
+			const rescueStory = document.getElementById('backgroundStory').value;
+			const rescueDate = document.getElementById('rescueDate').value;
+
+			const weight = document.getElementById('weight').value;
+			const size = document.getElementById('size').value;
+
+			if (!petID || !name || !type || !breed || !ageYear || !ageMonth || !attributes || !rescueStory || !rescueDate || !weight || !size) {
+				alert('Please fill out all fields.');
+				return;
+			}
+
+			const vaccination = Array.from({ length: this.state.vaccinationCount }, (_, i) => ({
+				name: document.getElementsByName('vaccinationName')[i].value,
+				date: document.getElementsByName('vaccinationDate')[i].value,
+				expiry: document.getElementsByName('vaccinationExpiry')[i].value
+			}));
+
+			const medicalHistory = Array.from({ length: this.state.medicalHistoryCount }, (_, i) => ({
+				procedure: document.getElementsByName('medicalHistoryProcedure')[i].value,
+				date: document.getElementsByName('medicalHistoryDate')[i].value,
+				notes: document.getElementsByName('medicalHistoryNotes')[i].value
+			}));
+
+			const rfidTag = document.getElementById('rfidTag').value;
+
+			if (!rfidTag) {
+				alert('Please scan RFID.');
+				return;
+			}
+
+			const imageInput = document.getElementById('imageInput').files[0];
+			const data = {
+				personal: {
+					name,
+					type,
+					breed,
+					age: {
+						year: ageYear,
+						month: ageMonth
+					},
+					picture: null
+				},
+				background: {
+					attributes,
+					rescueStory,
+					rescueDate,
+					weight,
+					size,
+					vaccination,
+					medicalHistory
+				},
+				rfidTag
+			};
+
+			if (imageInput instanceof Blob) {
+				const reader = new FileReader();
+				reader.readAsDataURL(imageInput);
+				reader.onload = async () => {
+					data.personal.picture = reader.result;
+					await sendData(data);
+				};
+				reader.onerror = () => console.error("Failed to read image file.");
+			} else {
+				data.personal.picture = document.getElementById('img').style.backgroundImage.slice(5, -2);
+				await sendData(data);
+			}
+
+			async function sendData(data) {
+				try {
+					const response = await fetch(`http://localhost:3000/ra/${petID}`, {
+						method: 'PUT',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify(data)
+					});
+					if (!response.ok) {
+						throw new Error('Failed to update rescued info.');
+					}
+					const result = await response.json();
+					if (result.message === 'Pet updated successfully') {
+						alert(result.message);
+						window.location.hash = '/rescues';
+					} else {
+						alert(result.message || 'Failed to update rescued info.');
+					}
+				} catch (err) {
+					console.error(err);
+					alert(err.message);
+				}
+			}
+		});
 	};
 	render() {
 		return (
@@ -616,7 +591,7 @@ class AddRescuedPet extends React.Component {
 												onClick={() => {
 													this.setState({
 														vaccinationCount: this.state.vaccinationCount - 1,
-														vaccination: this.state.vaccination.filter((v, i) => i !== index)
+														vaccination: this.state.vaccination.filter((_, i) => i !== index)
 													});
 												}}
 											/>
@@ -681,7 +656,7 @@ class AddRescuedPet extends React.Component {
 													onClick={() => {
 														this.setState({
 															medicalHistoryCount: this.state.medicalHistoryCount - 1,
-															medicalHistory: this.state.medicalHistory.filter((m, i) => i !== index)
+															medicalHistory: this.state.medicalHistory.filter((_, i) => i !== index)
 														});
 													}}
 												/>
