@@ -17,8 +17,11 @@ class Applications extends React.Component {
 				role: '',
 				username: ''
 			},
+			app: [],
+			searchTerm: ''
 		};
 	};
+
 	async componentDidMount() {
 		fetch('http://localhost:3000/admins/me', {
 			method: 'GET',
@@ -40,31 +43,37 @@ class Applications extends React.Component {
 			});
 
 		await this.fetchApp();
-	};
+	}
 
 	fetchApp = async () => {
 		try {
-			const response = await fetch('http://localhost:3000/application'); // Replace with your actual API URL
+			const response = await fetch('http://localhost:3000/application');
 			if (!response.ok) {
 				throw new Error('Network response was not ok');
 			}
 			const data = await response.json();
-			console.log(data);
-
-			this.setState({ admins: data });
+			this.setState({ app: data });
 		} catch (error) {
 			console.error('Error fetching applications:', error);
 		}
 	};
 
+	handleSearch = (event) => {
+		this.setState({ searchTerm: event.target.value });
+	};
+
 	render() {
+		const { app, searchTerm } = this.state;
+		const filteredApp = app.filter(app =>
+			(app.applicant.name.toLowerCase().includes(searchTerm.toLowerCase()) || app.id.toString().includes(searchTerm))
+		);
+
 		return (
 			<>
 				<Sidebar
 					avatar={this.state.user.avatar}
 					name={this.state.user.name}
 					role={this.state.user.role}
-
 					active='applications'
 				/>
 				<main id='applicationsMain'>
@@ -84,14 +93,36 @@ class Applications extends React.Component {
 							}
 						/>
 						<table id='applicationList'>
-							<tr>
-								<th>ID</th>
-								<th>Date & Time</th>
-								<th>Name</th>
-								<th>Pet Type</th>
-								<th>Status</th>
-								<th>Actions</th>
-							</tr>
+							<thead>
+								<tr>
+									<th>ID</th>
+									<th>Date & Time</th>
+									<th>Name</th>
+									<th>Pet ID</th>
+									<th>Status</th>
+									<th>Actions</th>
+								</tr>
+							</thead>
+							<tbody>
+								{filteredApp.map((app) => (
+									<tr key={app.id}>
+										<td>{app.id}</td>
+										<td>{app.aStaffInfo.Username}</td>
+										<td>{app.applicant.name}</td>
+										<td>{app.petData.id}</td>
+										<td>{app.status}</td>
+										<td>
+											<Button
+												title='View'
+												size='small'
+												onClick={() => {
+													window.location.hash = `/app/${app.id}`;
+												}}
+											/>
+										</td>
+									</tr>
+								))}
+							</tbody>
 						</table>
 					</section>
 				</main>
