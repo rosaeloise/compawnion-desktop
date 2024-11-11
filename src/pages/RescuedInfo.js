@@ -75,6 +75,7 @@ class AddRescuedPet extends React.Component {
 				document.getElementById('name').value = personal.name;
 				document.getElementById('type').value = personal.type;
 				document.getElementById('breed').value = personal.breed;
+				document.getElementById('gender').value = personal.gender;
 				document.getElementById('ageYear').value = personal.age.year;
 				document.getElementById('ageMonth').value = personal.age.month;
 				document.getElementById('img').style.backgroundImage = `url(${personal.picture})`;
@@ -104,14 +105,14 @@ class AddRescuedPet extends React.Component {
 				const breedElement = document.getElementById('breed');
 				const breedOptions = {
 					cat: [
-						{ value: 'siamese', label: 'Siamese' },
-						{ value: 'persian', label: 'Persian' },
-						{ value: 'ragdoll', label: 'Ragdoll' }
+						{ value: 'Siamese', label: 'Siamese' },
+						{ value: 'Persian', label: 'Persian' },
+						{ value: 'Ragdoll', label: 'Ragdoll' }
 					],
 					dog: [
-						{ value: 'beagle', label: 'Beagle' },
-						{ value: 'bulldog', label: 'Bulldog' },
-						{ value: 'poodle', label: 'Poodle' }
+						{ value: 'Beagle', label: 'Beagle' },
+						{ value: 'Bulldog', label: 'Bulldog' },
+						{ value: 'Poodle', label: 'Poodle' }
 					]
 				};
 
@@ -319,11 +320,11 @@ class AddRescuedPet extends React.Component {
 
 								options={[
 									{
-										value: 'cat',
+										value: 'Cat',
 										label: 'Cat'
 									},
 									{
-										value: 'dog',
+										value: 'Dog',
 										label: 'Dog'
 									}
 								]}
@@ -363,29 +364,29 @@ class AddRescuedPet extends React.Component {
 								options={(() => {
 									const cats = [
 										{
-											value: 'siamese',
+											value: 'Siamese',
 											label: 'Siamese'
 										},
 										{
-											value: 'persian',
+											value: 'Persian',
 											label: 'Persian'
 										},
 										{
-											value: 'ragdoll',
+											value: 'Ragdoll',
 											label: 'Ragdoll'
 										}
 									];
 									const dogs = [
 										{
-											value: 'beagle',
+											value: 'Beagle',
 											label: 'Beagle'
 										},
 										{
-											value: 'bulldog',
+											value: 'Bulldog',
 											label: 'Bulldog'
 										},
 										{
-											value: 'poodle',
+											value: 'Poodle',
 											label: 'Poodle'
 										}
 									];
@@ -404,36 +405,36 @@ class AddRescuedPet extends React.Component {
 
 										const cats = [
 											{
-												value: 'siamese',
+												value: 'Siamese',
 												label: 'Siamese'
 											},
 											{
-												value: 'persian',
+												value: 'Persian',
 												label: 'Persian'
 											},
 											{
-												value: 'ragdoll',
+												value: 'Ragdoll',
 												label: 'Ragdoll'
 											}
 										];
 										const dogs = [
 											{
-												value: 'beagle',
+												value: 'Beagle',
 												label: 'Beagle'
 											},
 											{
-												value: 'bulldog',
+												value: 'Bulldog',
 												label: 'Bulldog'
 											},
 											{
-												value: 'poodle',
+												value: 'Poodle',
 												label: 'Poodle'
 											}
 										];
 
 										const type = document.getElementById('type');
 										if (!type) return [];
-										if (type.value === 'cat') {
+										if (type.value === 'Cat') {
 											for (const cat of cats) {
 												const option = document.createElement('option');
 												option.value = cat.value;
@@ -441,7 +442,7 @@ class AddRescuedPet extends React.Component {
 												breed.appendChild(option);
 											};
 										};
-										if (type.value === 'dog') {
+										if (type.value === 'Dog') {
 											for (const dog of dogs) {
 												const option = document.createElement('option');
 												option.value = dog.value;
@@ -451,8 +452,8 @@ class AddRescuedPet extends React.Component {
 										};
 									});
 
-									if (type.value === 'cat') return cats;
-									if (type.value === 'dog') return dogs;
+									if (type.value === 'Cat') return cats;
+									if (type.value === 'Dog') return dogs;
 									return [];
 								})()}
 							/>
@@ -465,11 +466,11 @@ class AddRescuedPet extends React.Component {
 
 								options={[
 									{
-										value: 'male',
+										value: 'Male',
 										label: 'Male'
 									},
 									{
-										value: 'female',
+										value: 'Female',
 										label: 'Female'
 									}
 								]}
@@ -519,15 +520,15 @@ class AddRescuedPet extends React.Component {
 
 								options={[
 									{
-										value: 'small',
+										value: 'Small',
 										label: 'Small'
 									},
 									{
-										value: 'medium',
+										value: 'Medium',
 										label: 'Medium'
 									},
 									{
-										value: 'large',
+										value: 'Large',
 										label: 'Large'
 									}
 								]}
@@ -553,15 +554,15 @@ class AddRescuedPet extends React.Component {
 													label: ''
 												},
 												{
-													value: 'antiRabies',
+													value: 'Anti-Rabies',
 													label: 'Anti-Rabies'
 												},
 												{
-													value: 'da2ppVaccine',
+													value: 'DA2PP',
 													label: 'DA2PP'
 												},
 												{
-													value: 'leptospiraVaccine',
+													value: 'Leptospira Vaccine  (Leptospirosis)',
 													label: 'Leptospira Vaccine  (Leptospirosis)'
 												}
 											]}

@@ -14,7 +14,7 @@ class PetCard extends React.Component {
 				<p>{this.props.description}</p>
 				<Button
 					href={this.props.href}
-					size='small'
+					size='Small'
 					title='aboutMe'
 				>
 					Edit Info

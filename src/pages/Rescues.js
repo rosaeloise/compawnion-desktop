@@ -73,8 +73,8 @@ class Rescues extends React.Component {
 			});
 
 		// Type
-		const cat = document.getElementById('cat');
-		const dog = document.getElementById('dog');
+		const cat = document.getElementById('Cat');
+		const dog = document.getElementById('Dog');
 		const both = document.getElementById('both');
 
 		cat.addEventListener('change', () => {
@@ -82,7 +82,7 @@ class Rescues extends React.Component {
 			const petCards = petCardsElement.querySelectorAll('.petCard');
 
 			this.state.rescues.forEach(rescue => {
-				if (rescue.type === 'cat') {
+				if (rescue.type === 'Cat') {
 					petCards.forEach(card => {
 						const cardId = card.getAttribute('id');
 						if (rescue.petId === cardId) {
@@ -104,7 +104,7 @@ class Rescues extends React.Component {
 			const petCards = petCardsElement.querySelectorAll('.petCard');
 
 			this.state.rescues.forEach(rescue => {
-				if (rescue.type === 'dog') {
+				if (rescue.type === 'Dog') {
 					petCards.forEach(card => {
 						const cardId = card.getAttribute('id');
 						if (rescue.petId === cardId) {
@@ -136,9 +136,9 @@ class Rescues extends React.Component {
 		});
 
 		// Size
-		const small = document.getElementById('small');
-		const medium = document.getElementById('medium');
-		const large = document.getElementById('large');
+		const small = document.getElementById('Small');
+		const medium = document.getElementById('Medium');
+		const large = document.getElementById('Large');
 		small.checked = true;
 		medium.checked = true;
 		large.checked = true;
@@ -149,7 +149,7 @@ class Rescues extends React.Component {
 
 			if (small.checked) {
 				this.state.rescues.forEach(rescue => {
-					if (rescue.size === 'small') {
+					if (rescue.size === 'Small') {
 						petCards.forEach(card => {
 							const cardId = card.getAttribute('id');
 							if (rescue.petId === cardId) {
@@ -160,7 +160,7 @@ class Rescues extends React.Component {
 				});
 			} else {
 				this.state.rescues.forEach(rescue => {
-					if (rescue.size === 'small') {
+					if (rescue.size === 'Small') {
 						petCards.forEach(card => {
 							const cardId = card.getAttribute('id');
 							if (rescue.petId === cardId) {
@@ -177,7 +177,7 @@ class Rescues extends React.Component {
 
 			if (medium.checked) {
 				this.state.rescues.forEach(rescue => {
-					if (rescue.size === 'medium') {
+					if (rescue.size === 'Medium') {
 						petCards.forEach(card => {
 							const cardId = card.getAttribute('id');
 							if (rescue.petId === cardId) {
@@ -188,7 +188,7 @@ class Rescues extends React.Component {
 				});
 			} else {
 				this.state.rescues.forEach(rescue => {
-					if (rescue.size === 'medium') {
+					if (rescue.size === 'Medium') {
 						petCards.forEach(card => {
 							const cardId = card.getAttribute('id');
 							if (rescue.petId === cardId) {
@@ -205,7 +205,7 @@ class Rescues extends React.Component {
 
 			if (large.checked) {
 				this.state.rescues.forEach(rescue => {
-					if (rescue.size === 'large') {
+					if (rescue.size === 'Large') {
 						petCards.forEach(card => {
 							const cardId = card.getAttribute('id');
 							if (rescue.petId === cardId) {
@@ -216,7 +216,7 @@ class Rescues extends React.Component {
 				});
 			} else {
 				this.state.rescues.forEach(rescue => {
-					if (rescue.size === 'large') {
+					if (rescue.size === 'Large') {
 						petCards.forEach(card => {
 							const cardId = card.getAttribute('id');
 							if (rescue.petId === cardId) {
@@ -344,28 +344,28 @@ class Rescues extends React.Component {
 							<label htmlFor='both'>
 								Both
 							</label>
-							<input type='radio' name='type' id='cat' value='cat' />
-							<label htmlFor='cat'>
+							<input type='radio' name='type' id='Cat' value='Cat' />
+							<label htmlFor='Cat'>
 								Cat
 							</label>
-							<input type='radio' name='type' id='dog' value='dog' />
-							<label htmlFor='dog'>
+							<input type='radio' name='type' id='Dog' value='Dog' />
+							<label htmlFor='Dog'>
 								Dog
 							</label>
 						</div>
 
 						<div id='size'>
 							<h6>Size</h6>
-							<input type='checkbox' id='small' value='small' />
-							<label htmlFor='small'>
+							<input type='checkbox' id='Small' value='Small' />
+							<label htmlFor='Small'>
 								Small
 							</label>
-							<input type='checkbox' id='medium' value='medium' />
-							<label htmlFor='medium'>
+							<input type='checkbox' id='Medium' value='Medium' />
+							<label htmlFor='Medium'>
 								Medium
 							</label>
-							<input type='checkbox' id='large' value='large' />
-							<label htmlFor='large'>
+							<input type='checkbox' id='Large' value='Large' />
+							<label htmlFor='Large'>
 								Large
 							</label>
 						</div>
