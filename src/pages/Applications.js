@@ -256,7 +256,7 @@ class Applications extends React.Component {
 													<Button
 														title='View'
 														size='small'
-														onClick={() => this.props.history.push(`/applications/${app.id}`)}
+														href={`#/applications/${app.id}`}
 													/>
 												</td>
 											</tr>

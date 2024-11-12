@@ -14,6 +14,7 @@ import Rescues from './pages/Rescues';
 import AddRescuedPet from './pages/AddRescuedPet';
 import RescuedInfo from './pages/RescuedInfo';
 import Applications from './pages/Applications';
+import AppDetails from './pages/AppDetails';
 import Compawnions from './pages/Compawnions';
 
 class App extends
@@ -31,7 +32,9 @@ class App extends
 					<Route path='/rescues/:id' element={<RescuedInfo />} />
 
 					<Route path='/applications' element={<Applications />} />
-					<Route path='/compawnions' element={<Compawnions />} />
+					<Route path='/applications/:id' element={<AppDetails />} />
+
+					<Route path='/compawnions' element={<AppDetails />} />
 				</Routes>
 			</HashRouter>
 		);

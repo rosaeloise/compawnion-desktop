@@ -1,10 +1,12 @@
 import React from 'react';
 
 import Sidebar from '../components/Sidebar';
+import Input from '../components/Input';
 
-import '../css/applications.css';
+import '../css/compawnions.css';
+import Button from '../components/Button';
 
-class Compawnions extends React.Component {
+class AppDetails extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -15,13 +17,35 @@ class Compawnions extends React.Component {
 				role: '',
 				username: ''
 			},
+			compawnions: {
+				data: [
+					{
+						"id": "024",
+						"CompawnionUser": {
+							"MedSched": [],
+							"TrustedVet": [],
+							"CompawnionSched": [],
+							"accountCreate": {
+								"Username": "Neon",
+								"Email": "zedrama30@gmail.com",
+								"Password": "$2b$10$vhbgBm0QO2a3BCQUsxf1ous2QjpdxyXgcTYEFIKS9VkOElkef99d6"
+							},
+							"appPetID": "92014"
+						},
+						"LastLogout": null,
+						"Status": "Active",
+						"LastLogin": "2024-11-12T09:05:42.741Z"
+					}
+				],
+				message: ''
+			}
 		};
 	};
 	componentDidMount() {
 		fetch('http://localhost:3000/admins/me', {
 			method: 'GET',
 			headers: {
-				'Content-Type': 'application/json',
+				'Content-Type': 'compawnions/json',
 				'Authorization': `Bearer ${localStorage.getItem('token')}`
 			}
 		})
@@ -36,6 +60,19 @@ class Compawnions extends React.Component {
 					}
 				});
 			});
+
+		fetch('http://localhost:3000/compawnions/', {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'compawnions/json',
+				'Authorization': `Bearer ${localStorage.getItem('token')}`
+			}
+		}).then(res => res.json())
+			.then(res => {
+				this.setState({
+					compawnions: res
+				});
+			});
 	};
 	render() {
 		return (
@@ -47,9 +84,40 @@ class Compawnions extends React.Component {
 
 					active='compawnions'
 				/>
+				<form id='addRescuedPetMain'>
+					<header id='header'>
+						<h4>Add New Rescued Pet</h4>
+						<div>
+							<Button
+								title='Save'
+								id='save'
+							/>
+							<Button
+								title='Cancel'
+								theme='dark'
+
+								onClick={() => {
+									window.location.hash = '/rescues';
+								}}
+							/>
+						</div>
+					</header>
+
+					<section id='basicInfo'>
+						<div>
+							<FormInput
+								label='Name'
+								type='text'
+								id='name'
+								name='name'
+								placeholder='Enter pet name'
+							/>
+						</div>
+					</section>
+				</form>
 			</>
 		)
 	};
 };
 
-export default Compawnions;
+export default AppDetails;

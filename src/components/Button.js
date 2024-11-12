@@ -5,7 +5,7 @@ class Button extends React.Component {
 		if (this.props.href) {
 			return (
 				<a
-					className={`button ${this.props.fill === 'outline' ? 'outlined' : 'filled'} ${this.props.theme === 'dark' ? 'dark' : 'light'}`}
+					className={`button ${this.props.fill === 'outline' ? 'outlined' : 'filled'} ${this.props.theme === 'dark' ? 'dark' : 'light'} ${this.props.size === 'small' ? 'small' : 'large'}`}
 
 					href={this.props.href}
 					title={this.props.title}
@@ -21,7 +21,7 @@ class Button extends React.Component {
 		};
 		return (
 			<button
-				className={`button ${this.props.fill === 'outline' ? 'outline' : 'fill'} ${this.props.theme === 'dark' ? 'dark' : 'light'}`}
+				className={`button ${this.props.fill === 'outline' ? 'outline' : 'fill'} ${this.props.theme === 'dark' ? 'dark' : 'light'} ${this.props.size === 'small' ? 'small' : 'large'}`}
 				type={this.props.type || 'button'}
 				onClick={this.props.onClick}
 				id={this.props.id}

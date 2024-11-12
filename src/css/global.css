@@ -98,6 +98,9 @@ span {
 .button:hover {
 	background-color: var(--primary-complement);
 }
+.button.small {
+	padding: 0.5rem 2rem;
+}
 .button.outline {
 	border: solid 0.5rem var(--primary-color);
 	background-color: unset;

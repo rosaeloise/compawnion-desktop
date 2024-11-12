@@ -1,10 +1,10 @@
 
-#sidebarToggle:checked ~ #compawnionsMain {
+#sidebarToggle:checked ~ #appDetailsMain {
 	width: calc(100% - 8rem - 16rem);
 	left: 8rem;
 }
 
-#compawnionsMain {
+#appDetailsMain {
 	position: absolute;
 	width: calc(100% - 40rem - 16rem);
 	min-height: calc(100% - 16rem);
@@ -22,23 +22,23 @@
 }
 
 @media (max-width: 75rem) {
-	#sidebarToggle:checked ~ #compawnionsMain {
+	#sidebarToggle:checked ~ #appDetailsMain {
 		width: calc(100% - 16rem - 8rem);
 		left: 8rem;
 	}
 
-	#compawnionsMain {
+	#appDetailsMain {
 		width: calc(100% - 40rem - 16rem);
 		left: 40rem;
 	}
 }
 @media (max-width: 60rem) {
-	#sidebarToggle:checked ~ #compawnionsMain {
+	#sidebarToggle:checked ~ #appDetailsMain {
 		width: calc(100% - 8rem - 8rem);
 		left: 8rem;
 	}
 
-	#compawnionsMain {
+	#appDetailsMain {
 		width: calc(100% - 8rem - 8rem);
 		left: 8rem;
 		padding: 4rem;
@@ -46,14 +46,88 @@
 	}
 }
 @media (max-width: 40rem) {
-	#compawnionsMain {
+	#appDetailsMain {
 		width: calc(100% - 8rem - 8rem);
 		padding: 2rem;
 		gap: 2rem;
 	}
 }
 
-#compawnionsMain > #rescues {
+#appDetailsMain > #filter {
+	position: relative;
+	width: calc(100% - 8rem);
+	padding: 2rem 4rem;
+	border-radius: 2rem;
+	background-color: var(--white);
+	filter: drop-shadow(0px 0px 0.5rem rgba(0, 0, 0, 0.5));
+	display: flex;
+	justify-content: left;
+	align-items: start;
+	flex-direction: column;
+	gap: 2rem;
+
+	overflow: hidden;
+}
+#appDetailsMain > #filter > svg {
+	position: absolute;
+	width: 40rem;
+	height: 40rem;
+	top: 0;
+	left: 75%;
+	z-index: -1;
+}
+#appDetailsMain > #filter > div {
+	width: 75%;
+	display: flex;
+	justify-content: left;
+	align-items: center;
+	flex-direction: row;
+	gap: 2rem;
+}
+#appDetailsMain > #filter > div > * {
+	width: 100%;
+	display: block;
+}
+#appDetailsMain > #filter > div > input {
+	display: none;
+}
+#appDetailsMain > #filter > div > label {
+	padding: 0.5rem 4rem;
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	border: solid 0.5rem var(--primary-complement);
+	color: var(--primary-complement);
+	background-color: var(--white);
+	border-radius: 10rem;
+}
+#appDetailsMain > #filter > div > label:hover {
+	background-color: var(--primary-complement);
+	color: var(--white);
+}
+#appDetailsMain > #filter > div > input:checked + label {
+	background-color: var(--primary-complement);
+	color: var(--white);
+}
+#appDetailsMain > #filter > div > input:checked + label:hover {
+	background-color: var(--primary-complement);
+	color: var(--white);
+}
+@media (max-width: 60rem) {
+	#appDetailsMain > #filter {
+		flex-direction: row;
+	}
+	#appDetailsMain > #filter > div {
+		flex-direction: column;
+		text-align: center;
+	}
+	#appDetailsMain > #filter > div > label {
+		width: calc(100% - 8rem);
+	}
+}
+
+#appDetailsMain > #rescues {
 	width: 100%;
 	display: flex;
 	justify-content: left;
@@ -62,19 +136,19 @@
 	gap: 4rem;
 }
 @media (max-width: 60rem) {
-	#compawnionsMain > #rescues {
+	#appDetailsMain > #rescues {
 		gap: 2rem;
 	}
 }
 
-#compawnionsMain > #rescues > #header {
+#appDetailsMain > #rescues > #header {
 	width: 100%;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	flex-direction: row;
 }
-#compawnionsMain > #rescues > #header > form {
+#appDetailsMain > #rescues > #header > form {
 	display: flex;
 	justify-content: left;
 	align-items: center;
@@ -82,20 +156,20 @@
 	gap: 2rem;
 }
 @media (max-width: 60rem) {
-	#compawnionsMain > #rescues > #header {
+	#appDetailsMain > #rescues > #header {
 		gap: 2rem;
 		flex-direction: column;
 	}
-	#compawnionsMain > #rescues > #header > form {
+	#appDetailsMain > #rescues > #header > form {
 		width: 100%;
 		justify-content: space-between;
 	}
-	#compawnionsMain > #rescues > #header > form > .inputDiv,
-	#compawnionsMain > #rescues > #header > form > .inputDiv > input {
+	#appDetailsMain > #rescues > #header > form > .inputDiv,
+	#appDetailsMain > #rescues > #header > form > .inputDiv > input {
 		width: 100%;
 	}
 }
-#compawnionsMain > #rescues > #petCards {
+#appDetailsMain > #rescues > #petCards {
 	width: 100%;
 	display: flex;
 	justify-content: space-between;
@@ -105,7 +179,7 @@
 	gap: 4rem;
 }
 
-#compawnionsMain {
+#appDetailsMain {
 	display: flex;
 	justify-content: left;
 	align-items: center;
@@ -113,7 +187,7 @@
 	gap: 4rem;
 }
 
-#compawnionsMain > * {
+#appDetailsMain > * {
 	width: calc(100% - 8rem);
 	padding: 2rem 4rem;
 	border-radius: 2rem;
@@ -121,14 +195,14 @@
 	filter: drop-shadow(0px 0px 0.5rem rgba(0, 0, 0, 0.5));
 }
 
-#compawnionsMain > #header {
+#appDetailsMain > #header {
 	width: calc(100% - 8rem);
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	flex-direction: row;
 }
-#compawnionsMain > #header > div {
+#appDetailsMain > #header > div {
 	display: flex;
 	justify-content: left;
 	align-items: center;
@@ -136,21 +210,21 @@
 	gap: 2rem;
 }
 @media (max-width: 60rem) {
-	#compawnionsMain > #header {
+	#appDetailsMain > #header {
 		flex-direction: column;
 		gap: 2rem;
 		text-align: center;
 	}
-	#compawnionsMain > #header > div {
+	#appDetailsMain > #header > div {
 		width: 100%;
 		justify-content: space-between;
 	}
-	#compawnionsMain > #header > div > .button {
+	#appDetailsMain > #header > div > .button {
 		width: 100%;
 	}
 }
 
-#compawnionsMain > #basicInfo {
+#appDetailsMain > #basicInfo {
 	width: calc(100% - 8rem);
 	padding: 4rem 4rem;
 	display: flex;
@@ -159,7 +233,7 @@
 	flex-direction: row;
 	gap: 4rem;
 }
-#compawnionsMain > #basicInfo > div {
+#appDetailsMain > #basicInfo > div {
 	width: 100%;
 	display: flex;
 	justify-content: left;
@@ -167,10 +241,10 @@
 	flex-direction: column;
 	gap: 2rem;
 }
-#compawnionsMain > #basicInfo > #image {
+#appDetailsMain > #basicInfo > #image {
 	width: unset;
 }
-#compawnionsMain > #basicInfo > #image > #img {
+#appDetailsMain > #basicInfo > #image > #img {
 	width: 24rem;
 	height: 24rem;
 	border-radius: 2rem;
@@ -180,10 +254,10 @@
 	background-position: center;
 	filter: drop-shadow(0px 0px 0.5rem rgba(0, 0, 0, 0.5));
 }
-#compawnionsMain > #basicInfo > #image > input {
+#appDetailsMain > #basicInfo > #image > input {
 	display: none;
 }
-#compawnionsMain > #basicInfo > div > span {
+#appDetailsMain > #basicInfo > div > span {
 	width: 100%;
 	display: flex;
 	justify-content: space-between;
@@ -192,19 +266,19 @@
 	gap: 2rem;
 }
 @media (max-width: 60rem) {
-	#compawnionsMain > #basicInfo {
+	#appDetailsMain > #basicInfo {
 		flex-direction: column;
 		gap: 4rem;
 	}
-	#compawnionsMain > #basicInfo > div {
+	#appDetailsMain > #basicInfo > div {
 		width: 100%;
 	}
-	#compawnionsMain > #basicInfo > #image {
+	#appDetailsMain > #basicInfo > #image {
 		width: 100%;
 	}
 }
 
-#compawnionsMain > #backgroundInfo {
+#appDetailsMain > #backgroundInfo {
 	padding: 4rem 4rem;
 	display: flex;
 	justify-content: left;
@@ -213,22 +287,22 @@
 	gap: 2rem;
 }
 @media (max-width: 60rem) {
-	#compawnionsMain > #backgroundInfo {
+	#appDetailsMain > #backgroundInfo {
 		gap: 4rem;
 	}
 }
-#compawnionsMain > #backgroundInfo > div .formInput {
+#appDetailsMain > #backgroundInfo > div .formInput {
 	width: max-content;
 	min-width: 20rem;
 	flex: 1;
 }
 @media (max-width: 60rem) {
-	#compawnionsMain > #backgroundInfo > div .formInput:has(textarea) {
+	#appDetailsMain > #backgroundInfo > div .formInput:has(textarea) {
 		width: 100%;
 		min-width: 100%;
 	}
 }
-#compawnionsMain > #backgroundInfo > div {
+#appDetailsMain > #backgroundInfo > div {
 	width: 100%;
 	display: flex;
 	justify-content: space-between;
@@ -237,9 +311,9 @@
 	gap: 4rem;
 	margin-bottom: 4rem;
 }
-#compawnionsMain > #backgroundInfo > div:first-child,
-#compawnionsMain > #backgroundInfo > #vaccination,
-#compawnionsMain > #backgroundInfo > #medicalHistory {
+#appDetailsMain > #backgroundInfo > div:first-child,
+#appDetailsMain > #backgroundInfo > #vaccination,
+#appDetailsMain > #backgroundInfo > #medicalHistory {
 	width: 100%;
 	display: flex;
 	justify-content: left;
@@ -247,9 +321,9 @@
 	flex-direction: column;
 	gap: 4rem;
 }
-#compawnionsMain > #backgroundInfo > :nth-child(2),
-#compawnionsMain > #backgroundInfo > #vaccination > div,
-#compawnionsMain > #backgroundInfo > #medicalHistory > div {
+#appDetailsMain > #backgroundInfo > :nth-child(2),
+#appDetailsMain > #backgroundInfo > #vaccination > div,
+#appDetailsMain > #backgroundInfo > #medicalHistory > div {
 	width: 100%;
 	display: flex;
 	justify-content: stretch;
@@ -258,11 +332,11 @@
 	flex-wrap: wrap;
 	gap: 4rem;
 }
-#compawnionsMain > #backgroundInfo > #vaccination > div > .button,
-#compawnionsMain > #backgroundInfo > #medicalHistory > div > .button {
+#appDetailsMain > #backgroundInfo > #vaccination > div > .button,
+#appDetailsMain > #backgroundInfo > #medicalHistory > div > .button {
 	margin-top: 4rem;
 }
-#compawnionsMain > #backgroundInfo > #medicalHistory span {
+#appDetailsMain > #backgroundInfo > #medicalHistory span {
 	width: 100%;
 	display: flex;
 	justify-content: left;
@@ -271,21 +345,21 @@
 	gap: 2rem;
 }
 @media (max-width: 60rem) {
-	#compawnionsMain > #backgroundInfo > #medicalHistory .formInput:has(textarea) {
+	#appDetailsMain > #backgroundInfo > #medicalHistory .formInput:has(textarea) {
 		width: 100%;
 		min-width: unset;
 	}
 }
 
 @media (max-width: 60rem) {
-	#compawnionsMain > #backgroundInfo > :nth-child(2),
-	#compawnionsMain > #backgroundInfo > #vaccination > div,
-	#compawnionsMain > #backgroundInfo > #medicalHistory > div {
+	#appDetailsMain > #backgroundInfo > :nth-child(2),
+	#appDetailsMain > #backgroundInfo > #vaccination > div,
+	#appDetailsMain > #backgroundInfo > #medicalHistory > div {
 		gap: 4rem;
 	}
 }
 
-#compawnionsMain > #rfid {
+#appDetailsMain > #rfid {
 	padding: 4rem 4rem;
 	display: flex;
 	justify-content: left;
@@ -293,7 +367,7 @@
 	flex-direction: column;
 	gap: 4rem;
 }
-#compawnionsMain > #rfid > div {
+#appDetailsMain > #rfid > div {
 	width: 100%;
 	display: flex;
 	justify-content: left;
@@ -301,18 +375,18 @@
 	flex-direction: row;
 	gap: 2rem;
 }
-#compawnionsMain > #rfid > div .button {
+#appDetailsMain > #rfid > div .button {
 	margin-top: 4rem;
 }
 @media (max-width: 60rem) {
-	#compawnionsMain > #rfid {
+	#appDetailsMain > #rfid {
 		gap: 4rem;
 	}
-	#compawnionsMain > #rfid > div {
+	#appDetailsMain > #rfid > div {
 		flex-direction: column;
 		gap: 2rem;
 	}
-	#compawnionsMain > #rfid > div .button {
+	#appDetailsMain > #rfid > div .button {
 		width: 100%;
 		margin: unset;
 	}
