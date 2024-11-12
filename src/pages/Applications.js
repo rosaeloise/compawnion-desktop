@@ -17,7 +17,11 @@ class Applications extends React.Component {
 				role: '',
 				username: ''
 			},
-			app: [],
+			app: {
+				pending: [],
+				approved: [],
+				rejected: []
+			},
 			searchTerm: ''
 		};
 	};
@@ -47,11 +51,151 @@ class Applications extends React.Component {
 
 	fetchApp = async () => {
 		try {
-			const response = await fetch('http://localhost:3000/application');
+			const response = await fetch('http://localhost:3000/application/all');
 			if (!response.ok) {
 				throw new Error('Network response was not ok');
 			}
 			const data = await response.json();
+			// {
+			// 	"pending": [
+			// 		{
+			// 	"id": "060",
+			// 	"termsAndCondission": true,
+			// 	"paymentAgreement": true,
+			// 	"applicationType": "Online Application",
+			// 	"applicationAppId": "060",
+			// 	"appPetID": null,
+			// 	"petId": "029",
+			// 	"applicant": {
+			// 		"name": {
+			// 			"firstName": "Ely Rose",
+			// 			"middleName": "Abaricio",
+			// 			"lastName": "Bosangit"
+			// 		},
+			// 		"birthdate": "2003-01-05",
+			// 		"occupation": "Sales Consultant`",
+			// 		"address": {
+			// 			"country": "Philippines",
+			// 			"province": "Rizal",
+			// 			"cityOrMunicipality": "Rodriguez",
+			// 			"baranggay": "San Jose",
+			// 			"street": "Sub-Urban Phase 1F Blk 3",
+			// 			"lot": "Lot 67"
+			// 		},
+			// 		"contact": {
+			// 			"email": "bosangitelyrose05@gmail.com",
+			// 			"phoneNumber": "91234567890",
+			// 			"facebook": ""
+			// 		}
+			// 	},
+			// 	"dwelling": {
+			// 		"type": "Single-Storey House/Bungalow",
+			// 		"ownership": "Owned",
+			// 		"numberOfHouseMembers": "4",
+			// 		"numberOfPets": "1-2",
+			// 		"petsAllowedInHouse": "No",
+			// 		"planningToMoveOut": "Yes"
+			// 	},
+			// 	"petCare": {
+			// 		"petOwnershipExperience": "Recent pet-owner (Owned a pet 3 years or less)",
+			// 		"veterinarian": "Pet Clinic"
+			// 	},
+			// 	"status": "Pending"
+			// }
+			// 	],
+			// 	"approved": [
+			// 		{
+			// 	"id": "060",
+			// 	"termsAndCondission": true,
+			// 	"paymentAgreement": true,
+			// 	"applicationType": "Online Application",
+			// 	"applicationAppId": "060",
+			// 	"appPetID": null,
+			// 	"petId": "029",
+			// 	"applicant": {
+			// 		"name": {
+			// 			"firstName": "Ely Rose",
+			// 			"middleName": "Abaricio",
+			// 			"lastName": "Bosangit"
+			// 		},
+			// 		"birthdate": "2003-01-05",
+			// 		"occupation": "Sales Consultant`",
+			// 		"address": {
+			// 			"country": "Philippines",
+			// 			"province": "Rizal",
+			// 			"cityOrMunicipality": "Rodriguez",
+			// 			"baranggay": "San Jose",
+			// 			"street": "Sub-Urban Phase 1F Blk 3",
+			// 			"lot": "Lot 67"
+			// 		},
+			// 		"contact": {
+			// 			"email": "bosangitelyrose05@gmail.com",
+			// 			"phoneNumber": "91234567890",
+			// 			"facebook": ""
+			// 		}
+			// 	},
+			// 	"dwelling": {
+			// 		"type": "Single-Storey House/Bungalow",
+			// 		"ownership": "Owned",
+			// 		"numberOfHouseMembers": "4",
+			// 		"numberOfPets": "1-2",
+			// 		"petsAllowedInHouse": "No",
+			// 		"planningToMoveOut": "Yes"
+			// 	},
+			// 	"petCare": {
+			// 		"petOwnershipExperience": "Recent pet-owner (Owned a pet 3 years or less)",
+			// 		"veterinarian": "Pet Clinic"
+			// 	},
+			// 	"status": "Pending"
+			// }
+			// 	],
+			// 	"rejected": [
+			// 		{
+			// 	"id": "060",
+			// 	"termsAndCondission": true,
+			// 	"paymentAgreement": true,
+			// 	"applicationType": "Online Application",
+			// 	"applicationAppId": "060",
+			// 	"appPetID": null,
+			// 	"petId": "029",
+			// 	"applicant": {
+			// 		"name": {
+			// 			"firstName": "Ely Rose",
+			// 			"middleName": "Abaricio",
+			// 			"lastName": "Bosangit"
+			// 		},
+			// 		"birthdate": "2003-01-05",
+			// 		"occupation": "Sales Consultant`",
+			// 		"address": {
+			// 			"country": "Philippines",
+			// 			"province": "Rizal",
+			// 			"cityOrMunicipality": "Rodriguez",
+			// 			"baranggay": "San Jose",
+			// 			"street": "Sub-Urban Phase 1F Blk 3",
+			// 			"lot": "Lot 67"
+			// 		},
+			// 		"contact": {
+			// 			"email": "bosangitelyrose05@gmail.com",
+			// 			"phoneNumber": "91234567890",
+			// 			"facebook": ""
+			// 		}
+			// 	},
+			// 	"dwelling": {
+			// 		"type": "Single-Storey House/Bungalow",
+			// 		"ownership": "Owned",
+			// 		"numberOfHouseMembers": "4",
+			// 		"numberOfPets": "1-2",
+			// 		"petsAllowedInHouse": "No",
+			// 		"planningToMoveOut": "Yes"
+			// 	},
+			// 	"petCare": {
+			// 		"petOwnershipExperience": "Recent pet-owner (Owned a pet 3 years or less)",
+			// 		"veterinarian": "Pet Clinic"
+			// 	},
+			// 	"status": "Pending"
+			// }
+			// 	]
+			// }
 			this.setState({ app: data });
 		} catch (error) {
 			console.error('Error fetching applications:', error);
@@ -63,11 +207,6 @@ class Applications extends React.Component {
 	};
 
 	render() {
-		const { app, searchTerm } = this.state;
-		const filteredApp = app.filter(app =>
-			(app.applicant.name.toLowerCase().includes(searchTerm.toLowerCase()) || app.id.toString().includes(searchTerm))
-		);
-
 		return (
 			<>
 				<Sidebar
@@ -98,30 +237,32 @@ class Applications extends React.Component {
 									<th>ID</th>
 									<th>Date & Time</th>
 									<th>Name</th>
-									<th>Pet ID</th>
+									<th>Application Type</th>
 									<th>Status</th>
-									<th>Actions</th>
+									<th>Action</th>
 								</tr>
 							</thead>
 							<tbody>
-								{filteredApp.map((app) => (
-									<tr key={app.id}>
-										<td>{app.id}</td>
-										<td>{app.aStaffInfo.Username}</td>
-										<td>{app.applicant.name}</td>
-										<td>{app.petData.id}</td>
-										<td>{app.status}</td>
-										<td>
-											<Button
-												title='View'
-												size='small'
-												onClick={() => {
-													window.location.hash = `/app/${app.id}`;
-												}}
-											/>
-										</td>
-									</tr>
-								))}
+								{
+									this.state.app.pending.map((app, index) => {
+										return (
+											<tr key={index}>
+												<td>{app.id}</td>
+												<td>##########</td>
+												<td>{app.applicant.name.firstName}</td>
+												<td>{app.applicationType}</td>
+												<td>{app.status}</td>
+												<td>
+													<Button
+														title='View'
+														size='small'
+														onClick={() => this.props.history.push(`/applications/${app.id}`)}
+													/>
+												</td>
+											</tr>
+										);
+									})
+								}
 							</tbody>
 						</table>
 					</section>
