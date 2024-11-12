@@ -6,7 +6,7 @@ import Input from '../components/Input';
 import '../css/compawnions.css';
 import Button from '../components/Button';
 
-class AppDetails extends React.Component {
+class Compawnions extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -84,40 +84,62 @@ class AppDetails extends React.Component {
 
 					active='compawnions'
 				/>
-				<form id='addRescuedPetMain'>
+				<main id='compawnionsMain'>
 					<header id='header'>
-						<h4>Add New Rescued Pet</h4>
-						<div>
-							<Button
-								title='Save'
-								id='save'
-							/>
-							<Button
-								title='Cancel'
-								theme='dark'
-
-								onClick={() => {
-									window.location.hash = '/rescues';
-								}}
-							/>
-						</div>
+						<h4>Online compawnions</h4>
 					</header>
 
-					<section id='basicInfo'>
-						<div>
-							<FormInput
-								label='Name'
-								type='text'
-								id='name'
-								name='name'
-								placeholder='Enter pet name'
-							/>
-						</div>
+					<section id='compawnions'>
+						<Input
+							type='search'
+							placeholder='Search for Name or ID'
+							onChange={this.handleSearch}
+							icon={
+								<svg viewBox='0 0 17 15' fill='transparent'>
+									<path d='M11.5485 8.68585C11.839 8.01588 12 7.27674 12 6.5C12 3.46243 9.53757 1 6.5 1C3.46243 1 1 3.46243 1 6.5C1 9.53757 3.46243 12 6.5 12C7.72958 12 8.86493 11.5965 9.78085 10.9147M11.5485 8.68585L14.8235 10.8921C15.4731 11.3297 15.6449 12.2109 15.2073 12.8605C14.7698 13.51 13.8885 13.6819 13.239 13.2443L9.78085 10.9147M11.5485 8.68585C11.1629 9.57534 10.549 10.3429 9.78085 10.9147' stroke='var(--primary-complement)' strokeWidth='2' />
+								</svg>
+							}
+						/>
+						<table id='compawnionsList'>
+							<thead>
+								<tr>
+									<th>ID</th>
+									<th>Username</th>
+									<th>Email</th>
+									<th>Applicant ID</th>
+									<th>Status</th>
+									<th>Action</th>
+								</tr>
+							</thead>
+							<tbody>
+								{
+									this.state.compawnions.data.map((compawnion, index) => {
+										return (
+											<tr key={index}>
+												<td>{compawnion.id}</td>
+												<td>{compawnion.CompawnionUser.accountCreate.Username}</td>
+												<td>{compawnion.CompawnionUser.accountCreate.Email}</td>
+												<td>{compawnion.CompawnionUser.appPetID}</td>
+												<td>{compawnion.Status}</td>
+												<td>
+													<Button
+														type='button'
+														title='View'
+														size='small'
+														href={`/compawnions/${compawnion.id}`}
+													/>
+												</td>
+											</tr>
+										);
+									})
+								}
+							</tbody>
+						</table>
 					</section>
-				</form>
+				</main>
 			</>
 		)
 	};
 };
 
-export default AppDetails;
+export default Compawnions;

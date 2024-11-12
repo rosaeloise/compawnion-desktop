@@ -34,7 +34,7 @@ class App extends
 					<Route path='/applications' element={<Applications />} />
 					<Route path='/applications/:id' element={<AppDetails />} />
 
-					<Route path='/compawnions' element={<AppDetails />} />
+					<Route path='/compawnions' element={<Compawnions />} />
 				</Routes>
 			</HashRouter>
 		);

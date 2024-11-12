@@ -196,7 +196,7 @@ class AppDetails extends React.Component {
 					name={this.state.user.name}
 					role={this.state.user.role}
 
-					active='rescues'
+					active='applications'
 				/>
 
 				<form id='appDetailsMain'>
