@@ -16,6 +16,7 @@ import RescuedInfo from './pages/RescuedInfo';
 import Applications from './pages/Applications';
 import AppDetails from './pages/AppDetails';
 import Compawnions from './pages/Compawnions';
+import CompawnionInfo from './pages/CompawnionInfo';
 
 class App extends
 	React.Component {
@@ -35,6 +36,7 @@ class App extends
 					<Route path='/applications/:id' element={<AppDetails />} />
 
 					<Route path='/compawnions' element={<Compawnions />} />
+					<Route path='/compawnions/:id' element={<CompawnionInfo />} />
 				</Routes>
 			</HashRouter>
 		);

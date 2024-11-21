@@ -126,7 +126,7 @@ class Compawnions extends React.Component {
 														type='button'
 														title='View'
 														size='small'
-														href={`/compawnions/${compawnion.id}`}
+														href={`#/compawnions/${compawnion.id}`}
 													/>
 												</td>
 											</tr>
