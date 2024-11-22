@@ -19,23 +19,53 @@ class AppDetails extends React.Component {
 				username: ''
 			},
 			popupContent: <></>,
-			vaccinationCount: 1,
-			vaccination: [
-				{
-					name: null,
-					date: null,
-					expiry: null
+			application: {
+				id: '066',
+				termsAndCondission: true,
+				paymentAgreement: true,
+				applicationType: 'Online Application',
+				applicationAppId: '066',
+				appPetID: null,
+				petId: '032',
+				applicant: {
+					name: {
+						firstName: 'Kim Zedric',
+						middleName: 'V',
+						lastName: 'Rama'
+					},
+					birthdate: '',
+					occupation: 'student',
+					address: {
+						country: 'Philippines',
+						province: 'Rizal',
+						cityOrMunicipality: 'Rodriguez',
+						baranggay: 'San Jose',
+						street: 'Hilltop Abatex',
+						lot: ''
+					},
+					contact: {
+						email: 'zedrama30@gmail.com',
+						phoneNumber: '1234567890',
+						facebook: ''
+					}
+				},
+				dwelling: {
+					type: 'Single-Storey House/Bungalow',
+					ownership: 'Owned',
+					numberOfHouseMembers: '3',
+					numberOfPets: 'None',
+					petsAllowedInHouse: 'No',
+					planningToMoveOut: 'Yes'
+				},
+				petCare: {
+					petOwnershipExperience: 'First Time/New pet-owner',
+					veterinarian: 'Animal Clinic'
+				},
+				status: 'Waiting for Final Approval',
+				schedules: {
+					OnsiteMeetingDate: '2024-12-31'
 				}
-			],
-			medicalHistoryCount: 1,
-			medicalHistory: [
-				{
-					date: null,
-					procedure: null,
-					notes: null
-				}
-			],
-			petID: 0
+			}
 		};
 	};
 	componentDidMount() {
@@ -58,131 +88,24 @@ class AppDetails extends React.Component {
 				});
 			});
 
-		const saveButton = document.getElementById('save');
-		saveButton.addEventListener('click', () => {
-			const petID = document.getElementById('petID').value;
-			const name = document.getElementById('name').value;
-			const type = document.getElementById('type').value;
-			const gender = document.getElementById('gender').value;
-			const breed = document.getElementById('breed').value;
-			const ageYear = document.getElementById('ageYear').value;
-			const ageMonth = document.getElementById('ageMonth').value;
-
-			const attributes = document.getElementById('personality').value;
-			const rescueStory = document.getElementById('backgroundStory').value;
-			const rescueDate = document.getElementById('rescueDate').value;
-
-			const weight = document.getElementById('weight').value;
-			const size = document.getElementById('size').value;
-
-			if (!petID || !name || !type || !breed || !ageYear || !ageMonth || !attributes || !rescueStory || !rescueDate || !weight || !size) {
-				alert('Please fill out all fields.');
-				return;
-			}
-
-			const vaccination = [];
-			for (let i = 0; i < this.state.vaccinationCount; i++) {
-				const vaccinationName = document.getElementsByName('vaccinationName')[i].value;
-				const vaccinationDate = document.getElementsByName('vaccinationDate')[i].value;
-				const vaccinationExpiry = document.getElementsByName('vaccinationExpiry')[i].value;
-				vaccination.push({
-					name: vaccinationName,
-					date: vaccinationDate,
-					expiry: vaccinationExpiry
-				});
-			};
-
-			const medicalHistory = [];
-			for (let i = 0; i < this.state.medicalHistoryCount; i++) {
-				const medicalHistoryProcedure = document.getElementsByName('medicalHistoryProcedure')[i].value;
-				const medicalHistoryDate = document.getElementsByName('medicalHistoryDate')[i].value;
-				const medicalHistoryNotes = document.getElementsByName('medicalHistoryNotes')[i].value;
-				medicalHistory.push({
-					procedure: medicalHistoryProcedure,
-					date: medicalHistoryDate,
-					notes: medicalHistoryNotes
-				});
-			};
-
-			const rfidTag = document.getElementById('rfidTag').value;
-
-			if (!rfidTag) {
-				alert('Please scan RFID.');
-				return;
-			};
-
-			const image = document.getElementById('imageInput').files[0];
-			// Convert image to base64
-			const reader = new FileReader();
-			reader.readAsDataURL(image);
-			reader.onload = () => {
-				const imageBase64 = reader.result;
-
-				const data = {
-					personal: {
-						name: name,
-						type: type,
-						breed: breed,
-						age: {
-							year: ageYear,
-							month: ageMonth
-						},
-						picture: imageBase64,
-						gender: gender
-					},
-					background: {
-						attributes: attributes,
-						rescueStory: rescueStory,
-						rescueDate: rescueDate,
-						weight: weight,
-						size: size,
-						vaccination: vaccination,
-						medicalHistory: medicalHistory
-					},
-					rfidTag: rfidTag,
-				};
-
-				for (const key in data) {
-					if (data[key] === null) {
-						alert('Please fill out all fields.');
-						return;
-					};
-					if (typeof data[key] === 'object') {
-						for (const k in data[key]) {
-							if (data[key][k] === null) {
-								alert('Please fill out all fields.');
-								return;
-							};
-						};
-					};
-				};
-
-				console.log(data);
-
-				fetch('http://localhost:3000/ra', {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json'
-					},
-					body: JSON.stringify(data)
-				}).then(res => res.json()).then(res => {
-					window.location.hash = '/rescues';
-				});
-			};
-		});
-
-		fetch('http://localhost:3000/ra', {
+		const appID = (() => {
+			const url = window.location.href;
+			const id = url.split('/');
+			return id[id.length - 1];
+		})()
+		fetch(`http://localhost:3000/application/${appID}`, {
 			method: 'GET',
 			headers: {
-				'Content-Type': 'application/json'
+				'Content-Type': 'application/json',
+				'Authorization': `Bearer ${localStorage.getItem('token')}`
 			}
-		}).then(res => res.json()).then(res => {
-			const petID = document.getElementById('petID');
-			const petIDValue = (res.length + 1).toString().padStart(4, '0');
-			this.setState({
-				petID: petIDValue
+		})
+			.then(res => res.json())
+			.then(res => {
+				this.setState({
+					application: res.application
+				});
 			});
-		});
 	};
 	render() {
 		return (
@@ -204,10 +127,6 @@ class AppDetails extends React.Component {
 						<h4>Application Info</h4>
 						<div>
 							<Button
-								title='Save'
-								id='save'
-							/>
-							<Button
 								title='Cancel'
 								theme='dark'
 
@@ -225,22 +144,25 @@ class AppDetails extends React.Component {
 								type='text'
 								id='name'
 								name='name'
+								value={this.state.application.id}
 								disabled={true}
 							/>
 							<FormInput
-								label='Name'
+								label='Applicant Name'
 								type='text'
 								id='type'
 								name='type'
+								value={`${this.state.application.applicant.name.firstName} ${this.state.application.applicant.name.middleName} ${this.state.application.applicant.name.lastName}`}
 								disabled={true}
 							/>
 						</div>
 						<div>
 							<FormInput
-								label='Pet Type'
+								label='Pet ID'
 								type='text'
 								id='petID'
 								name='petID'
+								value={this.state.application.petId}
 								disabled={true}
 							/>
 							<FormInput
@@ -248,6 +170,7 @@ class AppDetails extends React.Component {
 								type='text'
 								id='breed'
 								name='breed'
+								value={this.state.application.status}
 								disabled={true}
 							/>
 						</div>
@@ -268,22 +191,28 @@ class AppDetails extends React.Component {
 							<FormInput
 								label='Room Link'
 								type='text'
-								id='personality'
-								name='personality'
+								id='roomLink'
+								name='roomLink'
+								disabled={this.state.application.status === 'Online Approved'}
+								value={this.state.application.schedules?.roomLink}
 								placeholder='Enter Room Link'
 							/>
 							<FormInput
 								label='Date'
 								type='date'
-								id='backgroundStory'
-								name='backgroundStory'
+								id='meetingDate'
+								disabled={this.state.application.status === 'Online Approved'}
+								value={this.state.application.schedules?.roomLink}
+								name='meetingDate'
 
 							/>
 							<FormInput
 								label='Time'
 								type='time'
-								id='rescueDate'
-								name='rescueDate'
+								id='Time'
+								disabled={this.state.application.status === 'Online Approved'}
+								value={this.state.application.schedules?.roomLink}
+								name='Time'
 							/>
 						</div>
 
@@ -293,6 +222,7 @@ class AppDetails extends React.Component {
 								label='Date'
 								type='date'
 								id='weight'
+								disabled={this.state.application.status !== 'Online Approved'}
 								name='weight'
 							/>
 						</div>
@@ -304,6 +234,35 @@ class AppDetails extends React.Component {
 						/>
 						<Button
 							title='Approve'
+							onClick={async () => {
+								if (this.state.application.status !== 'Online Approved') {
+									if (document.getElementById('roomLink').value === '' || document.getElementById('meetingDate').value === '' || document.getElementById('Time').value === '') {
+										alert('Please fill up the required fields.');
+										return;
+									};
+									const response = await fetch(`http://localhost:3000/application/${this.state.application.id}/onlineApprove`, {
+										method: 'POST',
+										headers: {
+											'Content-Type': 'application/json',
+											'Authorization': `Bearer ${localStorage.getItem('token')}`
+										},
+										body: JSON.stringify({
+											schedules: {
+												roomLink: document.getElementById('roomLink').value,
+												meetingDate: document.getElementById('meetingDate').value,
+												Time: document.getElementById('Time').value
+											}
+										})
+									});
+
+									if (response.status === 200) {
+										alert('Application approved.');
+										window.location.hash = '/applications';
+									} else {
+										alert('Failed to approve application.');
+									};
+								};
+							}}
 						/>
 						<Button
 							title='Decline'
