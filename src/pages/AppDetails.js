@@ -20,51 +20,49 @@ class AppDetails extends React.Component {
 			},
 			popupContent: <></>,
 			application: {
-				id: '066',
+				id: '',
 				termsAndCondission: true,
 				paymentAgreement: true,
-				applicationType: 'Online Application',
-				applicationAppId: '066',
+				applicationType: '',
+				applicationAppId: '',
 				appPetID: null,
-				petId: '032',
+				petId: '',
 				applicant: {
 					name: {
-						firstName: 'Kim Zedric',
-						middleName: 'V',
-						lastName: 'Rama'
+						firstName: '',
+						middleName: '',
+						lastName: ''
 					},
 					birthdate: '',
-					occupation: 'student',
+					occupation: '',
 					address: {
-						country: 'Philippines',
-						province: 'Rizal',
-						cityOrMunicipality: 'Rodriguez',
-						baranggay: 'San Jose',
-						street: 'Hilltop Abatex',
+						country: '',
+						province: '',
+						cityOrMunicipality: '',
+						baranggay: '',
+						street: '',
 						lot: ''
 					},
 					contact: {
-						email: 'zedrama30@gmail.com',
-						phoneNumber: '1234567890',
+						email: '',
+						phoneNumber: '',
 						facebook: ''
 					}
 				},
 				dwelling: {
-					type: 'Single-Storey House/Bungalow',
-					ownership: 'Owned',
-					numberOfHouseMembers: '3',
-					numberOfPets: 'None',
-					petsAllowedInHouse: 'No',
-					planningToMoveOut: 'Yes'
+					type: '',
+					ownership: '',
+					numberOfHouseMembers: '',
+					numberOfPets: '',
+					petsAllowedInHouse: '',
+					planningToMoveOut: ''
 				},
 				petCare: {
-					petOwnershipExperience: 'First Time/New pet-owner',
-					veterinarian: 'Animal Clinic'
+					petOwnershipExperience: '',
+					veterinarian: ''
 				},
-				status: 'Waiting for Final Approval',
-				schedules: {
-					OnsiteMeetingDate: '2024-12-31'
-				}
+				status: '',
+				schedules: {}
 			}
 		};
 	};
@@ -193,7 +191,7 @@ class AppDetails extends React.Component {
 								type='text'
 								id='roomLink'
 								name='roomLink'
-								disabled={this.state.application.status === 'Online Approved'}
+								disabled={!(this.state.application.status === '' || this.state.application.status === undefined)}
 								value={this.state.application.schedules?.roomLink}
 								placeholder='Enter Room Link'
 							/>
@@ -201,7 +199,7 @@ class AppDetails extends React.Component {
 								label='Date'
 								type='date'
 								id='meetingDate'
-								disabled={this.state.application.status === 'Online Approved'}
+								disabled={!(this.state.application.status === '' || this.state.application.status === undefined)}
 								value={this.state.application.schedules?.roomLink}
 								name='meetingDate'
 
@@ -210,8 +208,8 @@ class AppDetails extends React.Component {
 								label='Time'
 								type='time'
 								id='Time'
-								disabled={this.state.application.status === 'Online Approved'}
-								value={this.state.application.schedules?.roomLink}
+								disabled={!(this.state.application.status === '' || this.state.application.status === undefined)}
+								value={this.state.application.schedules?.Time}
 								name='Time'
 							/>
 						</div>
@@ -221,9 +219,10 @@ class AppDetails extends React.Component {
 							<FormInput
 								label='Date'
 								type='date'
-								id='weight'
+								id='OnSiteMeetingDate'
 								disabled={this.state.application.status !== 'Online Approved'}
-								name='weight'
+								value={this.state.application.schedules?.OnsiteMeetingDate}
+								name='OnSiteMeetingDate'
 							/>
 						</div>
 					</section>
@@ -235,7 +234,10 @@ class AppDetails extends React.Component {
 						<Button
 							title='Approve'
 							onClick={async () => {
-								if (this.state.application.status !== 'Online Approved') {
+								if (
+									this.state.application.status === '' ||
+									this.state.application.status === undefined
+								) {
 									if (document.getElementById('roomLink').value === '' || document.getElementById('meetingDate').value === '' || document.getElementById('Time').value === '') {
 										alert('Please fill up the required fields.');
 										return;
@@ -253,6 +255,49 @@ class AppDetails extends React.Component {
 												Time: document.getElementById('Time').value
 											}
 										})
+									});
+
+									if (response.status === 200) {
+										alert('Application approved.');
+										window.location.hash = '/applications';
+									} else {
+										alert('Failed to approve application.');
+									};
+								};
+
+								if (this.state.application.status === 'Online Approved') {
+									if (document.getElementById('OnSiteMeetingDate').value === '') {
+										alert('Please fill up the required fields.');
+										return;
+									};
+									const response = await fetch(`http://localhost:3000/application/${this.state.application.id}/onsiteApprove`, {
+										method: 'PUT',
+										headers: {
+											'Content-Type': 'application/json',
+											'Authorization': `Bearer ${localStorage.getItem('token')}`
+										},
+										body: JSON.stringify({
+											schedules: {
+												OnsiteMeetingDate: document.getElementById('OnSiteMeetingDate').value
+											}
+										})
+									});
+
+									if (response.status === 200) {
+										alert('Application approved.');
+										window.location.hash = '/applications';
+									} else {
+										alert('Failed to approve application.');
+									};
+								};
+
+								if (this.state.application.status === 'Waiting for Final Approval') {
+									const response = await fetch(`http://localhost:3000/application/${this.state.application.id}/approve`, {
+										method: 'POST',
+										headers: {
+											'Content-Type': 'application/json',
+											'Authorization': `Bearer ${localStorage.getItem('token')}`
+										}
 									});
 
 									if (response.status === 200) {
