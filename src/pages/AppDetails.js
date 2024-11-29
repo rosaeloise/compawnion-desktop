@@ -314,7 +314,41 @@ class AppDetails extends React.Component {
 							}}
 						/>
 						<Button
-							title='Decline'
+							title="Decline"
+							onClick={async () => {
+								// Confirm if the user really wants to decline the application
+								const confirmDecline = window.confirm(
+									"Are you sure you want to decline this application?"
+								);
+
+								if (!confirmDecline) return;
+
+								try {
+									const response = await fetch(
+										`https://compawnion-backend.onrender.com/application/${this.state.application.id}/reject`,
+										{
+											method: "PUT", // Use the appropriate method based on your backend
+											headers: {
+												"Content-Type": "application/json",
+												Authorization: `Bearer ${localStorage.getItem("token")}`,
+											},
+										}
+									);
+
+									if (response.status === 200) {
+										alert("Application declined successfully.");
+										// Redirect to the applications list page
+										window.location.hash = "/applications";
+									} else {
+										// Handle error response
+										const errorData = await response.json();
+										alert(`Failed to decline application: ${errorData.message}`);
+									}
+								} catch (error) {
+									console.error("Error declining application:", error);
+									alert("An error occurred while declining the application. Please try again.");
+								}
+							}}
 						/>
 					</section>
 				</form>
