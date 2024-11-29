@@ -86,7 +86,7 @@ class Compawnions extends React.Component {
 				/>
 				<main id='compawnionsMain'>
 					<header id='header'>
-						<h4>Online compawnions</h4>
+						<h4>Compawnion Users</h4>
 					</header>
 
 					<section id='compawnions'>

@@ -18,27 +18,23 @@ class CompawnionInfo extends React.Component {
 				role: '',
 				username: ''
 			},
+			compawnion: {
+				id: '',
+				name: '',
+				compawnionUser: {
+					accountCreate: {
+						username: '',
+						email: '',
+					},
+				},
+			},
 			popupContent: <></>,
-			vaccinationCount: 1,
-			vaccination: [
-				{
-					name: null,
-					date: null,
-					expiry: null
-				}
-			],
-			medicalHistoryCount: 1,
-			medicalHistory: [
-				{
-					date: null,
-					procedure: null,
-					notes: null
-				}
-			],
 			petID: 0
 		};
-	};
+	}
+
 	componentDidMount() {
+		// Fetch logged-in admin's info
 		fetch('https://compawnion-backend.onrender.com/admins/me', {
 			method: 'GET',
 			headers: {
@@ -56,27 +52,36 @@ class CompawnionInfo extends React.Component {
 						username: res.aStaffInfo.Username
 					}
 				});
-			});
+			})
+			.catch(error => console.error('Error fetching admin data:', error));
 
-		const appID = (() => {
+		// Get Compawnion ID from URL
+		const compawnionID = (() => {
 			const url = window.location.href;
-			const id = url.split('/');
-			return id[id.length - 1];
+			const id = url.split('/').pop();
+			return id;
 		})();
 
-		fetch(`https://compawnion-backend.onrender.com/compawnions/${appID}`, {
+		// Fetch Compawnion info
+		fetch(`https://compawnion-backend.onrender.com/compawnions/${compawnionID}`, {
 			method: 'GET',
 			headers: {
-				'Content-Type': 'application/json'
+				'Content-Type': 'application/json',
+				'Authorization': `Bearer ${localStorage.getItem('token')}`
 			}
-		}).then(res => res.json())
+		})
+			.then(res => res.json())
 			.then(res => {
 				this.setState({
 					compawnion: res
 				});
-			});
-	};
+			})
+			.catch(error => console.error('Error fetching compawnion data:', error));
+	}
+
 	render() {
+		const { user, compawnion } = this.state;
+
 		return (
 			<>
 				<Popup>
@@ -84,127 +89,109 @@ class CompawnionInfo extends React.Component {
 				</Popup>
 
 				<Sidebar
-					avatar={this.state.user.avatar}
-					name={this.state.user.name}
-					role={this.state.user.role}
-
-					active='compawnions'
+					avatar={user.avatar}
+					name={user.name}
+					role={user.role}
+					active="compawnions"
 				/>
 
-				<form id='appDetailsMain'>
-					<header id='header'>
-						<h4>Application Info</h4>
+				<form id="appDetailsMain">
+					<header id="header">
+						<h4>Compawnion User Info</h4>
 						<div>
 							<Button
-								title='Save'
-								id='save'
-							/>
-							<Button
-								title='Cancel'
-								theme='dark'
-
+								title="Cancel"
+								theme="dark"
 								onClick={() => {
-									window.location.hash = '/applications';
+									window.location.hash = '/compawnions';
 								}}
 							/>
 						</div>
 					</header>
 
-					<section id='basicInfo'>
+					<section id="basicInfo">
 						<div>
 							<FormInput
-								label='Application ID'
-								type='text'
-								id='name'
-								name='name'
+								label="Name"
+								type="text"
+								id="name"
+								name="name"
+								value={compawnion?.name || ''}
 								disabled={true}
 							/>
 							<FormInput
-								label='Name'
-								type='text'
-								id='type'
-								name='type'
+								label="Account ID"
+								type="text"
+								id="id"
+								name="id"
+								value={compawnion?.id || ''}
 								disabled={true}
 							/>
 						</div>
 						<div>
 							<FormInput
-								label='Username'
-								type='text'
-								id='petID'
-								name='petID'
+								label="Username"
+								type="text"
+								id="username"
+								name="username"
+								value={compawnion?.compawnionUser?.accountCreate?.username || ''}
 								disabled={true}
 							/>
 							<FormInput
-								label='Status'
-								type='text'
-								id='breed'
-								name='breed'
+								label="Email"
+								type="text"
+								id="email"
+								name="email"
+								value={compawnion?.compawnionUser?.accountCreate?.email || ''}
 								disabled={true}
 							/>
 						</div>
 						<div>
 							<h6>Application Details</h6>
 							<Button
-								title='View Application Form'
+								title="View Application Form"
 							/>
 							<Button
-								title='View Pets Information'
+								title="View Pets Information"
 							/>
 						</div>
 					</section>
 
-					<section id='backgroundInfo'>
-						<h6>Online Interview Schedule</h6>
+					<section id="backgroundInfo">
+						<h6>Compawnion Online Checking Schedule</h6>
 						<div>
 							<FormInput
-								label='Room Link'
-								type='text'
-								id='personality'
-								name='personality'
-								placeholder='Enter Room Link'
+								label="Room Link"
+								type="text"
+								id="roomlink"
+								name="roomlink"
+								placeholder="Enter Room Link"
 							/>
 							<FormInput
-								label='Date'
-								type='date'
-								id='backgroundStory'
-								name='backgroundStory'
-
+								label="Date"
+								type="date"
+								id="date"
+								name="date"
 							/>
 							<FormInput
-								label='Time'
-								type='time'
-								id='rescueDate'
-								name='rescueDate'
-							/>
-						</div>
-
-						<h6>Onsite Interview Schedule</h6>
-						<div>
-							<FormInput
-								label='Date'
-								type='date'
-								id='weight'
-								name='weight'
+								label="Time"
+								type="time"
+								id="time"
+								name="time"
 							/>
 						</div>
 					</section>
 
-					<section id='buttons'>
+					<section id="buttons">
 						<Button
-							title='Print Contract'
-						/>
-						<Button
-							title='Approve'
-						/>
-						<Button
-							title='Decline'
+							title="Delete Account"
+							onClick={() => alert('Account deletion is not yet implemented.')}
 						/>
 					</section>
 				</form>
 			</>
-		)
-	};
-};
+		);
+	}
+}
 
 export default CompawnionInfo;
