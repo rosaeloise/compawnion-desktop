@@ -191,7 +191,7 @@ class AppDetails extends React.Component {
 								type='text'
 								id='roomLink'
 								name='roomLink'
-								disabled={!(this.state.application.status === '' || this.state.application.status === undefined)}
+								disabled={!(this.state.application.status === '' || this.state.application.status === undefined || this.state.application.status === 'Pending')}
 								value={this.state.application.schedules?.roomLink}
 								placeholder='Enter Room Link'
 							/>
@@ -199,7 +199,7 @@ class AppDetails extends React.Component {
 								label='Date'
 								type='date'
 								id='meetingDate'
-								disabled={!(this.state.application.status === '' || this.state.application.status === undefined)}
+								disabled={!(this.state.application.status === '' || this.state.application.status === undefined || this.state.application.status === 'Pending')}
 								value={this.state.application.schedules?.roomLink}
 								name='meetingDate'
 
@@ -208,7 +208,7 @@ class AppDetails extends React.Component {
 								label='Time'
 								type='time'
 								id='Time'
-								disabled={!(this.state.application.status === '' || this.state.application.status === undefined)}
+								disabled={!(this.state.application.status === '' || this.state.application.status === undefined || this.state.application.status === 'Pending')}
 								value={this.state.application.schedules?.Time}
 								name='Time'
 							/>
@@ -230,13 +230,17 @@ class AppDetails extends React.Component {
 					<section id='buttons'>
 						<Button
 							title='Print Contract'
+							onClick={() => {
+								window.location.hash = `/contract/${this.state.application.applicationAppId}`;
+							}}
 						/>
 						<Button
 							title='Approve'
 							onClick={async () => {
 								if (
 									this.state.application.status === '' ||
-									this.state.application.status === undefined
+									this.state.application.status === undefined ||
+									this.state.application.status === 'Pending'
 								) {
 									if (document.getElementById('roomLink').value === '' || document.getElementById('meetingDate').value === '' || document.getElementById('Time').value === '') {
 										alert('Please fill up the required fields.');
