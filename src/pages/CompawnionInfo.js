@@ -39,7 +39,7 @@ class CompawnionInfo extends React.Component {
 		};
 	};
 	componentDidMount() {
-		fetch('http://localhost:3000/admins/me', {
+		fetch('https://compawnion-backend.onrender.com/admins/me', {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
@@ -64,7 +64,7 @@ class CompawnionInfo extends React.Component {
 			return id[id.length - 1];
 		})();
 
-		fetch(`http://localhost:3000/compawnions/${appID}`, {
+		fetch(`https://compawnion-backend.onrender.com/compawnions/${appID}`, {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json'

@@ -23,7 +23,7 @@ class Rescues extends React.Component {
 			rescues: []
 		};
 
-		fetch('http://localhost:3000/ra', {
+		fetch('https://compawnion-backend.onrender.com/ra', {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json'
@@ -53,7 +53,7 @@ class Rescues extends React.Component {
 			});
 	};
 	componentDidMount() {
-		fetch('http://localhost:3000/admins/me', {
+		fetch('https://compawnion-backend.onrender.com/admins/me', {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',

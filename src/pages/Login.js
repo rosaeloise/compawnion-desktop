@@ -14,7 +14,7 @@ class Login extends React.Component {
 		const Username = usernameElement.value;
 		const passwordElement = document.getElementById('Password');
 		const password = passwordElement.value;
-		fetch('http://localhost:3000/admins/login', {
+		fetch('https://compawnion-backend.onrender.com/admins/login', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'

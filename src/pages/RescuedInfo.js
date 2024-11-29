@@ -40,7 +40,7 @@ class AddRescuedPet extends React.Component {
 	};
 
 	componentDidMount() {
-		fetch('http://localhost:3000/admins/me', {
+		fetch('https://compawnion-backend.onrender.com/admins/me', {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
@@ -62,7 +62,7 @@ class AddRescuedPet extends React.Component {
 		// Get pet ID from URL
 		const petIDFromURL = window.location.hash.split('/').pop();
 		if (petIDFromURL) {
-			fetch(`http://localhost:3000/ra/${petIDFromURL}`, {
+			fetch(`https://compawnion-backend.onrender.com/ra/${petIDFromURL}`, {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json'
@@ -214,7 +214,7 @@ class AddRescuedPet extends React.Component {
 
 			async function sendData(data) {
 				try {
-					const response = await fetch(`http://localhost:3000/ra/${petID}`, {
+					const response = await fetch(`https://compawnion-backend.onrender.com/ra/${petID}`, {
 						method: 'PUT',
 						headers: {
 							'Content-Type': 'application/json'

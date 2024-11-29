@@ -27,7 +27,7 @@ class Applications extends React.Component {
 	};
 
 	async componentDidMount() {
-		fetch('http://localhost:3000/admins/me', {
+		fetch('https://compawnion-backend.onrender.com/admins/me', {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
@@ -51,7 +51,7 @@ class Applications extends React.Component {
 
 	fetchApp = async () => {
 		try {
-			const response = await fetch('http://localhost:3000/application/all');
+			const response = await fetch('https://compawnion-backend.onrender.com/application/all');
 			if (!response.ok) {
 				throw new Error('Network response was not ok');
 			}

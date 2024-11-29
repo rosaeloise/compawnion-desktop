@@ -67,7 +67,7 @@ class AppDetails extends React.Component {
 		};
 	};
 	componentDidMount() {
-		fetch('http://localhost:3000/admins/me', {
+		fetch('https://compawnion-backend.onrender.com/admins/me', {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
@@ -91,7 +91,7 @@ class AppDetails extends React.Component {
 			const id = url.split('/');
 			return id[id.length - 1];
 		})()
-		fetch(`http://localhost:3000/application/${appID}`, {
+		fetch(`https://compawnion-backend.onrender.com/application/${appID}`, {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
@@ -246,7 +246,7 @@ class AppDetails extends React.Component {
 										alert('Please fill up the required fields.');
 										return;
 									};
-									const response = await fetch(`http://localhost:3000/application/${this.state.application.id}/onlineApprove`, {
+									const response = await fetch(`https://compawnion-backend.onrender.com/application/${this.state.application.id}/onlineApprove`, {
 										method: 'POST',
 										headers: {
 											'Content-Type': 'application/json',
@@ -274,7 +274,7 @@ class AppDetails extends React.Component {
 										alert('Please fill up the required fields.');
 										return;
 									};
-									const response = await fetch(`http://localhost:3000/application/${this.state.application.id}/onsiteApprove`, {
+									const response = await fetch(`https://compawnion-backend.onrender.com/application/${this.state.application.id}/onsiteApprove`, {
 										method: 'PUT',
 										headers: {
 											'Content-Type': 'application/json',

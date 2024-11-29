@@ -41,7 +41,7 @@ class Dashboard extends React.Component {
 			});
 		}, 10);
 
-		fetch('http://localhost:3000/admins/me', {
+		fetch('https://compawnion-backend.onrender.com/admins/me', {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
