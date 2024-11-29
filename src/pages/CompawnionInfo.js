@@ -161,6 +161,13 @@ class CompawnionInfo extends React.Component {
 						<h6>Compawnion Online Checking Schedule</h6>
 						<div>
 							<FormInput
+								label="Title"
+								type="text"
+								id="title"
+								name="title"
+								placeholder="Enter Title"
+							/>
+							<FormInput
 								label="Room Link"
 								type="text"
 								id="roomlink"
@@ -183,6 +190,39 @@ class CompawnionInfo extends React.Component {
 					</section>
 
 					<section id="buttons">
+						<Button
+							title="Save"
+							onClick={() => {
+								const title = document.getElementById('title').value;
+								const roomLink = document.getElementById('roomlink').value;
+								const date = document.getElementById('date').value;
+								const time = document.getElementById('time').value;
+
+								fetch(`https://compawnion-backend.onrender.com/Compawnions/addCompawnionSched/${compawnion.id}`, {
+									method: 'POST',
+									headers: {
+										'Content-Type': 'application/json',
+										'Authorization': `Bearer ${localStorage.getItem('token')}`
+									},
+									body: JSON.stringify({
+										CompawnionSched: {
+											EventTitle: title,
+											CSDate: date,
+											CSTime: time,
+											GmeetRoom: roomLink
+										}
+									})
+								}).then(res => {
+									if (res.status === 200) {
+										alert('Compawnion Online Checking Schedule added successfully.');
+										window.location.hash = '/compawnions';
+									} else {
+										alert('Failed to add Compawnion Online Checking Schedule.');
+									}
+								});
+							}}
+						/>
+
 						<Button
 							title="Delete Account"
 							onClick={() => alert('Account deletion is not yet implemented.')}
