@@ -21,10 +21,10 @@ class CompawnionInfo extends React.Component {
 			compawnion: {
 				id: '',
 				name: '',
-				compawnionUser: {
+				CompawnionUser: {
 					accountCreate: {
-						username: '',
-						email: '',
+						Username: '',
+						Email: '',
 					},
 				},
 			},
@@ -73,7 +73,7 @@ class CompawnionInfo extends React.Component {
 			.then(res => res.json())
 			.then(res => {
 				this.setState({
-					compawnion: res
+					compawnion: res.data
 				});
 			})
 			.catch(error => console.error('Error fetching compawnion data:', error));
@@ -116,7 +116,7 @@ class CompawnionInfo extends React.Component {
 								type="text"
 								id="name"
 								name="name"
-								value={compawnion?.name || ''}
+								value={this.state.compawnion.CompawnionUser.accountCreate.Name || ''}
 								disabled={true}
 							/>
 							<FormInput
@@ -134,7 +134,7 @@ class CompawnionInfo extends React.Component {
 								type="text"
 								id="username"
 								name="username"
-								value={compawnion?.compawnionUser?.accountCreate?.username || ''}
+								value={this.state.compawnion.CompawnionUser.accountCreate.Username || ''}
 								disabled={true}
 							/>
 							<FormInput
@@ -142,7 +142,7 @@ class CompawnionInfo extends React.Component {
 								type="text"
 								id="email"
 								name="email"
-								value={compawnion?.compawnionUser?.accountCreate?.email || ''}
+								value={this.state.compawnion.CompawnionUser.accountCreate.Email || ''}
 								disabled={true}
 							/>
 						</div>
