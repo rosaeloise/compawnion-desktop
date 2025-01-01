@@ -8,7 +8,17 @@ import '../css/login.css';
 class Login extends React.Component {
 	constructor(props) {
 		super(props);
+		this.state = {
+			showPassword: false,
+		};
 	}
+
+	togglePasswordVisibility = () => {
+		this.setState(prevState => ({
+			showPassword: !prevState.showPassword,
+		}));
+	};
+
 	handleLogin = () => {
 		const usernameElement = document.getElementById('Username');
 		const Username = usernameElement.value;
@@ -57,7 +67,7 @@ class Login extends React.Component {
 						<h5>Admin Login</h5>
 					</div>
 
-					<div>
+					<div id='formGroup'>
 						<Input
 							placeholder='Username'
 							type='text'
@@ -70,18 +80,29 @@ class Login extends React.Component {
 								};
 							}}
 						/>
-
-						<Input
-							placeholder='Password'
-							type='password'
-							id='Password'
-							name='Password'
-							onKeyDown={(e) => {
+						<div id='passwordWrapper'>
+							<Input
+								type={this.state.showPassword ? 'text' : 'password'}
+								placeholder='Password'
+								id='Password'
+								name='Password'
+								onKeyDown={(e) => {
 								if (e.key === 'Enter') {
 									this.handleLogin();
 								};
 							}}
-						/>
+							/>
+							<button
+								type="button"
+								id="togglePasswordVisibility"
+								onClick={this.togglePasswordVisibility}
+								aria-label={
+									this.state.showPassword ? 'Hide password' : 'Show password'
+								}
+							>
+								{this.state.showPassword ? 'Hide' : 'Show'}
+							</button>
+						</div>
 					</div>
 
 					<Button
@@ -100,7 +121,7 @@ class Login extends React.Component {
 						<path d='M806.197 219.445C802.778 250.355 791.964 264.909 770.688 286.219C754.55 307.998 740.449 331.539 718.905 329.156C677.899 324.62 650.497 268.146 657.701 203.019C664.905 137.892 703.987 88.7728 744.993 93.3088C785.999 97.8447 813.401 154.318 806.197 219.445Z' fill='var(--primary-color)' />
 					</svg>
 
-					<p id='support'><a href='mailto:compawnion@gmail.com'>Contact Support</a></p>
+					<p id='support'><a href='https://mail.google.com/mail/?fs=1&tf=cm&to=barkcodecompawnion@gmail.com' target="_blank">Contact Support</a></p>
 				</form>
 			</>
 		)

@@ -26,8 +26,26 @@
 #loginForm > div > #logo {
 	height: 8rem;
 }
-#loginForm > div > .input {
+#loginForm > div > #Username {
 	width: 36rem;
+}
+
+#loginForm > #formGroup > #passwordWrapper {
+	display: flex;
+	align-items: center;
+	width: 40rem;
+}
+#loginForm > #formGroup > #passwordWrapper > #Password {
+	width: 50rem;
+}
+#loginForm > #formGroup > #passwordWrapper > #togglePasswordVisibility {
+	margin-left: 2rem;
+	cursor: pointer;
+	background: none;
+	border: none;
+	color: var(--primary-complement);
+	font-size: 2rem;
+	font-weight: 600;
 }
 
 #loginForm > #pawBackground {
