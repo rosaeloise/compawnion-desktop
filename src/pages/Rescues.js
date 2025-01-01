@@ -36,7 +36,7 @@ class Rescues extends React.Component {
 					rescues.push({
 						image: res[of].personal.picture,
 						name: res[of].personal.name,
-						description: res[of].background.rescueStory,
+						description: res[of].background.attributes,
 						href: '#/rescues/' + res[of].petId,
 						rfid: res[of].rfidTag,
 						petId: res[of].id,
