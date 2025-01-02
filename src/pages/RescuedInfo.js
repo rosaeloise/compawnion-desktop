@@ -1,11 +1,16 @@
 import React from 'react';
 
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+
 import Sidebar from '../components/Sidebar';
 import Button from '../components/Button';
 import Popup from '../components/Popup';
 import FormInput from '../components/FormInput';
 
 import '../css/rescuedInfo.css';
+
+const MySwal = withReactContent(Swal);
 
 class AddRescuedPet extends React.Component {
 	constructor(props) {
@@ -142,35 +147,83 @@ class AddRescuedPet extends React.Component {
 		const size = this.state.rescuedPet.background.size;
 
 		if (!petID || !name || !type || !breed || !ageYear || !ageMonth || !gender || !attributes || !rescueStory || !rescueDate || !weight || !size) {
-			alert('Please fill out all fields.');
+			MySwal.fire({
+				icon: 'error',
+				iconColor: 'red',
+				title: <h4>Please fill out all fields.</h4>,
+				width: '60rem',
+				confirmButtonColor: 'var(--primary-color)'
+			});
 			return;
 		};
 		if (parseInt(ageYear) < 0 || parseInt(ageMonth) < 0 || parseInt(weight) < 0) {
-			alert('Please enter valid values.');
+			MySwal.fire({
+				icon: 'error',
+				iconColor: 'red',
+				title: <h4>Please enter valid values.</h4>,
+				width: '60rem',
+				confirmButtonColor: 'var(--primary-color)'
+			});
 			return;
 		};
 		if (parseInt(ageYear) > 30) {
-			alert('Please enter valid year.');
+			MySwal.fire({
+				icon: 'error',
+				iconColor: 'red',
+				title: <h4>Please enter valid year.</h4>,
+				width: '60rem',
+				confirmButtonColor: 'var(--primary-color)'
+			});
 			return;
 		};
 		if (parseInt(ageMonth) > 11) {
-			alert('Please enter valid month.');
+			MySwal.fire({
+				icon: 'error',
+				iconColor: 'red',
+				title: <h4>Please enter valid month.</h4>,
+				width: '60rem',
+				confirmButtonColor: 'var(--primary-color)'
+			});
 			return;
 		};
 		if (parseInt(weight) > 200) {
-			alert('Please enter valid weight.');
+			MySwal.fire({
+				icon: 'error',
+				iconColor: 'red',
+				title: <h1>Please enter valid weight.</h1>,
+				width: '60rem',
+				confirmButtonColor: 'var(--primary-color)'
+			});
 			return;
 		}
 		if (this.state.vaccinationCount > 1 && this.state.vaccination.some(v => !v.name || !v.date || !v.expiry)) {
-			alert('Please fill out all vaccination fields.');
+			MySwal.fire({
+				icon: 'error',
+				iconColor: 'red',
+				title: <h1>Please fill out all vaccination fields.</h1>,
+				width: '60rem',
+				confirmButtonColor: 'var(--primary-color)'
+			});
 			return;
 		};
 		if (this.state.medicalHistoryCount > 1 && this.state.medicalHistory.some(m => !m.procedure || !m.date || !m.notes)) {
-			alert('Please fill out all medical history fields.');
+			MySwal.fire({
+				icon: 'error',
+				iconColor: 'red',
+				title: <h1>Please fill out all medical history fields.</h1>,
+				width: '60rem',
+				confirmButtonColor: 'var(--primary-color)'
+			});
 			return;
 		};
 		if (this.state.rescuedPet.background.rescueDate > new Date().toISOString().split('T')[0]) {
-			alert('Rescue date cannot be in the future.');
+			MySwal.fire({
+				icon: 'error',
+				iconColor: 'red',
+				title: <h1>Rescue date cannot be in the future.</h1>,
+				width: '60rem',
+				confirmButtonColor: 'var(--primary-color)'
+			});
 			return;
 		};
 
@@ -180,22 +233,46 @@ class AddRescuedPet extends React.Component {
 
 		for (const vac of vaccination) {
 			if (vac.expiry < vac.date) {
-				alert('Vaccination expiry cannot be before vaccination date.');
+				MySwal.fire({
+					icon: 'error',
+					iconColor: 'red',
+					title: <h1>Vaccination expiry cannot be before vaccination date.</h1>,
+					width: '60rem',
+					confirmButtonColor: 'var(--primary-color)'
+				});
 				return;
 			};
 			if (vac.date > new Date().toISOString().split('T')[0]) {
-				alert('Vaccination date cannot be in the future.');
+				MySwal.fire({
+					icon: 'error',
+					iconColor: 'red',
+					title: <h1>Vaccination date cannot be in the future.</h1>,
+					width: '60rem',
+					confirmButtonColor: 'var(--primary-color)'
+				});
 				return;
 			};
 		};
 		for (const med of medicalHistory) {
 			if (med.date > new Date().toISOString().split('T')[0]) {
-				alert('Medical history date cannot be in the future.');
+				MySwal.fire({
+					icon: 'error',
+					iconColor: 'red',
+					title: <h1>Medical history date cannot be in the future.</h1>,
+					width: '60rem',
+					confirmButtonColor: 'var(--primary-color)'
+				});
 				return;
 			};
 		};
 		if (!rfidTag) {
-			alert('Please scan RFID.');
+			MySwal.fire({
+				icon: 'error',
+				iconColor: 'red',
+				title: <h1>Please scan RFID tag.</h1>,
+				width: '60rem',
+				confirmButtonColor: 'var(--primary-color)'
+			});
 			return;
 		};
 
@@ -247,18 +324,43 @@ class AddRescuedPet extends React.Component {
 					body: JSON.stringify(data)
 				});
 				if (!response.ok) {
+					MySwal.fire({
+						icon: 'error',
+						iconColor: 'red',
+						title: <h1>Failed to update rescued info.</h1>,
+						width: '60rem',
+						confirmButtonColor: 'var(--primary-color)'
+					});
 					throw new Error('Failed to update rescued info.');
 				};
 				const result = await response.json();
 				if (result.message === 'Pet updated successfully') {
-					alert(result.message);
+					await MySwal.fire({
+						icon: 'success',
+						iconColor: 'var(--primary-color)',
+						title: <h1>Rescued pet info updated successfully.</h1>,
+						width: '60rem',
+						confirmButtonColor: 'var(--primary-color)'
+					});
 					window.location.hash = '/rescues';
 				} else {
-					alert(result.message || 'Failed to update rescued info.');
+					MySwal.fire({
+						icon: 'error',
+						iconColor: 'red',
+						title: <h1>{result.message || 'Failed to update rescued info.'}</h1>,
+						width: '60rem',
+						confirmButtonColor: 'var(--primary-color)'
+					});
 				};
 			} catch (err) {
 				console.error(err);
-				alert(err.message);
+				MySwal.fire({
+					icon: 'error',
+					iconColor: 'red',
+					title: <h1>Failed to update rescued info.</h1>,
+					width: '60rem',
+					confirmButtonColor: 'var(--primary-color)'
+				});
 			};
 		};
 	};
