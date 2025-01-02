@@ -35,7 +35,46 @@ class AddRescuedPet extends React.Component {
 					notes: null
 				}
 			],
-			petID: 0
+			petID: 0,
+			rescuedPet: {
+				id: '',
+				personal: {
+					name: '',
+					type: '',
+					breed: '',
+					age: {
+						year: '',
+						month: ''
+					},
+					picture: '',
+					gender: ''
+				},
+				background: {
+					attributes: '',
+					rescueStory: '',
+					rescueDate: '',
+					weight: '',
+					size: '',
+					vaccination: [
+						{
+							name: '',
+							date: '',
+							expiry: ''
+						}
+					],
+					medicalHistory: [
+						{
+							procedure: '',
+							date: '',
+							notes: ''
+						}
+					]
+				},
+				rfidTag: '',
+				petId: '',
+				status: '',
+				appPetID: ''
+			}
 		};
 	};
 
@@ -60,6 +99,9 @@ class AddRescuedPet extends React.Component {
 			});
 
 		// Get pet ID from URL
+		this.fetchRescuedInfo();
+		
+		return;
 		const petIDFromURL = window.location.hash.split('/').pop();
 		if (petIDFromURL) {
 			fetch(`https://compawnion-backend.onrender.com/ra/${petIDFromURL}`, {
@@ -70,6 +112,7 @@ class AddRescuedPet extends React.Component {
 			}).then(res => res.json()).then(res => {
 				const personal = res.personal;
 				const background = res.background;
+
 
 				document.getElementById('petID').value = res.petId;
 				document.getElementById('name').value = personal.name;
@@ -117,16 +160,16 @@ class AddRescuedPet extends React.Component {
 				};
 
 				const updateBreedOptions = () => {
-					const selectedType = typeElement.value;
-					const options = breedOptions[selectedType] || [];
+					const selectedType = typeElement.value.toLowerCase();
+					const options = breedOptions[selectedType.toLowerCase()];
 					breedElement.innerHTML = '';
-					options.forEach(option => {
+					for (const option of options) {
 						const opt = document.createElement('option');
 						opt.value = option.value;
 						opt.textContent = option.label;
 						breedElement.appendChild(opt);
-					});
-					breedElement.value = personal.breed;
+					};
+					breedElement.selectedIndex = selectedType === 'Cat' ? breedOptions.cat.indexOf(breedElement.value) : breedOptions.dog.indexOf(breedElement.value);
 				};
 
 				typeElement.addEventListener('change', updateBreedOptions);
@@ -135,108 +178,219 @@ class AddRescuedPet extends React.Component {
 		};
 
 		// Update rescued info
-		const updateButton = document.getElementById('update');
-		updateButton.addEventListener('click', async () => {
-			const petID = document.getElementById('petID').value;
-			const name = document.getElementById('name').value;
-			const type = document.getElementById('type').value;
-			const breed = document.getElementById('breed').value;
-			const ageYear = document.getElementById('ageYear').value;
-			const ageMonth = document.getElementById('ageMonth').value;
+		// const updateButton = document.getElementById('update');
+		// updateButton.addEventListener('click', async () => {
+		// 	const petID = document.getElementById('petID').value;
+		// 	const name = document.getElementById('name').value;
+		// 	const type = document.getElementById('type').value;
+		// 	const breed = document.getElementById('breed').value;
+		// 	const ageYear = document.getElementById('ageYear').value;
+		// 	const ageMonth = document.getElementById('ageMonth').value;
 
-			const attributes = document.getElementById('personality').value;
-			const rescueStory = document.getElementById('backgroundStory').value;
-			const rescueDate = document.getElementById('rescueDate').value;
+		// 	const attributes = document.getElementById('personality').value;
+		// 	const rescueStory = document.getElementById('backgroundStory').value;
+		// 	const rescueDate = document.getElementById('rescueDate').value;
 
-			const weight = document.getElementById('weight').value;
-			const size = document.getElementById('size').value;
+		// 	const weight = document.getElementById('weight').value;
+		// 	const size = document.getElementById('size').value;
 
-			if (!petID || !name || !type || !breed || !ageYear || !ageMonth || !attributes || !rescueStory || !rescueDate || !weight || !size) {
-				alert('Please fill out all fields.');
-				return;
-			}
+		// 	if (!petID || !name || !type || !breed || !ageYear || !ageMonth || !attributes || !rescueStory || !rescueDate || !weight || !size) {
+		// 		alert('Please fill out all fields.');
+		// 		return;
+		// 	}
 
-			const vaccination = Array.from({ length: this.state.vaccinationCount }, (_, i) => ({
-				name: document.getElementsByName('vaccinationName')[i].value,
-				date: document.getElementsByName('vaccinationDate')[i].value,
-				expiry: document.getElementsByName('vaccinationExpiry')[i].value
-			}));
+		// 	const vaccination = Array.from({ length: this.state.vaccinationCount }, (_, i) => ({
+		// 		name: document.getElementsByName('vaccinationName')[i].value,
+		// 		date: document.getElementsByName('vaccinationDate')[i].value,
+		// 		expiry: document.getElementsByName('vaccinationExpiry')[i].value
+		// 	}));
 
-			const medicalHistory = Array.from({ length: this.state.medicalHistoryCount }, (_, i) => ({
-				procedure: document.getElementsByName('medicalHistoryProcedure')[i].value,
-				date: document.getElementsByName('medicalHistoryDate')[i].value,
-				notes: document.getElementsByName('medicalHistoryNotes')[i].value
-			}));
+		// 	const medicalHistory = Array.from({ length: this.state.medicalHistoryCount }, (_, i) => ({
+		// 		procedure: document.getElementsByName('medicalHistoryProcedure')[i].value,
+		// 		date: document.getElementsByName('medicalHistoryDate')[i].value,
+		// 		notes: document.getElementsByName('medicalHistoryNotes')[i].value
+		// 	}));
 
-			const rfidTag = document.getElementById('rfidTag').value;
+		// 	const rfidTag = document.getElementById('rfidTag').value;
 
-			if (!rfidTag) {
-				alert('Please scan RFID.');
-				return;
-			}
+		// 	if (!rfidTag) {
+		// 		alert('Please scan RFID.');
+		// 		return;
+		// 	}
 
-			const imageInput = document.getElementById('imageInput').files[0];
-			const data = {
-				personal: {
-					name,
-					type,
-					breed,
-					age: {
-						year: ageYear,
-						month: ageMonth
-					},
-					picture: null
-				},
-				background: {
-					attributes,
-					rescueStory,
-					rescueDate,
-					weight,
-					size,
-					vaccination,
-					medicalHistory
-				},
-				rfidTag
-			};
+		// 	const imageInput = document.getElementById('imageInput').files[0];
+		// 	const data = {
+		// 		personal: {
+		// 			name,
+		// 			type,
+		// 			breed,
+		// 			age: {
+		// 				year: ageYear,
+		// 				month: ageMonth
+		// 			},
+		// 			picture: null
+		// 		},
+		// 		background: {
+		// 			attributes,
+		// 			rescueStory,
+		// 			rescueDate,
+		// 			weight,
+		// 			size,
+		// 			vaccination,
+		// 			medicalHistory
+		// 		},
+		// 		rfidTag
+		// 	};
 
-			if (imageInput instanceof Blob) {
-				const reader = new FileReader();
-				reader.readAsDataURL(imageInput);
-				reader.onload = async () => {
-					data.personal.picture = reader.result;
-					await sendData(data);
-				};
-				reader.onerror = () => console.error("Failed to read image file.");
-			} else {
-				data.personal.picture = document.getElementById('img').style.backgroundImage.slice(5, -2);
-				await sendData(data);
-			}
+		// 	if (imageInput instanceof Blob) {
+		// 		const reader = new FileReader();
+		// 		reader.readAsDataURL(imageInput);
+		// 		reader.onload = async () => {
+		// 			data.personal.picture = reader.result;
+		// 			await sendData(data);
+		// 		};
+		// 		reader.onerror = () => console.error('Failed to read image file.');
+		// 	} else {
+		// 		data.personal.picture = document.getElementById('img').style.backgroundImage.slice(5, -2);
+		// 		await sendData(data);
+		// 	}
 
-			async function sendData(data) {
-				try {
-					const response = await fetch(`https://compawnion-backend.onrender.com/ra/${petID}`, {
-						method: 'PUT',
-						headers: {
-							'Content-Type': 'application/json'
-						},
-						body: JSON.stringify(data)
-					});
-					if (!response.ok) {
-						throw new Error('Failed to update rescued info.');
-					}
-					const result = await response.json();
-					if (result.message === 'Pet updated successfully') {
-						alert(result.message);
-						window.location.hash = '/rescues';
-					} else {
-						alert(result.message || 'Failed to update rescued info.');
-					}
-				} catch (err) {
-					console.error(err);
-					alert(err.message);
-				}
+		// 	async function sendData(data) {
+		// 		try {
+		// 			const response = await fetch(`https://compawnion-backend.onrender.com/ra/${petID}`, {
+		// 				method: 'PUT',
+		// 				headers: {
+		// 					'Content-Type': 'application/json'
+		// 				},
+		// 				body: JSON.stringify(data)
+		// 			});
+		// 			if (!response.ok) {
+		// 				throw new Error('Failed to update rescued info.');
+		// 			}
+		// 			const result = await response.json();
+		// 			if (result.message === 'Pet updated successfully') {
+		// 				alert(result.message);
+		// 				window.location.hash = '/rescues';
+		// 			} else {
+		// 				alert(result.message || 'Failed to update rescued info.');
+		// 			}
+		// 		} catch (err) {
+		// 			console.error(err);
+		// 			alert(err.message);
+		// 		}
+		// 	}
+		// });
+	};
+	async fetchRescuedInfo() {
+		const petIDFromURL = window.location.hash.split('/').pop();
+		if (!petIDFromURL) return;
+		const response = await fetch(`https://compawnion-backend.onrender.com/ra/${petIDFromURL}`, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json'
 			}
 		});
+		const result = await response.json();
+		this.setState({
+			petID: petIDFromURL,
+			rescuedPet: result,
+			vaccinationCount: result.background.vaccination.length,
+			vaccination: result.background.vaccination,
+			medicalHistoryCount: result.background.medicalHistory.length,
+			medicalHistory: result.background.medicalHistory
+		});
+	};
+	async updateRescuedInfo() {
+		const petID = this.state.petID;
+		const name = this.state.rescuedPet.personal.name;
+		const type = this.state.rescuedPet.personal.type;
+		const breed = this.state.rescuedPet.personal.breed;
+		const ageYear = this.state.rescuedPet.personal.age.year;
+		const ageMonth = this.state.rescuedPet.personal.age.month;
+		const gender = this.state.rescuedPet.personal.gender;
+
+		const attributes = this.state.rescuedPet.background.attributes;
+		const rescueStory = this.state.rescuedPet.background.rescueStory;
+		const rescueDate = this.state.rescuedPet.background.rescueDate;
+
+		const weight = this.state.rescuedPet.background.weight;
+		const size = this.state.rescuedPet.background.size;
+
+		if (!petID || !name || !type || !breed || !ageYear || !ageMonth || !attributes || !rescueStory || !rescueDate || !weight || !size) {
+			alert('Please fill out all fields.');
+			return;
+		};
+
+		const vaccination = this.state.vaccination;
+		const medicalHistory = this.state.medicalHistory;
+		const rfidTag = this.state.rescuedPet.rfidTag;
+
+		if (!rfidTag) {
+			alert('Please scan RFID.');
+			return;
+		};
+
+		const imageInput = document.getElementById('imageInput').files[0];
+		const data = {
+			personal: {
+				name,
+				type,
+				breed,
+				age: {
+					year: ageYear,
+					month: ageMonth
+				},
+				picture: null
+			},
+			background: {
+				attributes,
+				rescueStory,
+				rescueDate,
+				weight,
+				size,
+				vaccination,
+				medicalHistory
+			},
+			rfidTag
+		};
+
+		if (imageInput instanceof Blob) {
+			const reader = new FileReader();
+			reader.readAsDataURL(imageInput);
+			reader.onload = async () => {
+				data.personal.picture = reader.result;
+				await sendData(data);
+			};
+			reader.onerror = () => console.error('Failed to read image file.');
+		} else {
+			data.personal.picture = document.getElementById('img').style.backgroundImage.slice(5, -2);
+			await sendData(data);
+		};
+
+		async function sendData(data) {
+			try {
+				const response = await fetch(`https://compawnion-backend.onrender.com/ra/${petID}`, {
+					method: 'PUT',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify(data)
+				});
+				if (!response.ok) {
+					throw new Error('Failed to update rescued info.');
+				};
+				const result = await response.json();
+				if (result.message === 'Pet updated successfully') {
+					alert(result.message);
+					window.location.hash = '/rescues';
+				} else {
+					alert(result.message || 'Failed to update rescued info.');
+				};
+			} catch (err) {
+				console.error(err);
+				alert(err.message);
+			};
+		};
 	};
 	render() {
 		return (
@@ -260,6 +414,9 @@ class AddRescuedPet extends React.Component {
 							<Button
 								title='Update'
 								id='update'
+								onClick={() => {
+									this.updateRescuedInfo();
+								}}
 							/>
 							<Button
 								title='Cancel'
@@ -274,7 +431,7 @@ class AddRescuedPet extends React.Component {
 
 					<section id='basicInfo'>
 						<div id='image'>
-							<input type='file' name='imageInput' id='imageInput' accept="image/*" />
+							<input type='file' name='imageInput' id='imageInput' accept='image/*' />
 							<div id='img' onClick={() => {
 								const imageInput = document.getElementById('imageInput');
 								imageInput.onchange = () => {
@@ -290,7 +447,7 @@ class AddRescuedPet extends React.Component {
 								};
 
 								imageInput.click();
-							}} />
+							}} style={{ backgroundImage: `${this.state.rescuedPet?.personal?.picture ? `url(${this.state.rescuedPet.personal.picture})` : ''}` }}></div>
 							<Button
 								title='Upload Image'
 								theme='dark'
@@ -309,14 +466,40 @@ class AddRescuedPet extends React.Component {
 								type='text'
 								id='name'
 								name='name'
+								value={this.state.rescuedPet?.personal?.name}
+								defaultValue={this.state.rescuedPet?.personal?.name}
 								placeholder='Enter pet name'
+								onChange={(e) => {
+									this.setState({
+										rescuedPet: {
+											...this.state.rescuedPet,
+											personal: {
+												...this.state.rescuedPet.personal,
+												name: e.target.value
+											}
+										}
+									});
+								}}
 							/>
 							<FormInput
 								label='Type'
 								type='dropdown'
 								id='type'
 								name='type'
+								value={this.state.rescuedPet?.personal?.type}
+								defaultValue={this.state.rescuedPet?.personal?.type}
 								placeholder='Select type'
+								onChange={(e) => {
+									this.setState({
+										rescuedPet: {
+											...this.state.rescuedPet,
+											personal: {
+												...this.state.rescuedPet.personal,
+												type: e.target.value
+											}
+										}
+									});
+								}}
 
 								options={[
 									{
@@ -335,6 +518,22 @@ class AddRescuedPet extends React.Component {
 									type='number'
 									id='ageYear'
 									name='ageYear'
+									value={this.state.rescuedPet?.personal?.age?.year}
+									defaultValue={this.state.rescuedPet?.personal?.age?.year}
+									onChange={(e) => {
+										this.setState({
+											rescuedPet: {
+												...this.state.rescuedPet,
+												personal: {
+													...this.state.rescuedPet.personal,
+													age: {
+														...this.state.rescuedPet.personal.age,
+														year: e.target.value
+													}
+												}
+											}
+										});
+									}}
 								/>
 								<h6>Yr.</h6>
 
@@ -342,6 +541,22 @@ class AddRescuedPet extends React.Component {
 									type='number'
 									id='ageMonth'
 									name='ageMonth'
+									value={this.state.rescuedPet?.personal?.age?.month}
+									defaultValue={this.state.rescuedPet?.personal?.age?.month}
+									onChange={(e) => {
+										this.setState({
+											rescuedPet: {
+												...this.state.rescuedPet,
+												personal: {
+													...this.state.rescuedPet.personal,
+													age: {
+														...this.state.rescuedPet.personal.age,
+														month: e.target.value
+													}
+												}
+											}
+										});
+									}}
 								/>
 								<h6>Months</h6>
 							</span>
@@ -352,6 +567,7 @@ class AddRescuedPet extends React.Component {
 								type='text'
 								id='petID'
 								name='petID'
+								value={this.state.rescuedPet?.petId}
 								disabled={true}
 							/>
 							<FormInput
@@ -359,7 +575,20 @@ class AddRescuedPet extends React.Component {
 								type='dropdown'
 								id='breed'
 								name='breed'
+								value={this.state.rescuedPet?.personal?.breed}
+								defaultValue={this.state.rescuedPet?.personal?.breed}
 								placeholder='Select breed'
+								onChange={(e) => {
+									this.setState({
+										rescuedPet: {
+											...this.state.rescuedPet,
+											personal: {
+												...this.state.rescuedPet.personal,
+												breed: e.target.value
+											}
+										}
+									});
+								}}
 
 								options={(() => {
 									const cats = [
@@ -393,68 +622,7 @@ class AddRescuedPet extends React.Component {
 
 									const type = document.getElementById('type');
 									if (!type) return [];
-
-									type.addEventListener('change', () => {
-										const breed = document.getElementById('breed');
-										breed.value = '';
-
-										const options = breed.querySelectorAll('option');
-										for (const option of options) {
-											option.remove();
-										};
-
-										const cats = [
-											{
-												value: 'Siamese',
-												label: 'Siamese'
-											},
-											{
-												value: 'Persian',
-												label: 'Persian'
-											},
-											{
-												value: 'Ragdoll',
-												label: 'Ragdoll'
-											}
-										];
-										const dogs = [
-											{
-												value: 'Beagle',
-												label: 'Beagle'
-											},
-											{
-												value: 'Bulldog',
-												label: 'Bulldog'
-											},
-											{
-												value: 'Poodle',
-												label: 'Poodle'
-											}
-										];
-
-										const type = document.getElementById('type');
-										if (!type) return [];
-										if (type.value === 'Cat') {
-											for (const cat of cats) {
-												const option = document.createElement('option');
-												option.value = cat.value;
-												option.innerHTML = cat.label;
-												breed.appendChild(option);
-											};
-										};
-										if (type.value === 'Dog') {
-											for (const dog of dogs) {
-												const option = document.createElement('option');
-												option.value = dog.value;
-												option.innerHTML = dog.label;
-												breed.appendChild(option);
-											};
-										};
-									});
-
-									if (type.value === 'Cat') return cats;
-									if (type.value === 'Dog') return dogs;
-									return [];
+									return type.value === 'Cat' ? cats : dogs;
 								})()}
 							/>
 							<FormInput
@@ -462,7 +630,20 @@ class AddRescuedPet extends React.Component {
 								type='dropdown'
 								id='gender'
 								name='gender'
+								value={this.state.rescuedPet?.personal?.gender}
+								defaultValue={this.state.rescuedPet?.personal?.gender}
 								placeholder='Select gender'
+								onChange={(e) => {
+									this.setState({
+										rescuedPet: {
+											...this.state.rescuedPet,
+											personal: {
+												...this.state.rescuedPet.personal,
+												gender: e.target.value
+											}
+										}
+									});
+								}}
 
 								options={[
 									{
@@ -486,20 +667,59 @@ class AddRescuedPet extends React.Component {
 								type='textarea'
 								id='personality'
 								name='personality'
+								value={this.state.rescuedPet?.background?.attributes}
+								defaultValue={this.state.rescuedPet?.background?.attributes}
 								placeholder='Enter attributes or description'
+								onChange={(e) => {
+									this.setState({
+										rescuedPet: {
+											...this.state.rescuedPet,
+											background: {
+												...this.state.rescuedPet.background,
+												attributes: e.target.value
+											}
+										}
+									});
+								}}
 							/>
 							<FormInput
 								label='Rescue Story'
 								type='textarea'
 								id='backgroundStory'
 								name='backgroundStory'
+								value={this.state.rescuedPet?.background?.rescueStory}
+								defaultValue={this.state.rescuedPet?.background?.rescueStory}
 								placeholder='Enter rescue story'
+								onChange={(e) => {
+									this.setState({
+										rescuedPet: {
+											...this.state.rescuedPet,
+											background: {
+												...this.state.rescuedPet.background,
+												rescueStory: e.target.value
+											}
+										}
+									});
+								}}
 							/>
 							<FormInput
 								label='Rescue Date'
 								type='date'
 								id='rescueDate'
 								name='rescueDate'
+								value={this.state.rescuedPet?.background?.rescueDate}
+								defaultValue={this.state.rescuedPet?.background?.rescueDate}
+								onChange={(e) => {
+									this.setState({
+										rescuedPet: {
+											...this.state.rescuedPet,
+											background: {
+												...this.state.rescuedPet.background,
+												rescueDate: e.target.value
+											}
+										}
+									});
+								}}
 							/>
 						</div>
 
@@ -510,6 +730,20 @@ class AddRescuedPet extends React.Component {
 								type='number'
 								id='weight'
 								name='weight'
+								value={this.state.rescuedPet?.background?.weight}
+								defaultValue={this.state.rescuedPet?.background?.weight}
+								placeholder='Enter weight'
+								onChange={(e) => {
+									this.setState({
+										rescuedPet: {
+											...this.state.rescuedPet,
+											background: {
+												...this.state.rescuedPet.background,
+												weight: e.target.value
+											}
+										}
+									});
+								}}
 							/>
 							<h6>Kg</h6>
 							<FormInput
@@ -517,6 +751,20 @@ class AddRescuedPet extends React.Component {
 								type='dropdown'
 								id='size'
 								name='size'
+								value={this.state.rescuedPet?.background?.size}
+								defaultValue={this.state.rescuedPet?.background?.size}
+								placeholder='Select size'
+								onChange={(e) => {
+									this.setState({
+										rescuedPet: {
+											...this.state.rescuedPet,
+											background: {
+												...this.state.rescuedPet.background,
+												size: e.target.value
+											}
+										}
+									});
+								}}
 
 								options={[
 									{
@@ -547,6 +795,35 @@ class AddRescuedPet extends React.Component {
 											name='vaccinationName'
 											placeholder='Enter vaccination name'
 											value={vaccination.name}
+											defaultValue={vaccination.name}
+											onChange={(e) => {
+												this.setState({
+													vaccination: this.state.vaccination.map((v, i) => {
+														if (i === index) {
+															return {
+																...v,
+																name: e.target.value
+															};
+														}
+														return v;
+													}),
+													rescuedPet: {
+														...this.state.rescuedPet,
+														background: {
+															...this.state.rescuedPet.background,
+															vaccination: this.state.vaccination.map((v, i) => {
+																if (i === index) {
+																	return {
+																		...v,
+																		name: e.target.value
+																	};
+																}
+																return v;
+															})
+														}
+													}
+												});
+											}}
 
 											options={[
 												{
@@ -574,6 +851,35 @@ class AddRescuedPet extends React.Component {
 											name='vaccinationDate'
 											placeholder='Enter vaccination date'
 											value={vaccination.date}
+											defaultValue={vaccination.date}
+											onChange={(e) => {
+												this.setState({
+													vaccination: this.state.vaccination.map((v, i) => {
+														if (i === index) {
+															return {
+																...v,
+																date: e.target.value
+															};
+														}
+														return v;
+													}),
+													rescuedPet: {
+														...this.state.rescuedPet,
+														background: {
+															...this.state.rescuedPet.background,
+															vaccination: this.state.vaccination.map((v, i) => {
+																if (i === index) {
+																	return {
+																		...v,
+																		date: e.target.value
+																	};
+																}
+																return v;
+															})
+														}
+													}
+												});
+											}}
 										/>
 										<FormInput
 											label='Expiry'
@@ -582,6 +888,35 @@ class AddRescuedPet extends React.Component {
 											name='vaccinationExpiry'
 											placeholder='Enter vaccination expiry'
 											value={vaccination.expiry}
+											defaultValue={vaccination.expiry}
+											onChange={(e) => {
+												this.setState({
+													vaccination: this.state.vaccination.map((v, i) => {
+														if (i === index) {
+															return {
+																...v,
+																expiry: e.target.value
+															};
+														}
+														return v;
+													}),
+													rescuedPet: {
+														...this.state.rescuedPet,
+														background: {
+															...this.state.rescuedPet.background,
+															vaccination: this.state.vaccination.map((v, i) => {
+																if (i === index) {
+																	return {
+																		...v,
+																		expiry: e.target.value
+																	};
+																}
+																return v;
+															})
+														}
+													}
+												});
+											}}
 										/>
 
 										{this.state.vaccinationCount > 1 && (
@@ -591,8 +926,15 @@ class AddRescuedPet extends React.Component {
 
 												onClick={() => {
 													this.setState({
-														vaccinationCount: this.state.vaccinationCount - 1,
-														vaccination: this.state.vaccination.filter((_, i) => i !== index)
+														varccinationCount: this.state.vaccinationCount - 1,
+														vaccination: this.state.vaccination.filter((_, i) => i !== index),
+														rescuedPet: {
+															...this.state.rescuedPet,
+															background: {
+																...this.state.rescuedPet.background,
+																vaccination: this.state.vaccination.filter((_, i) => i !== index)
+															}
+														}
 													});
 												}}
 											/>
@@ -606,13 +948,22 @@ class AddRescuedPet extends React.Component {
 								onClick={() => {
 									this.setState({
 										vaccinationCount: this.state.vaccinationCount + 1,
-										vaccination: this.state.vaccination.concat([
-											{
-												name: null,
-												date: null,
-												expiry: null
+										vaccination: this.state.vaccination.concat({
+											name: null,
+											date: null,
+											expiry: null
+										}),
+										rescuedPet: {
+											...this.state.rescuedPet,
+											background: {
+												...this.state.rescuedPet.background,
+												vaccination: this.state.vaccination.concat({
+													name: null,
+													date: null,
+													expiry: null
+												})
 											}
-										])
+										}
 									});
 								}}
 							/>
@@ -630,6 +981,35 @@ class AddRescuedPet extends React.Component {
 											name='medicalHistoryProcedure'
 											placeholder='Enter procedure'
 											value={medicalHistory.procedure}
+											defaultValue={medicalHistory.procedure}
+											onChange={(e) => {
+												this.setState({
+													medicalHistory: this.state.medicalHistory.map((m, i) => {
+														if (i === index) {
+															return {
+																...m,
+																procedure: e.target.value
+															};
+														}
+														return m;
+													}),
+													rescuedPet: {
+														...this.state.rescuedPet,
+														background: {
+															...this.state.rescuedPet.background,
+															medicalHistory: this.state.medicalHistory.map((m, i) => {
+																if (i === index) {
+																	return {
+																		...m,
+																		procedure: e.target.value
+																	};
+																}
+																return m;
+															})
+														}
+													}
+												});
+											}}
 										/>
 										<FormInput
 											label='Date'
@@ -638,6 +1018,35 @@ class AddRescuedPet extends React.Component {
 											name='medicalHistoryDate'
 											placeholder='Enter date'
 											value={medicalHistory.date}
+											defaultValue={medicalHistory.date}
+											onChange={(e) => {
+												this.setState({
+													medicalHistory: this.state.medicalHistory.map((m, i) => {
+														if (i === index) {
+															return {
+																...m,
+																date: e.target.value
+															};
+														}
+														return m;
+													}),
+													rescuedPet: {
+														...this.state.rescuedPet,
+														background: {
+															...this.state.rescuedPet.background,
+															medicalHistory: this.state.medicalHistory.map((m, i) => {
+																if (i === index) {
+																	return {
+																		...m,
+																		date: e.target.value
+																	};
+																}
+																return m;
+															})
+														}
+													}
+												});
+											}}
 										/>
 										<span>
 											<FormInput
@@ -647,6 +1056,35 @@ class AddRescuedPet extends React.Component {
 												name='medicalHistoryNotes'
 												placeholder='Enter notes'
 												value={medicalHistory.notes}
+												defaultValue={medicalHistory.notes}
+												onChange={(e) => {
+													this.setState({
+														medicalHistory: this.state.medicalHistory.map((m, i) => {
+															if (i === index) {
+																return {
+																	...m,
+																	notes: e.target.value
+																};
+															}
+															return m;
+														}),
+														rescuedPet: {
+															...this.state.rescuedPet,
+															background: {
+																...this.state.rescuedPet.background,
+																medicalHistory: this.state.medicalHistory.map((m, i) => {
+																	if (i === index) {
+																		return {
+																			...m,
+																			notes: e.target.value
+																		};
+																	}
+																	return m;
+																})
+															}
+														}
+													});
+												}}
 											/>
 
 											{this.state.medicalHistoryCount > 1 && (
@@ -657,7 +1095,14 @@ class AddRescuedPet extends React.Component {
 													onClick={() => {
 														this.setState({
 															medicalHistoryCount: this.state.medicalHistoryCount - 1,
-															medicalHistory: this.state.medicalHistory.filter((_, i) => i !== index)
+															medicalHistory: this.state.medicalHistory.filter((_, i) => i !== index),
+															rescuedPet: {
+																...this.state.rescuedPet,
+																background: {
+																	...this.state.rescuedPet.background,
+																	medicalHistory: this.state.medicalHistory.filter((_, i) => i !== index)
+																}
+															}
 														});
 													}}
 												/>
@@ -672,14 +1117,22 @@ class AddRescuedPet extends React.Component {
 								onClick={() => {
 									this.setState({
 										medicalHistoryCount: this.state.medicalHistoryCount + 1,
-										medicalHistory: this.state.medicalHistory.concat([
-											{
-												date: null,
-												procedure: null,
-												vet: null,
-												notes: null
+										medicalHistory: this.state.medicalHistory.concat({
+											procedure: null,
+											date: null,
+											notes: null
+										}),
+										rescuedPet: {
+											...this.state.rescuedPet,
+											background: {
+												...this.state.rescuedPet.background,
+												medicalHistory: this.state.medicalHistory.concat({
+													procedure: null,
+													date: null,
+													notes: null
+												})
 											}
-										])
+										}
 									});
 								}}
 							/>
@@ -696,10 +1149,18 @@ class AddRescuedPet extends React.Component {
 								name='rfidTag'
 								placeholder='Enter RFID'
 								disabled={true}
+								value={this.state.rescuedPet?.rfidTag}
+								defaultValue={this.state.rescuedPet?.rfidTag}
 
 								onEnter={() => {
 									const rfidTag = document.getElementById('rfidTag');
 									rfidTag.disabled = true;
+									this.setState({
+										rescuedPet: {
+											...this.state.rescuedPet,
+											rfidTag: rfidTag.value
+										}
+									});
 								}}
 							/>
 							<Button
@@ -712,7 +1173,6 @@ class AddRescuedPet extends React.Component {
 
 									rfidTag.focus();
 									console.log('Scanning RFID...');
-
 								}}
 							/>
 						</div>

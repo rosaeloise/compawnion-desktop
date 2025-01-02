@@ -21,6 +21,7 @@ class FormInput extends React.Component {
 					id={this.props.id}
 					name={this.props.name}
 					value={this.props.value}
+					defaultValue={this.props.value}
 					onChange={this.props.onChange}
 					disabled={this.props.disabled}
 				>
@@ -41,6 +42,7 @@ class FormInput extends React.Component {
 					name={this.props.name}
 					placeholder={this.props.placeholder}
 					value={this.props.value}
+					defaultValue={this.props.value}
 					onChange={this.props.onChange}
 					disabled={this.props.disabled}
 				/>
@@ -56,6 +58,7 @@ class FormInput extends React.Component {
 					name={this.props.name}
 					placeholder={this.props.placeholder}
 					value={this.props.value}
+					defaultValue={this.props.value}
 					onChange={this.props.onChange}
 					disabled={this.props.disabled}
 				/>
@@ -76,6 +79,7 @@ class FormInput extends React.Component {
 					name={this.props.name}
 					placeholder={this.props.placeholder}
 					value={this.props.value}
+					defaultValue={this.props.value}
 					onChange={this.props.onChange}
 					disabled={this.props.disabled}
 				/>
