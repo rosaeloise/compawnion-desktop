@@ -148,12 +148,16 @@ class AddRescuedPet extends React.Component {
 			alert('Please enter valid month.');
 			return;
 		};
-		if (this.state.vaccination.some(v => !v.name || !v.date || !v.expiry)) {
+		if (this.state.vaccinationCount > 1 && this.state.vaccination.some(v => !v.name || !v.date || !v.expiry)) {
 			alert('Please fill out all vaccination fields.');
 			return;
 		};
-		if (this.state.medicalHistory.some(m => !m.procedure || !m.date || !m.notes)) {
+		if (this.state.medicalHistoryCount > 1 && this.state.medicalHistory.some(m => !m.procedure || !m.date || !m.notes)) {
 			alert('Please fill out all medical history fields.');
+			return;
+		};
+		if (this.state.rescuedPet.background.rescueDate > new Date().toISOString().split('T')[0]) {
+			alert('Rescue date cannot be in the future.');
 			return;
 		};
 
@@ -161,6 +165,22 @@ class AddRescuedPet extends React.Component {
 		const medicalHistory = this.state.medicalHistory;
 		const rfidTag = this.state.rescuedPet.rfidTag;
 
+		for (const vac of vaccination) {
+			if (vac.expiry < vac.date) {
+				alert('Vaccination expiry cannot be before vaccination date.');
+				return;
+			};
+			if (vac.date > new Date().toISOString().split('T')[0]) {
+				alert('Vaccination date cannot be in the future.');
+				return;
+			};
+		};
+		for (const med of medicalHistory) {
+			if (med.date > new Date().toISOString().split('T')[0]) {
+				alert('Medical history date cannot be in the future.');
+				return;
+			};
+		};
 		if (!rfidTag) {
 			alert('Please scan RFID.');
 			return;
