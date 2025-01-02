@@ -37,6 +37,7 @@ class Compawnions extends React.Component {
 						"LastLogin": "2024-11-12T09:05:42.741Z"
 					}
 				],
+				filtered: [],
 				message: ''
 			}
 		};
@@ -75,9 +76,27 @@ class Compawnions extends React.Component {
 		}).then(res => res.json())
 			.then(res => {
 				this.setState({
-					compawnions: res
+					compawnions: {
+						...res,
+						filtered: res.data
+					}
 				});
 			});
+	};
+	handleSearch = (e) => {
+		const search = e.target.value;
+		const filtered = this.state.compawnions.data.filter(compawnion => {
+			return compawnion.CompawnionUser.accountCreate.Username.toLowerCase().includes(search.toLowerCase()) ||
+				compawnion.CompawnionUser.appPetID?.toLowerCase().includes(search.toLowerCase()) ||
+				compawnion.id.toLowerCase().includes(search.toLowerCase()) ||
+				compawnion.CompawnionUser.accountCreate.Email.toLowerCase().includes(search.toLowerCase());
+		});
+		this.setState({
+			compawnions: {
+				...this.state.compawnions,
+				filtered: filtered
+			}
+		});
 	};
 	render() {
 		return (
@@ -118,7 +137,7 @@ class Compawnions extends React.Component {
 							</thead>
 							<tbody>
 								{
-									this.state.compawnions.data.map((compawnion, index) => {
+									this.state.compawnions.filtered.map((compawnion, index) => {
 										return (
 											<tr key={index}>
 												<td>{compawnion.id}</td>

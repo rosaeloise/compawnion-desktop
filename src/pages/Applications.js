@@ -22,7 +22,11 @@ class Applications extends React.Component {
 				approved: [],
 				rejected: []
 			},
-			searchTerm: ''
+			filtered: {
+				pending: [],
+				approved: [],
+				rejected: []
+			}
 		};
 	};
 
@@ -201,14 +205,26 @@ class Applications extends React.Component {
 			// }
 			// 	]
 			// }
-			this.setState({ app: data });
+			this.setState({
+				app: data,
+				filtered: data
+			});
 		} catch (error) {
 			console.error('Error fetching applications:', error);
 		}
 	};
 
 	handleSearch = (event) => {
-		this.setState({ searchTerm: event.target.value });
+		const query = event.target.value;
+		const pending = this.state.app.pending.filter(app =>
+			app.applicant.name.firstName.toLowerCase().includes(query.toLowerCase())
+			|| app.id.toLowerCase().includes(query.toLowerCase())
+		);
+		this.setState({
+			filtered: {
+				pending
+			}
+		});
 	};
 
 	render() {
@@ -262,7 +278,7 @@ class Applications extends React.Component {
 							</thead>
 							<tbody>
 								{
-									this.state.app.pending.map((app, index) => {
+									this.state.filtered.pending.map((app, index) => {
 										return (
 											<tr key={index}>
 												<td>{app.id}</td>
