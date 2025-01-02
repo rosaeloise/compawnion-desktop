@@ -152,6 +152,10 @@ class AddRescuedPet extends React.Component {
 			alert('Please enter valid month.');
 			return;
 		};
+		if (parseInt(weight) > 200) {
+			alert('Please enter valid weight.');
+			return;
+		}
 		if (this.state.vaccinationCount > 1 && this.state.vaccination.some(v => !v.name || !v.date || !v.expiry)) {
 			alert('Please fill out all vaccination fields.');
 			return;
