@@ -316,7 +316,7 @@ class AddRescuedPet extends React.Component {
 		const weight = this.state.rescuedPet.background.weight;
 		const size = this.state.rescuedPet.background.size;
 
-		if (!petID || !name || !type || !breed || !ageYear || !ageMonth || !attributes || !rescueStory || !rescueDate || !weight || !size) {
+		if (!petID || !name || !type || !breed || !ageYear || !ageMonth || !gender || !attributes || !rescueStory || !rescueDate || !weight || !size) {
 			alert('Please fill out all fields.');
 			return;
 		};
@@ -340,7 +340,8 @@ class AddRescuedPet extends React.Component {
 					year: ageYear,
 					month: ageMonth
 				},
-				picture: null
+				picture: null,
+				gender
 			},
 			background: {
 				attributes,
