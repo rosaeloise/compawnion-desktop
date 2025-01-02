@@ -12,7 +12,7 @@ class Dashboard extends React.Component {
 			user: {
 				avatar: '',
 				name: '',
-				role: '',
+				branches: '',
 				username: ''
 			},
 			time: {
@@ -55,7 +55,7 @@ class Dashboard extends React.Component {
 						user: {
 							avatar: res.aStaffInfo.Picture,
 							name: res.aStaffInfo.Name,
-							role: res.aStaffInfo.Branches,
+							branches: res.aStaffInfo.Branches,
 							username: res.aStaffInfo.Username
 						}
 					});
@@ -325,7 +325,7 @@ class Dashboard extends React.Component {
 				<Sidebar
 					avatar={this.state.user.avatar}
 					name={this.state.user.name}
-					role={this.state.user.role}
+					branches={this.state.user.branches}
 
 					active='dashboard'
 				/>

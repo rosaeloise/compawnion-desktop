@@ -15,7 +15,7 @@ class CompawnionInfo extends React.Component {
 			user: {
 				avatar: '',
 				name: '',
-				role: '',
+				branches: '',
 				username: ''
 			},
 			compawnion: {
@@ -49,7 +49,7 @@ class CompawnionInfo extends React.Component {
 						user: {
 							avatar: res.aStaffInfo.Picture,
 							name: res.aStaffInfo.Name,
-							role: res.aStaffInfo.Branches,
+							branches: res.aStaffInfo.Branches,
 							username: res.aStaffInfo.Username
 						}
 					});
@@ -96,7 +96,7 @@ class CompawnionInfo extends React.Component {
 				<Sidebar
 					avatar={user.avatar}
 					name={user.name}
-					role={user.role}
+					branches={user.branches}
 					active="compawnions"
 				/>
 

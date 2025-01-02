@@ -39,7 +39,7 @@ class App extends
 					<Route path='/compawnions' element={<Compawnions />} />
 					<Route path='/compawnions/:id' element={<CompawnionInfo />} />
 
-					<Route path='/admin' element={<AdminInfo />} />
+					<Route path='/adminInfo' element={<AdminInfo />} />
 				</Routes>
 			</HashRouter>
 		);
