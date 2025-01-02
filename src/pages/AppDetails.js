@@ -233,12 +233,14 @@ class AppDetails extends React.Component {
 					</section>
 
 					<section id='buttons'>
-						<Button
-							title='Print Contract'
-							onClick={() => {
-								window.location.hash = `/contract/${this.state.application.applicationAppId}`;
-							}}
-						/>
+						{
+							this.state.application.status !== 'Online Approved' && <Button
+								title='Print Contract'
+								onClick={() => {
+									window.location.hash = `/contract/${this.state.application.applicationAppId}`;
+								}}
+							/>
+						}
 						<Button
 							title='Approve'
 							onClick={async () => {
