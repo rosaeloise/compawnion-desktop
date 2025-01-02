@@ -140,6 +140,22 @@ class AddRescuedPet extends React.Component {
 			alert('Please fill out all fields.');
 			return;
 		};
+		if (parseInt(ageYear) < 0 || parseInt(ageMonth) < 0 || parseInt(weight) < 0) {
+			alert('Please enter valid values.');
+			return;
+		};
+		if (parseInt(ageMonth) > 11) {
+			alert('Please enter valid month.');
+			return;
+		};
+		if (this.state.vaccination.some(v => !v.name || !v.date || !v.expiry)) {
+			alert('Please fill out all vaccination fields.');
+			return;
+		};
+		if (this.state.medicalHistory.some(m => !m.procedure || !m.date || !m.notes)) {
+			alert('Please fill out all medical history fields.');
+			return;
+		};
 
 		const vaccination = this.state.vaccination;
 		const medicalHistory = this.state.medicalHistory;
@@ -316,7 +332,8 @@ class AddRescuedPet extends React.Component {
 											...this.state.rescuedPet,
 											personal: {
 												...this.state.rescuedPet.personal,
-												type: e.target.value
+												type: e.target.value,
+												breed: ''
 											}
 										}
 									});
@@ -393,7 +410,7 @@ class AddRescuedPet extends React.Component {
 							/>
 							<FormInput
 								label='Breed'
-								type='dropdown'
+								type='list'
 								id='breed'
 								name='breed'
 								value={this.state.rescuedPet?.personal?.breed}
@@ -441,9 +458,7 @@ class AddRescuedPet extends React.Component {
 										}
 									];
 
-									const type = document.getElementById('type');
-									if (!type) return [];
-									return type.value === 'Cat' ? cats : dogs;
+									return this.state.rescuedPet?.personal?.type === 'Cat' ? cats : dogs;
 								})()}
 							/>
 							<FormInput

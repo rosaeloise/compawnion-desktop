@@ -33,6 +33,28 @@ class FormInput extends React.Component {
 				</select>
 			</div>
 		);
+		if (this.props.type === 'list') return (
+			<div className='formInput'>
+				<label htmlFor={this.props.id}><h6>{this.props.label}</h6></label>
+				<input
+					type='text'
+					id={this.props.id}
+					name={this.props.name}
+					placeholder={this.props.placeholder}
+					value={this.props.value}
+					defaultValue={this.props.value}
+					onChange={this.props.onChange}
+					list={this.props.id + 'List'}
+				/>
+				<datalist id={this.props.id + 'List'}>
+					{this.props.options.map((option, index) => {
+						return (
+							<option key={index} value={option.value} />
+						);
+					})}
+				</datalist>
+			</div>
+		);
 
 		if (this.props.type === 'textarea') return (
 			<div className='formInput'>
