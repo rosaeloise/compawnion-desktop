@@ -88,14 +88,19 @@ class AddRescuedPet extends React.Component {
 		})
 			.then(res => res.json())
 			.then(res => {
-				this.setState({
-					user: {
-						avatar: res.aStaffInfo.Picture,
-						name: res.aStaffInfo.Name,
-						role: res.aStaffInfo.Branches,
-						username: res.aStaffInfo.Username
-					}
-				});
+				try {
+					this.setState({
+						user: {
+							avatar: res.aStaffInfo.Picture,
+							name: res.aStaffInfo.Name,
+							role: res.aStaffInfo.Branches,
+							username: res.aStaffInfo.Username
+						}
+					});
+				} catch (error) {
+					localStorage.removeItem('token');
+					window.location.href = '/login';
+				};
 			});
 
 		// Get pet ID from URL
