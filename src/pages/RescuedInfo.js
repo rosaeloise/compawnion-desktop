@@ -144,6 +144,10 @@ class AddRescuedPet extends React.Component {
 			alert('Please enter valid values.');
 			return;
 		};
+		if (parseInt(ageYear) > 30) {
+			alert('Please enter valid year.');
+			return;
+		};
 		if (parseInt(ageMonth) > 11) {
 			alert('Please enter valid month.');
 			return;
