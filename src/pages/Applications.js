@@ -223,6 +223,19 @@ class Applications extends React.Component {
 				<main id='applicationsMain'>
 					<header id='header'>
 						<h4>Online Applications</h4>
+						<div>
+							<Button
+								title='Approved'
+								size='small'
+								href='#/applications/approved'
+							/>
+							<Button
+								title='Rejected'
+								size='small'
+								theme='dark'
+								href='#/applications/rejected'
+							/>
+						</div>
 					</header>
 
 					<section id='applications'>
