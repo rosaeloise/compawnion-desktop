@@ -297,6 +297,7 @@ span {
 	border-radius: 50%;
 	background-color: var(--plain);
 	filter: drop-shadow(0px 0px 0.5rem rgba(0, 0, 0, 0.5));
+	cursor: pointer;
 }
 #sidebar > #user > div {
 	display: flex;
@@ -304,6 +305,10 @@ span {
 	align-items: center;
 	flex-direction: column;
 	gap: 2rem;
+}
+#sidebar > #user > div > h6,
+#sidebar > #user > div > p {
+	cursor: pointer;
 }
 #sidebar > #pages {
 	width: 100%;
