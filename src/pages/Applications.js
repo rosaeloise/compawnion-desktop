@@ -282,7 +282,7 @@ class Applications extends React.Component {
 										return (
 											<tr key={index}>
 												<td>{app.id}</td>
-												<td>##########</td>
+												<td>{app.dateOfSubmission}</td>
 												<td>{app.applicant.name.firstName}</td>
 												<td>{app.applicationType}</td>
 												<td>{app.status}</td>
