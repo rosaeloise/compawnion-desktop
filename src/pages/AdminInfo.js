@@ -5,7 +5,7 @@ import Button from '../components/Button';
 import Popup from '../components/Popup';
 import FormInput from '../components/FormInput';
 
-import '../css/addRescuedPet.css';
+import '../css/adminInfo.css';
 
 class AdminInfo extends React.Component {
 	constructor(props) {
@@ -212,14 +212,6 @@ class AdminInfo extends React.Component {
 								title='Save'
 								id='save'
 							/>
-							<Button
-								title='Cancel'
-								theme='dark'
-
-								onClick={() => {
-									window.location.hash = '/rescues';
-								}}
-							/>
 						</div>
 					</header>
 
@@ -260,46 +252,28 @@ class AdminInfo extends React.Component {
 								type='text'
 								id='name'
 								name='name'
-								placeholder='Enter pet name'
+								placeholder='Name'
 							/>
 							<FormInput
 								label='Type'
-								type='dropdown'
+								type='text'
 								id='type'
 								name='type'
-								placeholder='Select type'
-
-								options={[
-									{
-										value: 'Cat',
-										label: 'Cat'
-									},
-									{
-										value: 'Dog',
-										label: 'Dog'
-									}
-								]}
+								placeholder='Username'
+								disabled={true}	
 							/>
-							<span>
-								<FormInput
-									label='Age'
-									type='number'
-									id='ageYear'
-									name='ageYear'
-								/>
-								<h6>Yr.</h6>
-
-								<FormInput
-									type='number'
-									id='ageMonth'
-									name='ageMonth'
-								/>
-								<h6>Months</h6>
-							</span>
+							<FormInput
+								label='Branch'
+								type='text'
+								id='ageYear'
+								name='ageYear'
+								placeholder='Branch'
+								disabled={true}
+							/>
 						</div>
 						<div>
 							<FormInput
-								label='Pet ID'
+								label='Admin'
 								type='text'
 								id='petID'
 								name='petID'
@@ -307,372 +281,25 @@ class AdminInfo extends React.Component {
 								disabled={true}
 							/>
 							<FormInput
-								label='Breed'
-								type='dropdown'
+								label='Email'
+								type='test'
 								id='breed'
 								name='breed'
-								placeholder='Select breed'
-
-								options={(() => {
-									const cats = [
-										{
-											value: 'Siamese',
-											label: 'Siamese'
-										},
-										{
-											value: 'Persian',
-											label: 'Persian'
-										},
-										{
-											value: 'Ragdoll',
-											label: 'Ragdoll'
-										}
-									];
-									const dogs = [
-										{
-											value: 'Beagle',
-											label: 'Beagle'
-										},
-										{
-											value: 'Bulldog',
-											label: 'Bulldog'
-										},
-										{
-											value: 'Poodle',
-											label: 'Poodle'
-										}
-									];
-
-									const type = document.getElementById('type');
-									if (!type) return [];
-
-									type.addEventListener('change', () => {
-										const breed = document.getElementById('breed');
-										breed.value = '';
-
-										const options = breed.querySelectorAll('option');
-										for (const option of options) {
-											option.remove();
-										};
-
-										const cats = [
-											{
-												value: 'Siamese',
-												label: 'Siamese'
-											},
-											{
-												value: 'Persian',
-												label: 'Persian'
-											},
-											{
-												value: 'Ragdoll',
-												label: 'Ragdoll'
-											}
-										];
-										const dogs = [
-											{
-												value: 'Beagle',
-												label: 'Beagle'
-											},
-											{
-												value: 'Bulldog',
-												label: 'Bulldog'
-											},
-											{
-												value: 'Poodle',
-												label: 'Poodle'
-											}
-										];
-
-										const type = document.getElementById('type');
-										if (!type) return [];
-										if (type.value === 'Cat') {
-											for (const cat of cats) {
-												const option = document.createElement('option');
-												option.value = cat.value;
-												option.innerHTML = cat.label;
-												breed.appendChild(option);
-											};
-										};
-										if (type.value === 'Dog') {
-											for (const dog of dogs) {
-												const option = document.createElement('option');
-												option.value = dog.value;
-												option.innerHTML = dog.label;
-												breed.appendChild(option);
-											};
-										};
-									});
-
-									if (type.value === 'Cat') return cats;
-									if (type.value === 'Dog') return dogs;
-									return [];
-								})()}
+								placeholder='Email'
 							/>
 							<FormInput
-								label='Gender'
-								type='dropdown'
+								label='Phone Number'
+								type='number'
 								id='gender'
 								name='gender'
-								placeholder='Select gender'
-
-								options={[
-									{
-										value: 'Male',
-										label: 'Male'
-									},
-									{
-										value: 'Female',
-										label: 'Female'
-									}
-								]}
-							/>
-						</div>
-					</section>
-
-					<section id='backgroundInfo'>
-						<h6>Background</h6>
-						<div>
-							<FormInput
-								label='Attributes/Personality'
-								type='textarea'
-								id='personality'
-								name='personality'
-								placeholder='Enter attributes or description'
-							/>
-							<FormInput
-								label='Rescue Story'
-								type='textarea'
-								id='backgroundStory'
-								name='backgroundStory'
-								placeholder='Enter rescue story'
-							/>
-							<FormInput
-								label='Rescue Date'
-								type='date'
-								id='rescueDate'
-								name='rescueDate'
-							/>
-						</div>
-
-						<h6>Medical Information</h6>
-						<div>
-							<FormInput
-								label='Weight'
-								type='number'
-								id='weight'
-								name='weight'
-							/>
-							<h6>Kg</h6>
-							<FormInput
-								label='Size'
-								type='dropdown'
-								id='size'
-								name='size'
-
-								options={[
-									{
-										value: 'Small',
-										label: 'Small'
-									},
-									{
-										value: 'Medium',
-										label: 'Medium'
-									},
-									{
-										value: 'Large',
-										label: 'Large'
-									}
-								]}
-							/>
-						</div>
-
-						<h6>Vaccination</h6>
-						<div id='vaccination'>
-							{this.state.vaccination.map((vaccination, index) => {
-								return (
-									<div key={index}>
-										<FormInput
-											label='Name'
-											type='dropdown'
-											id='vaccinationName'
-											name='vaccinationName'
-											placeholder='Enter vaccination name'
-											value={vaccination.name}
-
-											options={[
-												{
-													value: '',
-													label: ''
-												},
-												{
-													value: 'Anti-Rabies',
-													label: 'Anti-Rabies'
-												},
-												{
-													value: 'DA2PP',
-													label: 'DA2PP'
-												},
-												{
-													value: 'Leptospira Vaccine  (Leptospirosis)',
-													label: 'Leptospira Vaccine  (Leptospirosis)'
-												}
-											]}
-										/>
-										<FormInput
-											label='Date'
-											type='date'
-											id='vaccinationDate'
-											name='vaccinationDate'
-											placeholder='Enter vaccination date'
-											value={vaccination.date}
-										/>
-										<FormInput
-											label='Expiry'
-											type='date'
-											id='vaccinationExpiry'
-											name='vaccinationExpiry'
-											placeholder='Enter vaccination expiry'
-											value={vaccination.expiry}
-										/>
-
-										{this.state.vaccinationCount > 1 && (
-											<Button
-												title='-'
-												theme='dark'
-
-												onClick={() => {
-													this.setState({
-														vaccinationCount: this.state.vaccinationCount - 1,
-														vaccination: this.state.vaccination.filter((v, i) => i !== index)
-													});
-												}}
-											/>
-										)}
-									</div>
-								);
-							})}
-							<Button
-								title='Add Vaccination'
-
-								onClick={() => {
-									this.setState({
-										vaccinationCount: this.state.vaccinationCount + 1,
-										vaccination: this.state.vaccination.concat([
-											{
-												name: null,
-												date: null,
-												expiry: null
-											}
-										])
-									});
-								}}
-							/>
-						</div>
-
-						<h6>Medical History</h6>
-						<div id='medicalHistory'>
-							{this.state.medicalHistory.map((medicalHistory, index) => {
-								return (
-									<div key={index}>
-										<FormInput
-											label='Procedure'
-											type='text'
-											id='medicalHistoryProcedure'
-											name='medicalHistoryProcedure'
-											placeholder='Enter procedure'
-											value={medicalHistory.procedure}
-										/>
-										<FormInput
-											label='Date'
-											type='date'
-											id='medicalHistoryDate'
-											name='medicalHistoryDate'
-											placeholder='Enter date'
-											value={medicalHistory.date}
-										/>
-										<span>
-											<FormInput
-												label='Notes'
-												type='textarea'
-												id='medicalHistoryNotes'
-												name='medicalHistoryNotes'
-												placeholder='Enter notes'
-												value={medicalHistory.notes}
-											/>
-
-											{this.state.medicalHistoryCount > 1 && (
-												<Button
-													title='-'
-													theme='dark'
-
-													onClick={() => {
-														this.setState({
-															medicalHistoryCount: this.state.medicalHistoryCount - 1,
-															medicalHistory: this.state.medicalHistory.filter((m, i) => i !== index)
-														});
-													}}
-												/>
-											)}
-										</span>
-									</div>
-								);
-							})}
-							<Button
-								title='Add Medical History'
-
-								onClick={() => {
-									this.setState({
-										medicalHistoryCount: this.state.medicalHistoryCount + 1,
-										medicalHistory: this.state.medicalHistory.concat([
-											{
-												date: null,
-												procedure: null,
-												vet: null,
-												notes: null
-											}
-										])
-									});
-								}}
-							/>
-						</div>
-					</section>
-
-					<section id='rfid'>
-						<h6>RFID</h6>
-						<div>
-							<FormInput
-								label='Radio-frequency Identification Tag'
-								type='password'
-								id='rfidTag'
-								name='rfidTag'
-								placeholder='Enter RFID'
-								disabled={true}
-
-								onEnter={() => {
-									const rfidTag = document.getElementById('rfidTag');
-									rfidTag.disabled = true;
-								}}
-							/>
-							<Button
-								title='Scan RFID'
-
-								onClick={() => {
-									const rfidTag = document.getElementById('rfidTag');
-									rfidTag.disabled = false;
-									console.log(rfidTag);
-
-									rfidTag.focus();
-									console.log('Scanning RFID...');
-
-								}}
+								placeholder='Phone Number'
 							/>
 						</div>
 					</section>
 				</form>
 			</>
-		)
-	};
+		);
+	}
 };
 
 export default AdminInfo;

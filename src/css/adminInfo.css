@@ -1,0 +1,393 @@
+
+#sidebarToggle:checked ~ #addRescuedPetMain {
+	width: calc(100% - 8rem - 16rem);
+	left: 8rem;
+}
+
+#addRescuedPetMain {
+	position: absolute;
+	width: calc(100% - 40rem - 16rem);
+	min-height: calc(100% - 16rem);
+	top: 0;
+	left: 40rem;
+	padding: 8rem;
+
+	display: flex;
+	justify-content: left;
+	align-items: start;
+	flex-direction: column;
+	gap: 8rem;
+
+	transition: width var(--transition), left var(--transition);
+}
+
+@media (max-width: 75rem) {
+	#sidebarToggle:checked ~ #addRescuedPetMain {
+		width: calc(100% - 16rem - 8rem);
+		left: 8rem;
+	}
+
+	#addRescuedPetMain {
+		width: calc(100% - 40rem - 16rem);
+		left: 40rem;
+	}
+}
+@media (max-width: 60rem) {
+	#sidebarToggle:checked ~ #addRescuedPetMain {
+		width: calc(100% - 8rem - 8rem);
+		left: 8rem;
+	}
+
+	#addRescuedPetMain {
+		width: calc(100% - 8rem - 8rem);
+		left: 8rem;
+		padding: 4rem;
+		gap: 4rem;
+	}
+}
+@media (max-width: 40rem) {
+	#addRescuedPetMain {
+		width: calc(100% - 8rem - 8rem);
+		padding: 2rem;
+		gap: 2rem;
+	}
+}
+
+#addRescuedPetMain > #filter {
+	position: relative;
+	width: calc(100% - 8rem);
+	padding: 2rem 4rem;
+	border-radius: 2rem;
+	background-color: var(--white);
+	filter: drop-shadow(0px 0px 0.5rem rgba(0, 0, 0, 0.5));
+	display: flex;
+	justify-content: left;
+	align-items: start;
+	flex-direction: column;
+	gap: 2rem;
+
+	overflow: hidden;
+}
+#addRescuedPetMain > #filter > svg {
+	position: absolute;
+	width: 40rem;
+	height: 40rem;
+	top: 0;
+	left: 75%;
+	z-index: -1;
+}
+#addRescuedPetMain > #filter > div {
+	width: 75%;
+	display: flex;
+	justify-content: left;
+	align-items: center;
+	flex-direction: row;
+	gap: 2rem;
+}
+#addRescuedPetMain > #filter > div > * {
+	width: 100%;
+	display: block;
+}
+#addRescuedPetMain > #filter > div > input {
+	display: none;
+}
+#addRescuedPetMain > #filter > div > label {
+	padding: 0.5rem 4rem;
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	border: solid 0.5rem var(--primary-complement);
+	color: var(--primary-complement);
+	background-color: var(--white);
+	border-radius: 10rem;
+}
+#addRescuedPetMain > #filter > div > label:hover {
+	background-color: var(--primary-complement);
+	color: var(--white);
+}
+#addRescuedPetMain > #filter > div > input:checked + label {
+	background-color: var(--primary-complement);
+	color: var(--white);
+}
+#addRescuedPetMain > #filter > div > input:checked + label:hover {
+	background-color: var(--primary-complement);
+	color: var(--white);
+}
+@media (max-width: 60rem) {
+	#addRescuedPetMain > #filter {
+		flex-direction: row;
+	}
+	#addRescuedPetMain > #filter > div {
+		flex-direction: column;
+		text-align: center;
+	}
+	#addRescuedPetMain > #filter > div > label {
+		width: calc(100% - 8rem);
+	}
+}
+
+#addRescuedPetMain > #rescues {
+	width: 100%;
+	display: flex;
+	justify-content: left;
+	align-items: center;
+	flex-direction: column;
+	gap: 4rem;
+}
+@media (max-width: 60rem) {
+	#addRescuedPetMain > #rescues {
+		gap: 2rem;
+	}
+}
+
+#addRescuedPetMain > #rescues > #header {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-direction: row;
+}
+#addRescuedPetMain > #rescues > #header > form {
+	display: flex;
+	justify-content: left;
+	align-items: center;
+	flex-direction: row;
+	gap: 2rem;
+}
+@media (max-width: 60rem) {
+	#addRescuedPetMain > #rescues > #header {
+		gap: 2rem;
+		flex-direction: column;
+	}
+	#addRescuedPetMain > #rescues > #header > form {
+		width: 100%;
+		justify-content: space-between;
+	}
+	#addRescuedPetMain > #rescues > #header > form > .inputDiv,
+	#addRescuedPetMain > #rescues > #header > form > .inputDiv > input {
+		width: 100%;
+	}
+}
+#addRescuedPetMain > #rescues > #petCards {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-direction: row;
+	flex-wrap: wrap;
+	gap: 4rem;
+}
+
+#addRescuedPetMain {
+	display: flex;
+	justify-content: left;
+	align-items: center;
+	flex-direction: column;
+	gap: 4rem;
+}
+
+#addRescuedPetMain > * {
+	width: calc(100% - 8rem);
+	padding: 2rem 4rem;
+	border-radius: 2rem;
+	background-color: var(--white);
+	filter: drop-shadow(0px 0px 0.5rem rgba(0, 0, 0, 0.5));
+}
+
+#addRescuedPetMain > #header {
+	width: calc(100% - 8rem);
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-direction: row;
+}
+#addRescuedPetMain > #header > div {
+	display: flex;
+	justify-content: left;
+	align-items: center;
+	flex-direction: row;
+	gap: 2rem;
+}
+@media (max-width: 60rem) {
+	#addRescuedPetMain > #header {
+		flex-direction: column;
+		gap: 2rem;
+		text-align: center;
+	}
+	#addRescuedPetMain > #header > div {
+		width: 100%;
+		justify-content: space-between;
+	}
+	#addRescuedPetMain > #header > div > .button {
+		width: 100%;
+	}
+}
+
+#addRescuedPetMain > #basicInfo {
+	width: calc(100% - 8rem);
+	padding: 4rem 4rem;
+	display: flex;
+	justify-content: left;
+	align-items: flex-start;
+	flex-direction: row;
+	gap: 4rem;
+}
+#addRescuedPetMain > #basicInfo > div {
+	width: 100%;
+	display: flex;
+	justify-content: left;
+	align-items: center;
+	flex-direction: column;
+	gap: 2rem;
+}
+#addRescuedPetMain > #basicInfo > #image {
+	width: unset;
+}
+#addRescuedPetMain > #basicInfo > #image > #img {
+	width: 24rem;
+	height: 24rem;
+	border-radius: 2rem;
+	border: solid 0.5rem var(--semi-primary-complement);
+	background-color: var(--plain);
+	background-size: cover;
+	background-position: center;
+	filter: drop-shadow(0px 0px 0.5rem rgba(0, 0, 0, 0.5));
+}
+#addRescuedPetMain > #basicInfo > #image > input {
+	display: none;
+}
+#addRescuedPetMain > #basicInfo > div > span {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-direction: row;
+	gap: 2rem;
+}
+@media (max-width: 60rem) {
+	#addRescuedPetMain > #basicInfo {
+		flex-direction: column;
+		gap: 4rem;
+	}
+	#addRescuedPetMain > #basicInfo > div {
+		width: 100%;
+	}
+	#addRescuedPetMain > #basicInfo > #image {
+		width: 100%;
+	}
+}
+
+#addRescuedPetMain > #backgroundInfo {
+	padding: 4rem 4rem;
+	display: flex;
+	justify-content: left;
+	align-items: flex-start;
+	flex-direction: column;
+	gap: 2rem;
+}
+@media (max-width: 60rem) {
+	#addRescuedPetMain > #backgroundInfo {
+		gap: 4rem;
+	}
+}
+#addRescuedPetMain > #backgroundInfo > div .formInput {
+	width: max-content;
+	min-width: 20rem;
+	flex: 1;
+}
+@media (max-width: 60rem) {
+	#addRescuedPetMain > #backgroundInfo > div .formInput:has(textarea) {
+		width: 100%;
+		min-width: 100%;
+	}
+}
+#addRescuedPetMain > #backgroundInfo > div {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	flex-direction: row;
+	gap: 4rem;
+	margin-bottom: 4rem;
+}
+#addRescuedPetMain > #backgroundInfo > div:first-child,
+#addRescuedPetMain > #backgroundInfo > #vaccination,
+#addRescuedPetMain > #backgroundInfo > #medicalHistory {
+	width: 100%;
+	display: flex;
+	justify-content: left;
+	align-items: flex-start;
+	flex-direction: column;
+	gap: 4rem;
+}
+#addRescuedPetMain > #backgroundInfo > :nth-child(2),
+#addRescuedPetMain > #backgroundInfo > #vaccination > div,
+#addRescuedPetMain > #backgroundInfo > #medicalHistory > div {
+	width: 100%;
+	display: flex;
+	justify-content: stretch;
+	align-items: flex-start;
+	flex-direction: row;
+	flex-wrap: wrap;
+	gap: 4rem;
+}
+#addRescuedPetMain > #backgroundInfo > #vaccination > div > .button,
+#addRescuedPetMain > #backgroundInfo > #medicalHistory > div > .button {
+	margin-top: 4rem;
+}
+#addRescuedPetMain > #backgroundInfo > #medicalHistory span {
+	width: 100%;
+	display: flex;
+	justify-content: left;
+	align-items: center;
+	flex-direction: row;
+	gap: 2rem;
+}
+@media (max-width: 60rem) {
+	#addRescuedPetMain > #backgroundInfo > #medicalHistory .formInput:has(textarea) {
+		width: 100%;
+		min-width: unset;
+	}
+}
+
+@media (max-width: 60rem) {
+	#addRescuedPetMain > #backgroundInfo > :nth-child(2),
+	#addRescuedPetMain > #backgroundInfo > #vaccination > div,
+	#addRescuedPetMain > #backgroundInfo > #medicalHistory > div {
+		gap: 4rem;
+	}
+}
+
+#addRescuedPetMain > #rfid {
+	padding: 4rem 4rem;
+	display: flex;
+	justify-content: left;
+	align-items: flex-start;
+	flex-direction: column;
+	gap: 4rem;
+}
+#addRescuedPetMain > #rfid > div {
+	width: 100%;
+	display: flex;
+	justify-content: left;
+	align-items: center;
+	flex-direction: row;
+	gap: 2rem;
+}
+#addRescuedPetMain > #rfid > div .button {
+	margin-top: 4rem;
+}
+@media (max-width: 60rem) {
+	#addRescuedPetMain > #rfid {
+		gap: 4rem;
+	}
+	#addRescuedPetMain > #rfid > div {
+		flex-direction: column;
+		gap: 2rem;
+	}
+	#addRescuedPetMain > #rfid > div .button {
+		width: 100%;
+		margin: unset;
+	}
+}
