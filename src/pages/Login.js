@@ -47,9 +47,13 @@ class Login extends React.Component {
 				} else {
 					MySwal.fire({
 						title: <h4>Wrong Credentials</h4>,
-						html: <p>Incorrect Username or Password. Please try again.</p>,
+						html: <>
+							<p>Incorrect Username or Password.</p>
+							<p>Please try again.</p>,
+						</>,
 						width: '60rem',
 						icon: 'error',
+						iconColor: 'var(--primary-color)',
 						confirmButtonText: 'Ok',
 						confirmButtonColor: 'var(--primary-color)'
 					});
