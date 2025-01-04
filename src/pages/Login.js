@@ -2,8 +2,12 @@ import React from 'react';
 
 import Button from '../components/Button';
 import Input from '../components/Input';
-
 import '../css/login.css';
+
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+
+const MySwal = withReactContent(Swal);
 
 class Login extends React.Component {
 	constructor(props) {
@@ -41,7 +45,14 @@ class Login extends React.Component {
 					localStorage.setItem('token', token);
 					window.location.hash = '/dashboard';
 				} else {
-					alert('Invalid username or password');
+					MySwal.fire({
+						title: <h4>Wrong Credentials</h4>,
+						html: <p>Incorrect Username or Password. Please try again.</p>,
+						width: '60rem',
+						icon: 'error',
+						confirmButtonText: 'Ok',
+						confirmButtonColor: 'var(--primary-color)'
+					});
 				};
 			})
 			.catch(err => console.error)
