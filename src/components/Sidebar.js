@@ -1,5 +1,10 @@
 import React from 'react';
 
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+
+const MySwal = withReactContent(Swal);
+
 class Sidebar extends React.Component {
 	componentDidMount() {
 		const pages = document.getElementById('pages').children;
@@ -135,7 +140,22 @@ class Sidebar extends React.Component {
 
 					<div id='logout'
 						onClick={() => {
-							window.location.hash = '/';
+							MySwal.fire({
+								title: <h4>Are you sure?</h4>,
+								html: <p>You are about to logout</p>,
+								width: '60rem',
+								icon: 'warning',
+								iconColor: 'var(--primary-color)',
+								showCancelButton: true,
+								confirmButtonColor: 'var(--primary-color)',
+								cancelButtonColor: 'var(--primary-complement)',
+							}).then((result) => {
+								if (result.isConfirmed) {
+									localStorage.removeItem('user');
+									window.location.hash = '/';
+								}
+							}
+							)
 						}}
 					>
 						<svg viewBox='0 0 26 26'>
