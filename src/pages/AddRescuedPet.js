@@ -4,8 +4,12 @@ import Sidebar from '../components/Sidebar';
 import Button from '../components/Button';
 import Popup from '../components/Popup';
 import FormInput from '../components/FormInput';
-
 import '../css/addRescuedPet.css';
+
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+
+const MySwal = withReactContent(Swal);
 
 class AddRescuedPet extends React.Component {
 	constructor(props) {
@@ -81,7 +85,15 @@ class AddRescuedPet extends React.Component {
 			const size = document.getElementById('size').value;
 
 			if (!petID || !name || !type || !breed || !ageYear || !ageMonth || !attributes || !rescueStory || !rescueDate || !weight || !size) {
-				alert('Please fill out all fields.');
+				MySwal.fire({
+					title: <h4>Missing Fields</h4>,
+					html: <p>Please fill out all fields.</p>,
+					width: '60rem',
+					icon: 'error',
+					iconColor: 'var(--primary-color)',
+					confirmButtonText: 'Ok',
+					confirmButtonColor: 'var(--primary-color)'
+				});
 				return;
 			}
 
@@ -112,7 +124,15 @@ class AddRescuedPet extends React.Component {
 			const rfidTag = document.getElementById('rfidTag').value;
 
 			if (!rfidTag) {
-				alert('Please scan RFID.');
+				MySwal.fire({
+					title: <h4>Please Scan RFID</h4>,
+					html: <p>RFID cannot be empty.</p>,
+					width: '60rem',
+					icon: 'error',
+					iconColor: 'var(--primary-color)',
+					confirmButtonText: 'Ok',
+					confirmButtonColor: 'var(--primary-color)'
+				});
 				return;
 			};
 
@@ -171,6 +191,15 @@ class AddRescuedPet extends React.Component {
 					},
 					body: JSON.stringify(data)
 				}).then(res => res.json()).then(res => {
+					MySwal.fire({
+						title: <h4>Rescued Pet Added</h4>,
+						html: <p>Rescued pet has been successfully added.</p>,
+						width: '60rem',
+						icon: 'success',
+						iconColor: 'var(--primary-color)',
+						confirmButtonText: 'Ok',
+						confirmButtonColor: 'var(--primary-color)'
+					});
 					window.location.hash = '/rescues';
 				});
 			};
