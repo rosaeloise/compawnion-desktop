@@ -520,6 +520,15 @@ class Rescues extends React.Component {
 										} catch (error) { console.log(error) };
 									}}
 								/>
+								<Button
+									title='Archive'
+									theme='dark'
+
+									onClick={(e) => {
+										e.preventDefault();
+										window.location.hash = '/rescues/add';
+									}}
+								/>
 							</form>
 						</div>
 
