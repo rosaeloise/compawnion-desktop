@@ -28,9 +28,9 @@ class Login extends React.Component {
 					'Authorization': `Bearer ${localStorage.getItem('token')}`
 				}
 			});
+			document.getElementById('loginButton').disabled = false;
 
 			if (!response.ok) return;
-			document.getElementById('loginButton').disabled = false;
 
 			window.location.hash = '/dashboard';
 		};
