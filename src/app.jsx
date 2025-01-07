@@ -18,6 +18,7 @@ import AppDetails from './pages/AppDetails';
 import Compawnions from './pages/Compawnions';
 import CompawnionInfo from './pages/CompawnionInfo';
 import AdminInfo from './pages/AdminInfo';
+import Contract from './pages/Contract';
 
 class App extends
 	React.Component {
@@ -40,6 +41,8 @@ class App extends
 					<Route path='/compawnions/:id' element={<CompawnionInfo />} />
 
 					<Route path='/adminInfo' element={<AdminInfo />} />
+
+					<Route path='/contract/:id' element={<Contract />} />
 				</Routes>
 			</HashRouter>
 		);
