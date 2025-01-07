@@ -20,37 +20,9 @@ class Rescues extends React.Component {
 				username: ''
 			},
 			popupContent: <></>,
-			rescues: []
+			rescues: [],
+			onArchive: false
 		};
-
-		fetch('https://compawnion-backend.onrender.com/ra', {
-			method: 'GET',
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		})
-			.then(res => res.json())
-			.then(res => {
-				const rescues = [];
-				for (const of in res) {
-					rescues.push({
-						image: res[of].personal.picture,
-						name: res[of].personal.name,
-						description: res[of].background.attributes,
-						href: '#/rescues/' + res[of].petId,
-						rfid: res[of].rfidTag,
-						petId: res[of].id,
-						type: res[of].personal.type,
-						size: res[of].background.size,
-						age: parseInt(res[of].personal.age.year) * parseInt(res[of].personal.age.month) // Age in months
-					});
-				};
-				console.log(rescues);
-
-				this.setState({
-					rescues: rescues
-				});
-			});
 	};
 	componentDidMount() {
 		fetch('https://compawnion-backend.onrender.com/admins/me', {
@@ -76,256 +48,324 @@ class Rescues extends React.Component {
 					window.location.hash = '/login';
 				};
 			});
+		{
+			// Type
+			const cat = document.getElementById('Cat');
+			const dog = document.getElementById('Dog');
+			const both = document.getElementById('both');
 
-		// Type
-		const cat = document.getElementById('Cat');
-		const dog = document.getElementById('Dog');
-		const both = document.getElementById('both');
+			cat.addEventListener('change', () => {
+				const petCardsElement = document.getElementById('petCards');
+				const petCards = petCardsElement.querySelectorAll('.petCard');
 
-		cat.addEventListener('change', () => {
-			const petCardsElement = document.getElementById('petCards');
-			const petCards = petCardsElement.querySelectorAll('.petCard');
+				this.state.rescues.forEach(rescue => {
+					if (rescue.type === 'Cat') {
+						petCards.forEach(card => {
+							const cardId = card.getAttribute('id');
+							if (rescue.petId === cardId) {
+								card.style.display = 'flex';
+							};
+						});
+					} else {
+						petCards.forEach(card => {
+							const cardId = card.getAttribute('id');
+							if (rescue.petId === cardId) {
+								card.style.display = 'none';
+							};
+						});
+					};
+				});
+			});
+			dog.addEventListener('change', () => {
+				const petCardsElement = document.getElementById('petCards');
+				const petCards = petCardsElement.querySelectorAll('.petCard');
 
-			this.state.rescues.forEach(rescue => {
-				if (rescue.type === 'Cat') {
+				this.state.rescues.forEach(rescue => {
+					if (rescue.type === 'Dog') {
+						petCards.forEach(card => {
+							const cardId = card.getAttribute('id');
+							if (rescue.petId === cardId) {
+								card.style.display = 'flex';
+							};
+						});
+					} else {
+						petCards.forEach(card => {
+							const cardId = card.getAttribute('id');
+							if (rescue.petId === cardId) {
+								card.style.display = 'none';
+							};
+						});
+					};
+				});
+			});
+			both.addEventListener('change', () => {
+				const petCardsElement = document.getElementById('petCards');
+				const petCards = petCardsElement.querySelectorAll('.petCard');
+
+				this.state.rescues.forEach(rescue => {
 					petCards.forEach(card => {
 						const cardId = card.getAttribute('id');
 						if (rescue.petId === cardId) {
 							card.style.display = 'flex';
 						};
 					});
+				});
+			});
+
+			// Size
+			const small = document.getElementById('Small');
+			const medium = document.getElementById('Medium');
+			const large = document.getElementById('Large');
+			small.checked = true;
+			medium.checked = true;
+			large.checked = true;
+
+			small.addEventListener('change', () => {
+				const petCardsElement = document.getElementById('petCards');
+				const petCards = petCardsElement.querySelectorAll('.petCard');
+
+				if (small.checked) {
+					this.state.rescues.forEach(rescue => {
+						if (rescue.size === 'Small') {
+							petCards.forEach(card => {
+								const cardId = card.getAttribute('id');
+								if (rescue.petId === cardId) {
+									card.style.display = 'flex';
+								};
+							});
+						};
+					});
 				} else {
-					petCards.forEach(card => {
-						const cardId = card.getAttribute('id');
-						if (rescue.petId === cardId) {
-							card.style.display = 'none';
+					this.state.rescues.forEach(rescue => {
+						if (rescue.size === 'Small') {
+							petCards.forEach(card => {
+								const cardId = card.getAttribute('id');
+								if (rescue.petId === cardId) {
+									card.style.display = 'none';
+								};
+							});
 						};
 					});
 				};
 			});
-		});
-		dog.addEventListener('change', () => {
-			const petCardsElement = document.getElementById('petCards');
-			const petCards = petCardsElement.querySelectorAll('.petCard');
+			medium.addEventListener('change', () => {
+				const petCardsElement = document.getElementById('petCards');
+				const petCards = petCardsElement.querySelectorAll('.petCard');
 
-			this.state.rescues.forEach(rescue => {
-				if (rescue.type === 'Dog') {
-					petCards.forEach(card => {
-						const cardId = card.getAttribute('id');
-						if (rescue.petId === cardId) {
-							card.style.display = 'flex';
+				if (medium.checked) {
+					this.state.rescues.forEach(rescue => {
+						if (rescue.size === 'Medium') {
+							petCards.forEach(card => {
+								const cardId = card.getAttribute('id');
+								if (rescue.petId === cardId) {
+									card.style.display = 'flex';
+								};
+							});
 						};
 					});
 				} else {
-					petCards.forEach(card => {
-						const cardId = card.getAttribute('id');
-						if (rescue.petId === cardId) {
-							card.style.display = 'none';
+					this.state.rescues.forEach(rescue => {
+						if (rescue.size === 'Medium') {
+							petCards.forEach(card => {
+								const cardId = card.getAttribute('id');
+								if (rescue.petId === cardId) {
+									card.style.display = 'none';
+								};
+							});
 						};
 					});
 				};
 			});
-		});
-		both.addEventListener('change', () => {
-			const petCardsElement = document.getElementById('petCards');
-			const petCards = petCardsElement.querySelectorAll('.petCard');
+			large.addEventListener('change', () => {
+				const petCardsElement = document.getElementById('petCards');
+				const petCards = petCardsElement.querySelectorAll('.petCard');
 
-			this.state.rescues.forEach(rescue => {
-				petCards.forEach(card => {
-					const cardId = card.getAttribute('id');
-					if (rescue.petId === cardId) {
-						card.style.display = 'flex';
-					};
-				});
+				if (large.checked) {
+					this.state.rescues.forEach(rescue => {
+						if (rescue.size === 'Large') {
+							petCards.forEach(card => {
+								const cardId = card.getAttribute('id');
+								if (rescue.petId === cardId) {
+									card.style.display = 'flex';
+								};
+							});
+						};
+					});
+				} else {
+					this.state.rescues.forEach(rescue => {
+						if (rescue.size === 'Large') {
+							petCards.forEach(card => {
+								const cardId = card.getAttribute('id');
+								if (rescue.petId === cardId) {
+									card.style.display = 'none';
+								};
+							});
+						};
+					});
+				};
 			});
-		});
 
-		// Size
-		const small = document.getElementById('Small');
-		const medium = document.getElementById('Medium');
-		const large = document.getElementById('Large');
-		small.checked = true;
-		medium.checked = true;
-		large.checked = true;
+			// Age
+			const months = document.getElementById('months');
+			const oneToFiveYears = document.getElementById('1-5years');
+			const fivePlusYears = document.getElementById('5+years');
+			months.checked = true;
+			oneToFiveYears.checked = true;
+			fivePlusYears.checked = true;
 
-		small.addEventListener('change', () => {
-			const petCardsElement = document.getElementById('petCards');
-			const petCards = petCardsElement.querySelectorAll('.petCard');
+			months.addEventListener('change', () => {
+				const petCardsElement = document.getElementById('petCards');
+				const petCards = petCardsElement.querySelectorAll('.petCard');
 
-			if (small.checked) {
-				this.state.rescues.forEach(rescue => {
-					if (rescue.size === 'Small') {
-						petCards.forEach(card => {
-							const cardId = card.getAttribute('id');
-							if (rescue.petId === cardId) {
-								card.style.display = 'flex';
-							};
-						});
-					};
-				});
-			} else {
-				this.state.rescues.forEach(rescue => {
-					if (rescue.size === 'Small') {
-						petCards.forEach(card => {
-							const cardId = card.getAttribute('id');
-							if (rescue.petId === cardId) {
-								card.style.display = 'none';
-							};
-						});
-					};
-				});
-			};
-		});
-		medium.addEventListener('change', () => {
-			const petCardsElement = document.getElementById('petCards');
-			const petCards = petCardsElement.querySelectorAll('.petCard');
+				if (months.checked) {
+					this.state.rescues.forEach(rescue => {
+						if (rescue.age < 12) {
+							petCards.forEach(card => {
+								const cardId = card.getAttribute('id');
+								if (rescue.petId === cardId) {
+									card.style.display = 'flex';
+								};
+							});
+						};
+					});
+				} else {
+					this.state.rescues.forEach(rescue => {
+						if (rescue.age < 12) {
+							petCards.forEach(card => {
+								const cardId = card.getAttribute('id');
+								if (rescue.petId === cardId) {
+									card.style.display = 'none';
+								};
+							});
+						};
+					});
+				};
+			});
+			oneToFiveYears.addEventListener('change', () => {
+				const petCardsElement = document.getElementById('petCards');
+				const petCards = petCardsElement.querySelectorAll('.petCard');
 
-			if (medium.checked) {
-				this.state.rescues.forEach(rescue => {
-					if (rescue.size === 'Medium') {
-						petCards.forEach(card => {
-							const cardId = card.getAttribute('id');
-							if (rescue.petId === cardId) {
-								card.style.display = 'flex';
-							};
-						});
-					};
-				});
-			} else {
-				this.state.rescues.forEach(rescue => {
-					if (rescue.size === 'Medium') {
-						petCards.forEach(card => {
-							const cardId = card.getAttribute('id');
-							if (rescue.petId === cardId) {
-								card.style.display = 'none';
-							};
-						});
-					};
-				});
-			};
-		});
-		large.addEventListener('change', () => {
-			const petCardsElement = document.getElementById('petCards');
-			const petCards = petCardsElement.querySelectorAll('.petCard');
+				if (oneToFiveYears.checked) {
+					this.state.rescues.forEach(rescue => {
+						if (rescue.age >= 12 && rescue.age < 60) {
+							petCards.forEach(card => {
+								const cardId = card.getAttribute('id');
+								if (rescue.petId === cardId) {
+									card.style.display = 'flex';
+								};
+							});
+						};
+					});
+				} else {
+					this.state.rescues.forEach(rescue => {
+						if (rescue.age >= 12 && rescue.age < 60) {
+							petCards.forEach(card => {
+								const cardId = card.getAttribute('id');
+								if (rescue.petId === cardId) {
+									card.style.display = 'none';
+								};
+							});
+						};
+					});
+				};
+			});
+			fivePlusYears.addEventListener('change', () => {
+				const petCardsElement = document.getElementById('petCards');
+				const petCards = petCardsElement.querySelectorAll('.petCard');
 
-			if (large.checked) {
-				this.state.rescues.forEach(rescue => {
-					if (rescue.size === 'Large') {
-						petCards.forEach(card => {
-							const cardId = card.getAttribute('id');
-							if (rescue.petId === cardId) {
-								card.style.display = 'flex';
-							};
-						});
-					};
-				});
-			} else {
-				this.state.rescues.forEach(rescue => {
-					if (rescue.size === 'Large') {
-						petCards.forEach(card => {
-							const cardId = card.getAttribute('id');
-							if (rescue.petId === cardId) {
-								card.style.display = 'none';
-							};
-						});
-					};
-				});
-			};
-		});
+				if (fivePlusYears.checked) {
+					this.state.rescues.forEach(rescue => {
+						if (rescue.age >= 60) {
+							petCards.forEach(card => {
+								const cardId = card.getAttribute('id');
+								if (rescue.petId === cardId) {
+									card.style.display = 'flex';
+								};
+							});
+						};
+					});
+				} else {
+					this.state.rescues.forEach(rescue => {
+						if (rescue.age >= 60) {
+							petCards.forEach(card => {
+								const cardId = card.getAttribute('id');
+								if (rescue.petId === cardId) {
+									card.style.display = 'none';
+								};
+							});
+						};
+					});
+				};
+			});
+		}
 
-		// Age
-		const months = document.getElementById('months');
-		const oneToFiveYears = document.getElementById('1-5years');
-		const fivePlusYears = document.getElementById('5+years');
-		months.checked = true;
-		oneToFiveYears.checked = true;
-		fivePlusYears.checked = true;
-
-		months.addEventListener('change', () => {
-			const petCardsElement = document.getElementById('petCards');
-			const petCards = petCardsElement.querySelectorAll('.petCard');
-
-			if (months.checked) {
-				this.state.rescues.forEach(rescue => {
-					if (rescue.age < 12) {
-						petCards.forEach(card => {
-							const cardId = card.getAttribute('id');
-							if (rescue.petId === cardId) {
-								card.style.display = 'flex';
-							};
-						});
-					};
-				});
-			} else {
-				this.state.rescues.forEach(rescue => {
-					if (rescue.age < 12) {
-						petCards.forEach(card => {
-							const cardId = card.getAttribute('id');
-							if (rescue.petId === cardId) {
-								card.style.display = 'none';
-							};
-						});
-					};
-				});
-			};
-		});
-		oneToFiveYears.addEventListener('change', () => {
-			const petCardsElement = document.getElementById('petCards');
-			const petCards = petCardsElement.querySelectorAll('.petCard');
-
-			if (oneToFiveYears.checked) {
-				this.state.rescues.forEach(rescue => {
-					if (rescue.age >= 12 && rescue.age < 60) {
-						petCards.forEach(card => {
-							const cardId = card.getAttribute('id');
-							if (rescue.petId === cardId) {
-								card.style.display = 'flex';
-							};
-						});
-					};
-				});
-			} else {
-				this.state.rescues.forEach(rescue => {
-					if (rescue.age >= 12 && rescue.age < 60) {
-						petCards.forEach(card => {
-							const cardId = card.getAttribute('id');
-							if (rescue.petId === cardId) {
-								card.style.display = 'none';
-							};
-						});
-					};
-				});
-			};
-		});
-		fivePlusYears.addEventListener('change', () => {
-			const petCardsElement = document.getElementById('petCards');
-			const petCards = petCardsElement.querySelectorAll('.petCard');
-
-			if (fivePlusYears.checked) {
-				this.state.rescues.forEach(rescue => {
-					if (rescue.age >= 60) {
-						petCards.forEach(card => {
-							const cardId = card.getAttribute('id');
-							if (rescue.petId === cardId) {
-								card.style.display = 'flex';
-							};
-						});
-					};
-				});
-			} else {
-				this.state.rescues.forEach(rescue => {
-					if (rescue.age >= 60) {
-						petCards.forEach(card => {
-							const cardId = card.getAttribute('id');
-							if (rescue.petId === cardId) {
-								card.style.display = 'none';
-							};
-						});
-					};
-				});
-			};
-		});
+		this.fetchRescues();
 	};
+
+	fetchRescues() {
+		fetch('https://compawnion-backend.onrender.com/ra', {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+			.then(res => res.json())
+			.then(res => {
+				const rescues = [];
+				for (const of in res) {
+					rescues.push({
+						image: res[of].personal.picture,
+						name: res[of].personal.name,
+						description: res[of].background.attributes,
+						href: '#/rescues/' + res[of].petId,
+						rfid: res[of].rfidTag,
+						petId: res[of].id,
+						type: res[of].personal.type,
+						size: res[of].background.size,
+						age: parseInt(res[of].personal.age.year) * parseInt(res[of].personal.age.month) // Age in months
+					});
+				};
+				console.log(rescues);
+
+				this.setState({
+					rescues: rescues,
+					onArchive: false
+				});
+			});
+	};
+
+	fetchArchive() {
+		fetch('https://compawnion-backend.onrender.com/ra/archived', {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+			.then(res => res.json())
+			.then(res => {
+				const archive = [];
+				for (const of in res) {
+					archive.push({
+						image: res[of].personal.picture,
+						name: res[of].personal.name,
+						description: res[of].background.attributes,
+						href: '#/archive/' + res[of].petId,
+						rfid: res[of].rfidTag,
+						petId: res[of].id,
+						type: res[of].personal.type,
+						size: res[of].background.size,
+						age: parseInt(res[of].personal.age.year) * parseInt(res[of].personal.age.month) // Age in months
+					});
+				};
+				console.log(archive);
+
+				this.setState({
+					rescues: archive,
+					onArchive: true
+				});
+			});
+	};
+
 	render() {
 		return (
 			<>
@@ -402,7 +442,7 @@ class Rescues extends React.Component {
 
 					<div id='rescues'>
 						<div id='header'>
-							<h3>Results</h3>
+							<h3>{ this.state.onArchive ? 'Archive' : 'Rescues' }</h3>
 
 							<form>
 								<Input
@@ -438,97 +478,115 @@ class Rescues extends React.Component {
 										});
 									}}
 								/>
-								<Button
-									title='Add New'
+								{
+									!this.state.onArchive ? (
+										<>
+											<Button
+												title='Add New'
 
-									onClick={(e) => {
-										e.preventDefault();
-										window.location.hash = '/rescues/add';
-									}}
-								/>
-								<Button
-									title='Scan RFID'
-									theme='dark'
+												onClick={(e) => {
+													e.preventDefault();
+													window.location.hash = '/rescues/add';
+												}}
+											/>
+											<Button
+												title='Scan RFID'
+												theme='dark'
 
-									onClick={(e) => {
-										e.preventDefault();
-										this.setState({
-											popupContent: (
-												<>
-													<h1>Scan RFID</h1>
-													<Input
-														type='password'
-														placeholder='RFID'
-														id='rfid'
-														onKeyDown={(e) => {
-															if (e.key === 'Enter') {
-																const rescues = this.state.rescues;
-																const search = e.target.value.toLowerCase();
+												onClick={(e) => {
+													e.preventDefault();
+													this.setState({
+														popupContent: (
+															<>
+																<h1>Scan RFID</h1>
+																<Input
+																	type='password'
+																	placeholder='RFID'
+																	id='rfid'
+																	onKeyDown={(e) => {
+																		if (e.key === 'Enter') {
+																			const rescues = this.state.rescues;
+																			const search = e.target.value.toLowerCase();
 
-																const filteredRescues = rescues.filter(rescue => {
-																	return rescue.rfid.toLowerCase().includes(search);
-																});
+																			const filteredRescues = rescues.filter(rescue => {
+																				return rescue.rfid.toLowerCase().includes(search);
+																			});
 
-																const petCardsElement = document.getElementById('petCards');
-																const petCards = petCardsElement.querySelectorAll('.petCard');
+																			const petCardsElement = document.getElementById('petCards');
+																			const petCards = petCardsElement.querySelectorAll('.petCard');
 
-																petCards.forEach(card => {
-																	const cardId = card.getAttribute('id');
-																	if (filteredRescues.some(rescue => rescue.petId === cardId)) {
-																		card.style.display = 'flex';
-																	} else {
-																		card.style.display = 'none';
-																	}
-																});
+																			petCards.forEach(card => {
+																				const cardId = card.getAttribute('id');
+																				if (filteredRescues.some(rescue => rescue.petId === cardId)) {
+																					card.style.display = 'flex';
+																				} else {
+																					card.style.display = 'none';
+																				}
+																			});
 
-																const popup = document.getElementById('popup');
-																popup.style.top = '-50%';
+																			const popup = document.getElementById('popup');
+																			popup.style.top = '-50%';
 
-																setTimeout(() => {
-																	this.setState({
-																		popupContent: <></>
-																	});
-																}, 250);
-															};
-														}}
-													/>
-													<Button
-														title='Cancel'
-														theme='dark'
-														onClick={() => {
-															const popup = document.getElementById('popup');
-															popup.style.top = '-50%';
+																			setTimeout(() => {
+																				this.setState({
+																					popupContent: <></>
+																				});
+																			}, 250);
+																		};
+																	}}
+																/>
+																<Button
+																	title='Cancel'
+																	theme='dark'
+																	onClick={() => {
+																		const popup = document.getElementById('popup');
+																		popup.style.top = '-50%';
 
-															setTimeout(() => {
-																this.setState({
-																	popupContent: <></>
-																});
-															}, 250);
-														}}
-													/>
-												</>
-											)
-										});
+																		setTimeout(() => {
+																			this.setState({
+																				popupContent: <></>
+																			});
+																		}, 250);
+																	}}
+																/>
+															</>
+														)
+													});
 
-										const popup = document.getElementById('popup');
-										popup.style.top = '50%';
-										try {
-											setTimeout(() => {
-												const input = popup.querySelector('#rfid');
-												input.focus();
-											}, 250);
-										} catch (error) { console.log(error) };
-									}}
-								/>
-								<Button
-									title='Archive'
-									theme='dark'
+													const popup = document.getElementById('popup');
+													popup.style.top = '50%';
+													try {
+														setTimeout(() => {
+															const input = popup.querySelector('#rfid');
+															input.focus();
+														}, 250);
+													} catch (error) { console.log(error) };
+												}}
+											/>
+											<Button
+												title='Archive'
+												theme='dark'
 
-									onClick={(e) => {
-										e.preventDefault();
-										window.location.hash = '/rescues/add';
-									}}
-								/>
+												onClick={(e) => {
+													e.preventDefault();
+													this.fetchArchive();
+												}}
+											/>
+										</>
+									) : (
+										<>
+											<Button
+												title='Back'
+												theme='dark'
+
+												onClick={(e) => {
+													e.preventDefault();
+													this.fetchRescues();
+												}}
+											/>
+										</>
+									)
+								}
 							</form>
 						</div>
 
@@ -541,6 +599,7 @@ class Rescues extends React.Component {
 									name={rescue.name}
 									description={rescue.description}
 									href={rescue.href}
+									archived={this.state.onArchive ? 'true' : 'false'}
 								/>
 							))}
 						</div>

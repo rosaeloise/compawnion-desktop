@@ -14,10 +14,14 @@ class PetCard extends React.Component {
 				<p>{this.props.description}</p>
 				<Button
 					href={this.props.href}
-					size='Small'
+					size='small'
 					title='aboutMe'
 				>
-					Edit Info
+					{
+						this.props.archived === 'true' ?
+							'View Info' :
+							'Edit Info'
+					}
 				</Button>
 			</div>
 		)
