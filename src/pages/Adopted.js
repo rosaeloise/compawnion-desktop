@@ -6,6 +6,11 @@ import Button from '../components/Button';
 import PetCard from '../components/PetCard';
 import Popup from '../components/Popup';
 
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+
+const MySwal = withReactContent(Swal);
+
 import '../css/adopted.css';
 
 class Adopted extends React.Component {
@@ -86,7 +91,7 @@ class Adopted extends React.Component {
 					localStorage.removeItem('token');
 					await MySwal.fire({
 						title: <h4>Session Expired</h4>,
-						text: <p>Please login again.</p>,
+						html: <p>Please login again.</p>,
 						icon: 'error',
 						iconColor: 'var(--primary-color)',
 						confirmButtonColor: 'var(--primary-color)'
@@ -139,7 +144,7 @@ class Adopted extends React.Component {
 					name={this.state.user.name}
 					branches={this.state.user.branches}
 
-					active='adopted'
+					active='compawnions'
 				/>
 
 				<main id='adoptedMain'>
@@ -164,7 +169,7 @@ class Adopted extends React.Component {
 									image={adopted.personal.picture}
 									name={adopted.personal.name}
 									description={adopted.background.attributes}
-									href={adopted.appPetID}
+									href={`#/adopted/${window.location.hash.split('/')[window.location.hash.split('/').length - 1]}/${adopted.petId}`}
 								/>
 							))}
 						</div>

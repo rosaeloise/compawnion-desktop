@@ -1,0 +1,393 @@
+
+#sidebarToggle:checked ~ #adoptedInfoMain {
+	width: calc(100% - 8rem - 16rem);
+	left: 8rem;
+}
+
+#adoptedInfoMain {
+	position: absolute;
+	width: calc(100% - 40rem - 16rem);
+	min-height: calc(100% - 16rem);
+	top: 0;
+	left: 40rem;
+	padding: 8rem;
+
+	display: flex;
+	justify-content: left;
+	align-items: start;
+	flex-direction: column;
+	gap: 8rem;
+
+	transition: width var(--transition), left var(--transition);
+}
+
+@media (max-width: 75rem) {
+	#sidebarToggle:checked ~ #adoptedInfoMain {
+		width: calc(100% - 16rem - 8rem);
+		left: 8rem;
+	}
+
+	#adoptedInfoMain {
+		width: calc(100% - 40rem - 16rem);
+		left: 40rem;
+	}
+}
+@media (max-width: 60rem) {
+	#sidebarToggle:checked ~ #adoptedInfoMain {
+		width: calc(100% - 8rem - 8rem);
+		left: 8rem;
+	}
+
+	#adoptedInfoMain {
+		width: calc(100% - 8rem - 8rem);
+		left: 8rem;
+		padding: 4rem;
+		gap: 4rem;
+	}
+}
+@media (max-width: 40rem) {
+	#adoptedInfoMain {
+		width: calc(100% - 8rem - 8rem);
+		padding: 2rem;
+		gap: 2rem;
+	}
+}
+
+#adoptedInfoMain > #filter {
+	position: relative;
+	width: calc(100% - 8rem);
+	padding: 2rem 4rem;
+	border-radius: 2rem;
+	background-color: var(--white);
+	filter: drop-shadow(0px 0px 0.5rem rgba(0, 0, 0, 0.5));
+	display: flex;
+	justify-content: left;
+	align-items: start;
+	flex-direction: column;
+	gap: 2rem;
+
+	overflow: hidden;
+}
+#adoptedInfoMain > #filter > svg {
+	position: absolute;
+	width: 40rem;
+	height: 40rem;
+	top: 0;
+	left: 75%;
+	z-index: -1;
+}
+#adoptedInfoMain > #filter > div {
+	width: 75%;
+	display: flex;
+	justify-content: left;
+	align-items: center;
+	flex-direction: row;
+	gap: 2rem;
+}
+#adoptedInfoMain > #filter > div > * {
+	width: 100%;
+	display: block;
+}
+#adoptedInfoMain > #filter > div > input {
+	display: none;
+}
+#adoptedInfoMain > #filter > div > label {
+	padding: 0.5rem 4rem;
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	border: solid 0.5rem var(--primary-complement);
+	color: var(--primary-complement);
+	background-color: var(--white);
+	border-radius: 10rem;
+}
+#adoptedInfoMain > #filter > div > label:hover {
+	background-color: var(--primary-complement);
+	color: var(--white);
+}
+#adoptedInfoMain > #filter > div > input:checked + label {
+	background-color: var(--primary-complement);
+	color: var(--white);
+}
+#adoptedInfoMain > #filter > div > input:checked + label:hover {
+	background-color: var(--primary-complement);
+	color: var(--white);
+}
+@media (max-width: 60rem) {
+	#adoptedInfoMain > #filter {
+		flex-direction: row;
+	}
+	#adoptedInfoMain > #filter > div {
+		flex-direction: column;
+		text-align: center;
+	}
+	#adoptedInfoMain > #filter > div > label {
+		width: calc(100% - 8rem);
+	}
+}
+
+#adoptedInfoMain > #rescues {
+	width: 100%;
+	display: flex;
+	justify-content: left;
+	align-items: center;
+	flex-direction: column;
+	gap: 4rem;
+}
+@media (max-width: 60rem) {
+	#adoptedInfoMain > #rescues {
+		gap: 2rem;
+	}
+}
+
+#adoptedInfoMain > #rescues > #header {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-direction: row;
+}
+#adoptedInfoMain > #rescues > #header > form {
+	display: flex;
+	justify-content: left;
+	align-items: center;
+	flex-direction: row;
+	gap: 2rem;
+}
+@media (max-width: 60rem) {
+	#adoptedInfoMain > #rescues > #header {
+		gap: 2rem;
+		flex-direction: column;
+	}
+	#adoptedInfoMain > #rescues > #header > form {
+		width: 100%;
+		justify-content: space-between;
+	}
+	#adoptedInfoMain > #rescues > #header > form > .inputDiv,
+	#adoptedInfoMain > #rescues > #header > form > .inputDiv > input {
+		width: 100%;
+	}
+}
+#adoptedInfoMain > #rescues > #petCards {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-direction: row;
+	flex-wrap: wrap;
+	gap: 4rem;
+}
+
+#adoptedInfoMain {
+	display: flex;
+	justify-content: left;
+	align-items: center;
+	flex-direction: column;
+	gap: 4rem;
+}
+
+#adoptedInfoMain > * {
+	width: calc(100% - 8rem);
+	padding: 2rem 4rem;
+	border-radius: 2rem;
+	background-color: var(--white);
+	filter: drop-shadow(0px 0px 0.5rem rgba(0, 0, 0, 0.5));
+}
+
+#adoptedInfoMain > #header {
+	width: calc(100% - 8rem);
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-direction: row;
+}
+#adoptedInfoMain > #header > div {
+	display: flex;
+	justify-content: left;
+	align-items: center;
+	flex-direction: row;
+	gap: 2rem;
+}
+@media (max-width: 60rem) {
+	#adoptedInfoMain > #header {
+		flex-direction: column;
+		gap: 2rem;
+		text-align: center;
+	}
+	#adoptedInfoMain > #header > div {
+		width: 100%;
+		justify-content: space-between;
+	}
+	#adoptedInfoMain > #header > div > .button {
+		width: 100%;
+	}
+}
+
+#adoptedInfoMain > #basicInfo {
+	width: calc(100% - 8rem);
+	padding: 4rem 4rem;
+	display: flex;
+	justify-content: left;
+	align-items: flex-start;
+	flex-direction: row;
+	gap: 4rem;
+}
+#adoptedInfoMain > #basicInfo > div {
+	width: 100%;
+	display: flex;
+	justify-content: left;
+	align-items: center;
+	flex-direction: column;
+	gap: 2rem;
+}
+#adoptedInfoMain > #basicInfo > #image {
+	width: unset;
+}
+#adoptedInfoMain > #basicInfo > #image > #img {
+	width: 24rem;
+	height: 24rem;
+	border-radius: 2rem;
+	border: solid 0.5rem var(--semi-primary-complement);
+	background-color: var(--plain);
+	background-size: cover;
+	background-position: center;
+	filter: drop-shadow(0px 0px 0.5rem rgba(0, 0, 0, 0.5));
+}
+#adoptedInfoMain > #basicInfo > #image > input {
+	display: none;
+}
+#adoptedInfoMain > #basicInfo > div > span {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-direction: row;
+	gap: 2rem;
+}
+@media (max-width: 60rem) {
+	#adoptedInfoMain > #basicInfo {
+		flex-direction: column;
+		gap: 4rem;
+	}
+	#adoptedInfoMain > #basicInfo > div {
+		width: 100%;
+	}
+	#adoptedInfoMain > #basicInfo > #image {
+		width: 100%;
+	}
+}
+
+#adoptedInfoMain > #backgroundInfo {
+	padding: 4rem 4rem;
+	display: flex;
+	justify-content: left;
+	align-items: flex-start;
+	flex-direction: column;
+	gap: 2rem;
+}
+@media (max-width: 60rem) {
+	#adoptedInfoMain > #backgroundInfo {
+		gap: 4rem;
+	}
+}
+#adoptedInfoMain > #backgroundInfo > div .formInput {
+	width: max-content;
+	min-width: 20rem;
+	flex: 1;
+}
+@media (max-width: 60rem) {
+	#adoptedInfoMain > #backgroundInfo > div .formInput:has(textarea) {
+		width: 100%;
+		min-width: 100%;
+	}
+}
+#adoptedInfoMain > #backgroundInfo > div {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	flex-direction: row;
+	gap: 4rem;
+	margin-bottom: 4rem;
+}
+#adoptedInfoMain > #backgroundInfo > div:first-child,
+#adoptedInfoMain > #backgroundInfo > #vaccination,
+#adoptedInfoMain > #backgroundInfo > #medicalHistory {
+	width: 100%;
+	display: flex;
+	justify-content: left;
+	align-items: flex-start;
+	flex-direction: column;
+	gap: 4rem;
+}
+#adoptedInfoMain > #backgroundInfo > :nth-child(2),
+#adoptedInfoMain > #backgroundInfo > #vaccination > div,
+#adoptedInfoMain > #backgroundInfo > #medicalHistory > div {
+	width: 100%;
+	display: flex;
+	justify-content: stretch;
+	align-items: flex-start;
+	flex-direction: row;
+	flex-wrap: wrap;
+	gap: 4rem;
+}
+#adoptedInfoMain > #backgroundInfo > #vaccination > div > .button,
+#adoptedInfoMain > #backgroundInfo > #medicalHistory > div > .button {
+	margin-top: 4rem;
+}
+#adoptedInfoMain > #backgroundInfo > #medicalHistory span {
+	width: 100%;
+	display: flex;
+	justify-content: left;
+	align-items: center;
+	flex-direction: row;
+	gap: 2rem;
+}
+@media (max-width: 60rem) {
+	#adoptedInfoMain > #backgroundInfo > #medicalHistory .formInput:has(textarea) {
+		width: 100%;
+		min-width: unset;
+	}
+}
+
+@media (max-width: 60rem) {
+	#adoptedInfoMain > #backgroundInfo > :nth-child(2),
+	#adoptedInfoMain > #backgroundInfo > #vaccination > div,
+	#adoptedInfoMain > #backgroundInfo > #medicalHistory > div {
+		gap: 4rem;
+	}
+}
+
+#adoptedInfoMain > #rfid {
+	padding: 4rem 4rem;
+	display: flex;
+	justify-content: left;
+	align-items: flex-start;
+	flex-direction: column;
+	gap: 4rem;
+}
+#adoptedInfoMain > #rfid > div {
+	width: 100%;
+	display: flex;
+	justify-content: left;
+	align-items: center;
+	flex-direction: row;
+	gap: 2rem;
+}
+#adoptedInfoMain > #rfid > div .button {
+	margin-top: 4rem;
+}
+@media (max-width: 60rem) {
+	#adoptedInfoMain > #rfid {
+		gap: 4rem;
+	}
+	#adoptedInfoMain > #rfid > div {
+		flex-direction: column;
+		gap: 2rem;
+	}
+	#adoptedInfoMain > #rfid > div .button {
+		width: 100%;
+		margin: unset;
+	}
+}

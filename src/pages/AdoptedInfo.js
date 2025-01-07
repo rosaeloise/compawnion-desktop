@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { useLocation } from 'react-router-dom';
+
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 
@@ -8,11 +10,11 @@ import Button from '../components/Button';
 import Popup from '../components/Popup';
 import FormInput from '../components/FormInput';
 
-import '../css/rescuedInfo.css';
+import '../css/adoptedInfo.css';
 
 const MySwal = withReactContent(Swal);
 
-class AddRescuedPet extends React.Component {
+class AddAdoptedPet extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -41,7 +43,7 @@ class AddRescuedPet extends React.Component {
 				}
 			],
 			petID: 0,
-			rescuedPet: {
+			adoptedPet: {
 				id: '',
 				personal: {
 					name: '',
@@ -106,7 +108,7 @@ class AddRescuedPet extends React.Component {
 					localStorage.removeItem('token');
 					await MySwal.fire({
 						title: <h4>Session Expired</h4>,
-						text: <p>Please login again.</p>,
+						html: <p>Please login again.</p>,
 						icon: 'error',
 						iconColor: 'var(--primary-color)',
 						confirmButtonColor: 'var(--primary-color)'
@@ -116,12 +118,13 @@ class AddRescuedPet extends React.Component {
 			});
 
 		// Get pet ID from URL
-		this.fetchRescuedInfo();
+		this.fetchAdoptedInfo();
 	};
-	async fetchRescuedInfo() {
-		const petIDFromURL = window.location.hash.split('/').pop();
-		if (!petIDFromURL) return;
-		const response = await fetch(`https://compawnion-backend.onrender.com/ra/${petIDFromURL}`, {
+	async fetchAdoptedInfo() {
+		const appPetID = window.location.hash.split('/')[window.location.hash.split('/').length - 2];
+		const petID = window.location.hash.split('/')[window.location.hash.split('/').length - 1];
+		if (!appPetID || !petID) return;
+		const response = await fetch(`https://compawnion-backend.onrender.com/adoptedAnimals/${appPetID}/${petID}`, {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json'
@@ -129,35 +132,36 @@ class AddRescuedPet extends React.Component {
 		});
 		const result = await response.json();
 		this.setState({
-			petID: petIDFromURL,
-			rescuedPet: result,
+			petID: appPetID,
+			adoptedPet: result,
 			vaccinationCount: result.background.vaccination.length,
 			vaccination: result.background.vaccination,
 			medicalHistoryCount: result.background.medicalHistory.length,
 			medicalHistory: result.background.medicalHistory
 		});
 	};
-	async updateRescuedInfo() {
+
+	async updateAdoptedInfo() {
 		const petID = this.state.petID;
-		const name = this.state.rescuedPet.personal.name;
-		const type = this.state.rescuedPet.personal.type;
-		const breed = this.state.rescuedPet.personal.breed;
-		const ageYear = this.state.rescuedPet.personal.age.year;
-		const ageMonth = this.state.rescuedPet.personal.age.month;
-		const gender = this.state.rescuedPet.personal.gender;
+		const name = this.state.adoptedPet.personal.name;
+		const type = this.state.adoptedPet.personal.type;
+		const breed = this.state.adoptedPet.personal.breed;
+		const ageYear = this.state.adoptedPet.personal.age.year;
+		const ageMonth = this.state.adoptedPet.personal.age.month;
+		const gender = this.state.adoptedPet.personal.gender;
 
-		const attributes = this.state.rescuedPet.background.attributes;
-		const rescueStory = this.state.rescuedPet.background.rescueStory;
-		const rescueDate = this.state.rescuedPet.background.rescueDate;
+		const attributes = this.state.adoptedPet.background.attributes;
+		const rescueStory = this.state.adoptedPet.background.rescueStory;
+		const rescueDate = this.state.adoptedPet.background.rescueDate;
 
-		const weight = this.state.rescuedPet.background.weight;
-		const size = this.state.rescuedPet.background.size;
+		const weight = this.state.adoptedPet.background.weight;
+		const size = this.state.adoptedPet.background.size;
 
 		if (!petID || !name || !type || !breed || !ageYear || !ageMonth || !gender || !attributes || !rescueStory || !rescueDate || !weight || !size) {
 			MySwal.fire({
 				icon: 'error',
 				iconColor: 'red',
-				title: <h4>Please fill out all fields.</h4>,
+				title: <h4>Please fill out all fields.a</h4>,
 				width: '60rem',
 				confirmButtonColor: 'var(--primary-color)'
 			});
@@ -223,7 +227,7 @@ class AddRescuedPet extends React.Component {
 			});
 			return;
 		};
-		if (this.state.rescuedPet.background.rescueDate > new Date().toISOString().split('T')[0]) {
+		if (this.state.adoptedPet.background.rescueDate > new Date().toISOString().split('T')[0]) {
 			MySwal.fire({
 				icon: 'error',
 				iconColor: 'red',
@@ -236,7 +240,7 @@ class AddRescuedPet extends React.Component {
 
 		const vaccination = this.state.vaccination;
 		const medicalHistory = this.state.medicalHistory;
-		const rfidTag = this.state.rescuedPet.rfidTag;
+		const rfidTag = this.state.adoptedPet.rfidTag;
 
 		for (const vac of vaccination) {
 			if (vac.expiry < vac.date) {
@@ -322,8 +326,11 @@ class AddRescuedPet extends React.Component {
 		};
 
 		async function sendData(data) {
+			const appPetID = window.location.hash.split('/')[window.location.hash.split('/').length - 2];
+			const petID = window.location.hash.split('/')[window.location.hash.split('/').length - 1];
+			if (!appPetID || !petID) return;
 			try {
-				const response = await fetch(`https://compawnion-backend.onrender.com/ra/${petID}`, {
+				const response = await fetch(`https://compawnion-backend.onrender.com/adoptedAnimals/${appPetID}/${petID}`, {
 					method: 'PUT',
 					headers: {
 						'Content-Type': 'application/json'
@@ -334,18 +341,18 @@ class AddRescuedPet extends React.Component {
 					MySwal.fire({
 						icon: 'error',
 						iconColor: 'red',
-						title: <h1>Failed to update rescued info.</h1>,
+						title: <h1>Failed to update adopted info.</h1>,
 						width: '60rem',
 						confirmButtonColor: 'var(--primary-color)'
 					});
-					throw new Error('Failed to update rescued info.');
+					throw new Error('Failed to update adopted info.');
 				};
 				const result = await response.json();
-				if (result.message === 'Pet updated successfully') {
+				if (result.message === 'Adopted animal updated successfully') {
 					await MySwal.fire({
 						icon: 'success',
 						iconColor: 'var(--primary-color)',
-						title: <h1>Rescued pet info updated successfully.</h1>,
+						title: <h1>Adopted pet info updated successfully.</h1>,
 						width: '60rem',
 						confirmButtonColor: 'var(--primary-color)'
 					});
@@ -354,7 +361,7 @@ class AddRescuedPet extends React.Component {
 					MySwal.fire({
 						icon: 'error',
 						iconColor: 'red',
-						title: <h1>{result.message || 'Failed to update rescued info.'}</h1>,
+						title: <h1>{result.message || 'Failed to update adopted info.'}</h1>,
 						width: '60rem',
 						confirmButtonColor: 'var(--primary-color)'
 					});
@@ -364,13 +371,65 @@ class AddRescuedPet extends React.Component {
 				MySwal.fire({
 					icon: 'error',
 					iconColor: 'red',
-					title: <h1>Failed to update rescued info.</h1>,
+					title: <h1>Failed to update adopted info.</h1>,
 					width: '60rem',
 					confirmButtonColor: 'var(--primary-color)'
 				});
 			};
 		};
 	};
+
+	async archiveAdoptedPet() {
+		const appPetID = window.location.hash.split('/')[window.location.hash.split('/').length - 2];
+		const petID = window.location.hash.split('/')[window.location.hash.split('/').length - 1];
+		if (!appPetID || !petID) return;
+		const result = await MySwal.fire({
+			icon: 'warning',
+			iconColor: 'red',
+			title: <h1>Are you sure you want to archive this adopted pet?</h1>,
+			width: '60rem',
+			showCancelButton: true,
+			confirmButtonText: 'Yes',
+			confirmButtonColor: 'red',
+			cancelButtonText: 'No',
+			cancelButtonColor: 'var(--primary-color)'
+		});
+
+		if (result.isConfirmed) {
+			try {
+				const response = await fetch(`https://compawnion-backend.onrender.com/adoptedAnimals/archive/${appPetID}/${petID}`, {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					}
+				});
+
+				if (!response.ok) {
+					MySwal.fire({
+						icon: 'error',
+						iconColor: 'red',
+						title: <h1>Failed to archive adopted pet.</h1>,
+						width: '60rem',
+						confirmButtonColor: 'var(--primary-color)'
+					});
+					throw new Error('Failed to archive adopted pet.');
+				};
+
+				const result = await response.json();
+				if (result.message === 'Adopted animal archived successfully') {
+					await MySwal.fire({
+						icon: 'success',
+						iconColor: 'var(--primary-color)',
+						title: <h1>Adopted pet archived successfully.</h1>,
+						width: '60rem',
+						confirmButtonColor: 'var(--primary-color)'
+					});
+					window.history.back();
+				};
+			} catch (error) { };
+		};
+	};
+
 	render() {
 		return (
 			<>
@@ -383,73 +442,18 @@ class AddRescuedPet extends React.Component {
 					name={this.state.user.name}
 					branches={this.state.user.branches}
 
-					active='rescues'
+					active='compawnions'
 				/>
 
-				<form id='rescuedInfoMain'>
+				<form id='adoptedInfoMain'>
 					<header id='header'>
-						<h4>Rescued Pet Infotmation</h4>
+						<h4>Adopted Pet Infotmation</h4>
 						<div>
 							<Button
 								title='Update'
 								id='update'
 								onClick={() => {
-									this.updateRescuedInfo();
-								}}
-							/>
-							<Button
-								title='Archive'
-								theme='dark'
-
-								onClick={() => {
-									MySwal.fire({
-										icon: 'warning',
-										iconColor: 'var(--primary-color)',
-										title: <h1>Are you sure you want to archive this rescued pet?</h1>,
-										width: '60rem',
-										showCancelButton: true,
-										confirmButtonColor: 'var(--primary-color)',
-										cancelButtonColor: 'var(--primary-color)',
-										confirmButtonText: 'Yes, archive it.'
-									}).then(async (result) => {
-										if (result.isConfirmed) {
-											const response = await fetch(`https://compawnion-backend.onrender.com/ra/archived/${this.state.petID}`, {
-												method: 'POST',
-												headers: {
-													'Content-Type': 'application/json'
-												}
-											});
-											if (!response.ok) {
-												MySwal.fire({
-													icon: 'error',
-													iconColor: 'red',
-													title: <h1>Failed to archive rescued pet.</h1>,
-													width: '60rem',
-													confirmButtonColor: 'var(--primary-color)'
-												});
-												return;
-											};
-											const result = await response.json();
-											if (result.message === 'Pet archived successfully') {
-												MySwal.fire({
-													icon: 'success',
-													iconColor: 'var(--primary-color)',
-													title: <h1>Rescued pet archived successfully.</h1>,
-													width: '60rem',
-													confirmButtonColor: 'var(--primary-color)'
-												});
-												window.location.hash = '/rescues';
-											} else {
-												MySwal.fire({
-													icon: 'error',
-													iconColor: 'red',
-													title: <h1>{result.message || 'Failed to archive rescued pet.'}</h1>,
-													width: '60rem',
-													confirmButtonColor: 'var(--primary-color)'
-												});
-											};
-										};
-									});
+									this.updateAdoptedInfo();
 								}}
 							/>
 							<Button
@@ -457,7 +461,7 @@ class AddRescuedPet extends React.Component {
 								theme='dark'
 
 								onClick={() => {
-									window.location.hash = '/rescues';
+									window.history.back();
 								}}
 							/>
 						</div>
@@ -481,7 +485,7 @@ class AddRescuedPet extends React.Component {
 								};
 
 								imageInput.click();
-							}} style={{ backgroundImage: `${this.state.rescuedPet?.personal?.picture ? `url(${this.state.rescuedPet.personal.picture})` : ''}` }}></div>
+							}} style={{ backgroundImage: `${this.state.adoptedPet?.personal?.picture ? `url(${this.state.adoptedPet.personal.picture})` : ''}` }}></div>
 							<Button
 								title='Upload Image'
 								theme='dark'
@@ -500,15 +504,15 @@ class AddRescuedPet extends React.Component {
 								type='text'
 								id='name'
 								name='name'
-								value={this.state.rescuedPet?.personal?.name}
-								defaultValue={this.state.rescuedPet?.personal?.name}
+								value={this.state.adoptedPet?.personal?.name}
+								defaultValue={this.state.adoptedPet?.personal?.name}
 								placeholder='Enter pet name'
 								onChange={(e) => {
 									this.setState({
-										rescuedPet: {
-											...this.state.rescuedPet,
+										adoptedPet: {
+											...this.state.adoptedPet,
 											personal: {
-												...this.state.rescuedPet.personal,
+												...this.state.adoptedPet.personal,
 												name: e.target.value
 											}
 										}
@@ -520,15 +524,15 @@ class AddRescuedPet extends React.Component {
 								type='dropdown'
 								id='type'
 								name='type'
-								value={this.state.rescuedPet?.personal?.type}
-								defaultValue={this.state.rescuedPet?.personal?.type}
+								value={this.state.adoptedPet?.personal?.type}
+								defaultValue={this.state.adoptedPet?.personal?.type}
 								placeholder='Select type'
 								onChange={(e) => {
 									this.setState({
-										rescuedPet: {
-											...this.state.rescuedPet,
+										adoptedPet: {
+											...this.state.adoptedPet,
 											personal: {
-												...this.state.rescuedPet.personal,
+												...this.state.adoptedPet.personal,
 												type: e.target.value,
 												breed: ''
 											}
@@ -553,16 +557,16 @@ class AddRescuedPet extends React.Component {
 									type='number'
 									id='ageYear'
 									name='ageYear'
-									value={this.state.rescuedPet?.personal?.age?.year}
-									defaultValue={this.state.rescuedPet?.personal?.age?.year}
+									value={this.state.adoptedPet?.personal?.age?.year}
+									defaultValue={this.state.adoptedPet?.personal?.age?.year}
 									onChange={(e) => {
 										this.setState({
-											rescuedPet: {
-												...this.state.rescuedPet,
+											adoptedPet: {
+												...this.state.adoptedPet,
 												personal: {
-													...this.state.rescuedPet.personal,
+													...this.state.adoptedPet.personal,
 													age: {
-														...this.state.rescuedPet.personal.age,
+														...this.state.adoptedPet.personal.age,
 														year: e.target.value
 													}
 												}
@@ -576,16 +580,16 @@ class AddRescuedPet extends React.Component {
 									type='number'
 									id='ageMonth'
 									name='ageMonth'
-									value={this.state.rescuedPet?.personal?.age?.month}
-									defaultValue={this.state.rescuedPet?.personal?.age?.month}
+									value={this.state.adoptedPet?.personal?.age?.month}
+									defaultValue={this.state.adoptedPet?.personal?.age?.month}
 									onChange={(e) => {
 										this.setState({
-											rescuedPet: {
-												...this.state.rescuedPet,
+											adoptedPet: {
+												...this.state.adoptedPet,
 												personal: {
-													...this.state.rescuedPet.personal,
+													...this.state.adoptedPet.personal,
 													age: {
-														...this.state.rescuedPet.personal.age,
+														...this.state.adoptedPet.personal.age,
 														month: e.target.value
 													}
 												}
@@ -602,7 +606,7 @@ class AddRescuedPet extends React.Component {
 								type='text'
 								id='petID'
 								name='petID'
-								value={this.state.rescuedPet?.petId}
+								value={this.state.adoptedPet?.petId}
 								disabled={true}
 							/>
 							<FormInput
@@ -610,15 +614,15 @@ class AddRescuedPet extends React.Component {
 								type='list'
 								id='breed'
 								name='breed'
-								value={this.state.rescuedPet?.personal?.breed}
-								defaultValue={this.state.rescuedPet?.personal?.breed}
+								value={this.state.adoptedPet?.personal?.breed}
+								defaultValue={this.state.adoptedPet?.personal?.breed}
 								placeholder='Select breed'
 								onChange={(e) => {
 									this.setState({
-										rescuedPet: {
-											...this.state.rescuedPet,
+										adoptedPet: {
+											...this.state.adoptedPet,
 											personal: {
-												...this.state.rescuedPet.personal,
+												...this.state.adoptedPet.personal,
 												breed: e.target.value
 											}
 										}
@@ -655,7 +659,7 @@ class AddRescuedPet extends React.Component {
 										}
 									];
 
-									return this.state.rescuedPet?.personal?.type === 'Cat' ? cats : dogs;
+									return this.state.adoptedPet?.personal?.type === 'Cat' ? cats : dogs;
 								})()}
 							/>
 							<FormInput
@@ -663,15 +667,15 @@ class AddRescuedPet extends React.Component {
 								type='dropdown'
 								id='gender'
 								name='gender'
-								value={this.state.rescuedPet?.personal?.gender}
-								defaultValue={this.state.rescuedPet?.personal?.gender}
+								value={this.state.adoptedPet?.personal?.gender}
+								defaultValue={this.state.adoptedPet?.personal?.gender}
 								placeholder='Select gender'
 								onChange={(e) => {
 									this.setState({
-										rescuedPet: {
-											...this.state.rescuedPet,
+										adoptedPet: {
+											...this.state.adoptedPet,
 											personal: {
-												...this.state.rescuedPet.personal,
+												...this.state.adoptedPet.personal,
 												gender: e.target.value
 											}
 										}
@@ -700,15 +704,15 @@ class AddRescuedPet extends React.Component {
 								type='textarea'
 								id='personality'
 								name='personality'
-								value={this.state.rescuedPet?.background?.attributes}
-								defaultValue={this.state.rescuedPet?.background?.attributes}
+								value={this.state.adoptedPet?.background?.attributes}
+								defaultValue={this.state.adoptedPet?.background?.attributes}
 								placeholder='Enter attributes or description'
 								onChange={(e) => {
 									this.setState({
-										rescuedPet: {
-											...this.state.rescuedPet,
+										adoptedPet: {
+											...this.state.adoptedPet,
 											background: {
-												...this.state.rescuedPet.background,
+												...this.state.adoptedPet.background,
 												attributes: e.target.value
 											}
 										}
@@ -720,15 +724,15 @@ class AddRescuedPet extends React.Component {
 								type='textarea'
 								id='backgroundStory'
 								name='backgroundStory'
-								value={this.state.rescuedPet?.background?.rescueStory}
-								defaultValue={this.state.rescuedPet?.background?.rescueStory}
+								value={this.state.adoptedPet?.background?.rescueStory}
+								defaultValue={this.state.adoptedPet?.background?.rescueStory}
 								placeholder='Enter rescue story'
 								onChange={(e) => {
 									this.setState({
-										rescuedPet: {
-											...this.state.rescuedPet,
+										adoptedPet: {
+											...this.state.adoptedPet,
 											background: {
-												...this.state.rescuedPet.background,
+												...this.state.adoptedPet.background,
 												rescueStory: e.target.value
 											}
 										}
@@ -740,14 +744,14 @@ class AddRescuedPet extends React.Component {
 								type='date'
 								id='rescueDate'
 								name='rescueDate'
-								value={this.state.rescuedPet?.background?.rescueDate}
-								defaultValue={this.state.rescuedPet?.background?.rescueDate}
+								value={this.state.adoptedPet?.background?.rescueDate}
+								defaultValue={this.state.adoptedPet?.background?.rescueDate}
 								onChange={(e) => {
 									this.setState({
-										rescuedPet: {
-											...this.state.rescuedPet,
+										adoptedPet: {
+											...this.state.adoptedPet,
 											background: {
-												...this.state.rescuedPet.background,
+												...this.state.adoptedPet.background,
 												rescueDate: e.target.value
 											}
 										}
@@ -763,15 +767,15 @@ class AddRescuedPet extends React.Component {
 								type='number'
 								id='weight'
 								name='weight'
-								value={this.state.rescuedPet?.background?.weight}
-								defaultValue={this.state.rescuedPet?.background?.weight}
+								value={this.state.adoptedPet?.background?.weight}
+								defaultValue={this.state.adoptedPet?.background?.weight}
 								placeholder='Enter weight'
 								onChange={(e) => {
 									this.setState({
-										rescuedPet: {
-											...this.state.rescuedPet,
+										adoptedPet: {
+											...this.state.adoptedPet,
 											background: {
-												...this.state.rescuedPet.background,
+												...this.state.adoptedPet.background,
 												weight: e.target.value
 											}
 										}
@@ -784,15 +788,15 @@ class AddRescuedPet extends React.Component {
 								type='dropdown'
 								id='size'
 								name='size'
-								value={this.state.rescuedPet?.background?.size}
-								defaultValue={this.state.rescuedPet?.background?.size}
+								value={this.state.adoptedPet?.background?.size}
+								defaultValue={this.state.adoptedPet?.background?.size}
 								placeholder='Select size'
 								onChange={(e) => {
 									this.setState({
-										rescuedPet: {
-											...this.state.rescuedPet,
+										adoptedPet: {
+											...this.state.adoptedPet,
 											background: {
-												...this.state.rescuedPet.background,
+												...this.state.adoptedPet.background,
 												size: e.target.value
 											}
 										}
@@ -840,10 +844,10 @@ class AddRescuedPet extends React.Component {
 														}
 														return v;
 													}),
-													rescuedPet: {
-														...this.state.rescuedPet,
+													adoptedPet: {
+														...this.state.adoptedPet,
 														background: {
-															...this.state.rescuedPet.background,
+															...this.state.adoptedPet.background,
 															vaccination: this.state.vaccination.map((v, i) => {
 																if (i === index) {
 																	return {
@@ -896,10 +900,10 @@ class AddRescuedPet extends React.Component {
 														}
 														return v;
 													}),
-													rescuedPet: {
-														...this.state.rescuedPet,
+													adoptedPet: {
+														...this.state.adoptedPet,
 														background: {
-															...this.state.rescuedPet.background,
+															...this.state.adoptedPet.background,
 															vaccination: this.state.vaccination.map((v, i) => {
 																if (i === index) {
 																	return {
@@ -933,10 +937,10 @@ class AddRescuedPet extends React.Component {
 														}
 														return v;
 													}),
-													rescuedPet: {
-														...this.state.rescuedPet,
+													adoptedPet: {
+														...this.state.adoptedPet,
 														background: {
-															...this.state.rescuedPet.background,
+															...this.state.adoptedPet.background,
 															vaccination: this.state.vaccination.map((v, i) => {
 																if (i === index) {
 																	return {
@@ -961,10 +965,10 @@ class AddRescuedPet extends React.Component {
 													this.setState({
 														varccinationCount: this.state.vaccinationCount - 1,
 														vaccination: this.state.vaccination.filter((_, i) => i !== index),
-														rescuedPet: {
-															...this.state.rescuedPet,
+														adoptedPet: {
+															...this.state.adoptedPet,
 															background: {
-																...this.state.rescuedPet.background,
+																...this.state.adoptedPet.background,
 																vaccination: this.state.vaccination.filter((_, i) => i !== index)
 															}
 														}
@@ -986,10 +990,10 @@ class AddRescuedPet extends React.Component {
 											date: null,
 											expiry: null
 										}),
-										rescuedPet: {
-											...this.state.rescuedPet,
+										adoptedPet: {
+											...this.state.adoptedPet,
 											background: {
-												...this.state.rescuedPet.background,
+												...this.state.adoptedPet.background,
 												vaccination: this.state.vaccination.concat({
 													name: null,
 													date: null,
@@ -1026,10 +1030,10 @@ class AddRescuedPet extends React.Component {
 														}
 														return m;
 													}),
-													rescuedPet: {
-														...this.state.rescuedPet,
+													adoptedPet: {
+														...this.state.adoptedPet,
 														background: {
-															...this.state.rescuedPet.background,
+															...this.state.adoptedPet.background,
 															medicalHistory: this.state.medicalHistory.map((m, i) => {
 																if (i === index) {
 																	return {
@@ -1063,10 +1067,10 @@ class AddRescuedPet extends React.Component {
 														}
 														return m;
 													}),
-													rescuedPet: {
-														...this.state.rescuedPet,
+													adoptedPet: {
+														...this.state.adoptedPet,
 														background: {
-															...this.state.rescuedPet.background,
+															...this.state.adoptedPet.background,
 															medicalHistory: this.state.medicalHistory.map((m, i) => {
 																if (i === index) {
 																	return {
@@ -1101,10 +1105,10 @@ class AddRescuedPet extends React.Component {
 															}
 															return m;
 														}),
-														rescuedPet: {
-															...this.state.rescuedPet,
+														adoptedPet: {
+															...this.state.adoptedPet,
 															background: {
-																...this.state.rescuedPet.background,
+																...this.state.adoptedPet.background,
 																medicalHistory: this.state.medicalHistory.map((m, i) => {
 																	if (i === index) {
 																		return {
@@ -1129,10 +1133,10 @@ class AddRescuedPet extends React.Component {
 														this.setState({
 															medicalHistoryCount: this.state.medicalHistoryCount - 1,
 															medicalHistory: this.state.medicalHistory.filter((_, i) => i !== index),
-															rescuedPet: {
-																...this.state.rescuedPet,
+															adoptedPet: {
+																...this.state.adoptedPet,
 																background: {
-																	...this.state.rescuedPet.background,
+																	...this.state.adoptedPet.background,
 																	medicalHistory: this.state.medicalHistory.filter((_, i) => i !== index)
 																}
 															}
@@ -1155,10 +1159,10 @@ class AddRescuedPet extends React.Component {
 											date: null,
 											notes: null
 										}),
-										rescuedPet: {
-											...this.state.rescuedPet,
+										adoptedPet: {
+											...this.state.adoptedPet,
 											background: {
-												...this.state.rescuedPet.background,
+												...this.state.adoptedPet.background,
 												medicalHistory: this.state.medicalHistory.concat({
 													procedure: null,
 													date: null,
@@ -1182,15 +1186,15 @@ class AddRescuedPet extends React.Component {
 								name='rfidTag'
 								placeholder='Enter RFID'
 								disabled={true}
-								value={this.state.rescuedPet?.rfidTag}
-								defaultValue={this.state.rescuedPet?.rfidTag}
+								value={this.state.adoptedPet?.rfidTag}
+								defaultValue={this.state.adoptedPet?.rfidTag}
 
 								onEnter={() => {
 									const rfidTag = document.getElementById('rfidTag');
 									rfidTag.disabled = true;
 									this.setState({
-										rescuedPet: {
-											...this.state.rescuedPet,
+										adoptedPet: {
+											...this.state.adoptedPet,
 											rfidTag: rfidTag.value
 										}
 									});
@@ -1212,62 +1216,10 @@ class AddRescuedPet extends React.Component {
 					</section>
 					<div>
 						<Button
-							title='Delete'
-							style={{ backgroundColor: 'red' }}
-
+							title='Return'
+							theme='dark'
 							onClick={() => {
-								MySwal.fire({
-									icon: 'warning',
-									iconColor: 'red',
-									title: <h1>Are you sure you want to delete this rescued pet?</h1>,
-									width: '60rem',
-									showCancelButton: true,
-									confirmButtonColor: 'var(--primary-color)',
-									cancelButtonColor: 'red',
-									confirmButtonText: 'Yes, delete it',
-									cancelButtonText: 'No, cancel',
-									reverseButtons: true
-								}).then((result) => {
-									if (result.isConfirmed) {
-										fetch(`https://compawnion-backend.onrender.com/ra/${this.state.petID}`, {
-											method: 'DELETE',
-											headers: {
-												'Content-Type': 'application/json'
-											}
-										})
-											.then(res => res.json())
-											.then(res => {
-												if (res.message === 'Pet deleted successfully') {
-													MySwal.fire({
-														icon: 'success',
-														iconColor: 'var(--primary-color)',
-														title: <h1>Rescued pet deleted successfully.</h1>,
-														width: '60rem',
-														confirmButtonColor: 'var(--primary-color)'
-													});
-													window.location.hash = '/rescues';
-												} else {
-													MySwal.fire({
-														icon: 'error',
-														iconColor: 'red',
-														title: <h1>{res.message || 'Failed to delete rescued pet.'}</h1>,
-														width: '60rem',
-														confirmButtonColor: 'var(--primary-color)'
-													});
-												};
-											})
-											.catch(err => {
-												console.error(err);
-												MySwal.fire({
-													icon: 'error',
-													iconColor: 'red',
-													title: <h1>Failed to delete rescued pet.</h1>,
-													width: '60rem',
-													confirmButtonColor: 'var(--primary-color)'
-												});
-											});
-									};
-								});
+								this.archiveAdoptedPet();
 							}}
 						/>
 					</div>
@@ -1277,4 +1229,4 @@ class AddRescuedPet extends React.Component {
 	};
 };
 
-export default AddRescuedPet;
+export default AddAdoptedPet;

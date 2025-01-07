@@ -47,7 +47,7 @@ class App extends
 					<Route path='/contract/:id' element={<Contract />} />
 
 					<Route path='/adopted/:id' element={<Adopted />} />
-					<Route path='/adoptedAnimal/:id' element={<AdoptedInfo />} />
+					<Route path='/adopted/:id/:appPetID' element={<AdoptedInfo />} />
 				</Routes>
 			</HashRouter>
 		);
