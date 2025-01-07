@@ -20,16 +20,33 @@ class CompawnionInfo extends React.Component {
 			},
 			compawnion: {
 				id: '',
-				name: '',
+				LastLogout: null,
+				Status: '',
+				LastLogin: '',
 				CompawnionUser: {
+					MedSched: [],
+					TrustedVet: [],
+					appPetID: '',
 					accountCreate: {
+						Name: '',
+						FirstName: '',
+						LastName: '',
 						Username: '',
 						Email: '',
+						PhoneNumber: '',
 					},
-				},
+					CompawnionSched: [
+						{
+							GmeetRoom: '',
+							CSTime: '',
+							EventTitle: '',
+							CSDate: '',
+						}
+					]
+				}
 			},
 			popupContent: <></>,
-			petID: 0
+			appPetID: 0
 		};
 	}
 
@@ -87,6 +104,7 @@ class CompawnionInfo extends React.Component {
 				this.setState({
 					compawnion: res.data
 				});
+				console.log(res.data);
 			})
 			.catch(error => console.error('Error fetching compawnion data:', error));
 	}
@@ -165,6 +183,9 @@ class CompawnionInfo extends React.Component {
 							/>
 							<Button
 								title="View Pets Information"
+								onClick={() => {
+									window.location.hash = `/adopted/${this.state.compawnion.CompawnionUser.appPetID}`;
+								}}
 							/>
 						</div>
 					</section>
@@ -210,7 +231,7 @@ class CompawnionInfo extends React.Component {
 								const date = document.getElementById('date').value;
 								const time = document.getElementById('time').value;
 
-								fetch(`https://compawnion-backend.onrender.com/Compawnions/addCompawnionSched/${compawnion.id}`, {
+								fetch(`https://compawnion-backend.onrender.com/Compawnions/addCompawnionSched/${compawnion.CompawnionUser.appPetID}`, {
 									method: 'POST',
 									headers: {
 										'Content-Type': 'application/json',
