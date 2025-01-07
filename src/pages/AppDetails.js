@@ -196,7 +196,11 @@ class AppDetails extends React.Component {
 								type='text'
 								id='roomLink'
 								name='roomLink'
-								disabled={!(this.state.application.status === '' || this.state.application.status === undefined || this.state.application.status === 'Pending')}
+								disabled={
+									this.state.application.applicationType === 'Onsite Application' ?
+										true :
+										!(this.state.application.status === 'Pending')
+								}
 								value={this.state.application.schedules?.roomLink}
 								placeholder='Enter Room Link'
 							/>
@@ -204,7 +208,11 @@ class AppDetails extends React.Component {
 								label='Date'
 								type='date'
 								id='meetingDate'
-								disabled={!(this.state.application.status === '' || this.state.application.status === undefined || this.state.application.status === 'Pending')}
+								disabled={
+									this.state.application.applicationType === 'Onsite Application' ?
+										true :
+										!(this.state.application.status === 'Pending')
+								}
 								value={this.state.application.schedules?.roomLink}
 								name='meetingDate'
 
@@ -213,7 +221,11 @@ class AppDetails extends React.Component {
 								label='Time'
 								type='time'
 								id='Time'
-								disabled={!(this.state.application.status === '' || this.state.application.status === undefined || this.state.application.status === 'Pending')}
+								disabled={
+									this.state.application.applicationType === 'Onsite Application' ?
+										true :
+										!(this.state.application.status === 'Pending')
+								}
 								value={this.state.application.schedules?.Time}
 								name='Time'
 							/>
@@ -225,7 +237,11 @@ class AppDetails extends React.Component {
 								label='Date'
 								type='date'
 								id='OnSiteMeetingDate'
-								disabled={this.state.application.status !== 'Online Approved'}
+								disabled={
+									this.state.application.applicationType === 'Onsite Application' ?
+										this.state.application.status === 'Waiting for Final Approval' :
+										!(this.state.application.status === 'Online Approved')
+								}
 								value={this.state.application.schedules?.OnsiteMeetingDate}
 								name='OnSiteMeetingDate'
 							/>
@@ -234,7 +250,7 @@ class AppDetails extends React.Component {
 
 					<section id='buttons'>
 						{
-							this.state.application.status !== 'Online Approved' && <Button
+							this.state.application.status === 'Waiting for Final Approval' && <Button
 								title='Print Contract'
 								onClick={() => {
 									window.location.hash = `/contract/${this.state.application.applicationAppId}`;
@@ -244,78 +260,149 @@ class AppDetails extends React.Component {
 						<Button
 							title='Approve'
 							onClick={async () => {
-								if (
-									this.state.application.status === '' ||
-									this.state.application.status === undefined ||
-									this.state.application.status === 'Pending'
-								) {
-									if (document.getElementById('roomLink').value === '' || document.getElementById('meetingDate').value === '' || document.getElementById('Time').value === '') {
-										alert('Please fill up the required fields.');
-										return;
+								if (this.state.application.applicationType === 'Online Application') {
+									if (
+										this.state.application.status === '' ||
+										this.state.application.status === undefined ||
+										this.state.application.status === 'Pending'
+									) {
+										if (document.getElementById('roomLink').value === '' || document.getElementById('meetingDate').value === '' || document.getElementById('Time').value === '') {
+											alert('Please fill up the required fields.');
+											return;
+										};
+										const response = await fetch(`https://compawnion-backend.onrender.com/application/${this.state.application.id}/onlineApprove`, {
+											method: 'POST',
+											headers: {
+												'Content-Type': 'application/json',
+												'Authorization': `Bearer ${localStorage.getItem('token')}`
+											},
+											body: JSON.stringify({
+												schedules: {
+													roomLink: document.getElementById('roomLink').value,
+													meetingDate: document.getElementById('meetingDate').value,
+													Time: document.getElementById('Time').value
+												}
+											})
+										});
+
+										if (response.status === 200) {
+											alert('Application approved.');
+											window.location.hash = '/applications';
+										} else {
+											alert('Failed to approve application.');
+										};
 									};
-									const response = await fetch(`https://compawnion-backend.onrender.com/application/${this.state.application.id}/onlineApprove`, {
-										method: 'POST',
-										headers: {
-											'Content-Type': 'application/json',
-											'Authorization': `Bearer ${localStorage.getItem('token')}`
-										},
-										body: JSON.stringify({
-											schedules: {
-												roomLink: document.getElementById('roomLink').value,
-												meetingDate: document.getElementById('meetingDate').value,
-												Time: document.getElementById('Time').value
+
+									if (this.state.application.status === 'Online Approved') {
+										if (document.getElementById('OnSiteMeetingDate').value === '') {
+											alert('Please fill up the required fields.');
+											return;
+										};
+										const response = await fetch(`https://compawnion-backend.onrender.com/application/${this.state.application.id}/onsiteApprove`, {
+											method: 'PUT',
+											headers: {
+												'Content-Type': 'application/json',
+												'Authorization': `Bearer ${localStorage.getItem('token')}`
+											},
+											body: JSON.stringify({
+												schedules: {
+													OnsiteMeetingDate: document.getElementById('OnSiteMeetingDate').value
+												}
+											})
+										});
+
+										if (response.status === 200) {
+											alert('Application approved.');
+											window.location.hash = '/applications';
+										} else {
+											alert('Failed to approve application.');
+										};
+									};
+
+									if (this.state.application.status === 'Waiting for Final Approval') {
+										const response = await fetch(`https://compawnion-backend.onrender.com/application/${this.state.application.id}/approve`, {
+											method: 'POST',
+											headers: {
+												'Content-Type': 'application/json',
+												'Authorization': `Bearer ${localStorage.getItem('token')}`
 											}
-										})
-									});
+										});
 
-									if (response.status === 200) {
-										alert('Application approved.');
-										window.location.hash = '/applications';
-									} else {
-										alert('Failed to approve application.');
+										if (response.status === 200) {
+											alert('Application approved.');
+											window.location.hash = '/applications';
+										} else {
+											alert('Failed to approve application.');
+										};
 									};
-								};
-
-								if (this.state.application.status === 'Online Approved') {
-									if (document.getElementById('OnSiteMeetingDate').value === '') {
-										alert('Please fill up the required fields.');
-										return;
-									};
-									const response = await fetch(`https://compawnion-backend.onrender.com/application/${this.state.application.id}/onsiteApprove`, {
-										method: 'PUT',
-										headers: {
-											'Content-Type': 'application/json',
-											'Authorization': `Bearer ${localStorage.getItem('token')}`
-										},
-										body: JSON.stringify({
-											schedules: {
-												OnsiteMeetingDate: document.getElementById('OnSiteMeetingDate').value
-											}
-										})
-									});
-
-									if (response.status === 200) {
-										alert('Application approved.');
-										window.location.hash = '/applications';
-									} else {
-										alert('Failed to approve application.');
-									};
-								};
-
-								if (this.state.application.status === 'Waiting for Final Approval') {
-									const response = await fetch(`https://compawnion-backend.onrender.com/application/${this.state.application.id}/approve`, {
-										method: 'POST',
-										headers: {
-											'Content-Type': 'application/json',
-											'Authorization': `Bearer ${localStorage.getItem('token')}`
+								} else if (this.state.application.applicationType === 'Onsite Application') {
+									if (
+										this.state.application.status === '' ||
+										this.state.application.status === undefined ||
+										this.state.application.status === 'Pending'
+									) {
+										// Automatically approve the Onsite Interview
+										{
+											const autoApprove = await fetch(`https://compawnion-backend.onrender.com/application/${this.state.application.id}/onlineApprove`, {
+												method: 'POST',
+												headers: {
+													'Content-Type': 'application/json',
+													'Authorization': `Bearer ${localStorage.getItem('token')}`
+												},
+												body: JSON.stringify({
+													schedules: {
+														roomLink: 'N/A',
+														meetingDate: new Date().toLocaleDateString(),
+														Time: new Date().toLocaleTimeString()
+													}
+												})
+											});
+											if (!autoApprove.ok) {
+												alert('Failed to automatically approve the application from Online Interview.');
+												return;
+											};
 										}
-									});
 
-									if (response.status === 200) {
-										alert('Application approved.');
-										window.location.hash = '/applications';
-									} else {
-										alert('Failed to approve application.');
+										if (document.getElementById('OnSiteMeetingDate').value === '') {
+											alert('Please fill up the required fields.');
+											return;
+										};
+
+										const response = await fetch(`https://compawnion-backend.onrender.com/application/${this.state.application.id}/onsiteApprove`, {
+											method: 'PUT',
+											headers: {
+												'Content-Type': 'application/json',
+											},
+											body: JSON.stringify({
+												schedules: {
+													OnsiteMeetingDate: document.getElementById('OnSiteMeetingDate').value
+												}
+											})
+										});
+
+										if (response.status === 200) {
+											alert('Application approved.');
+											window.location.hash = '/applications';
+										} else {
+											alert('Failed to approve application.');
+										};
+									};
+
+									if (this.state.application.status === 'Waiting for Final Approval') {
+										const response = await fetch(`https://compawnion-backend.onrender.com/application/${this.state.application.id}/approve`, {
+											method: 'POST',
+											headers: {
+												'Content-Type': 'application/json',
+												'Authorization': `Bearer ${localStorage.getItem('token')}`
+											}
+										});
+
+										if (response.status === 200) {
+											alert('Application approved.');
+											window.location.hash = '/applications';
+										} else {
+											alert('Failed to approve application.');
+										};
 									};
 								};
 							}}
