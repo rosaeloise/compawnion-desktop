@@ -303,7 +303,7 @@ class AppDetails extends React.Component {
 								};
 
 								if (this.state.application.status === 'Waiting for Final Approval') {
-									const response = await fetch(`http://localhost:3000/application/${this.state.application.id}/approve`, {
+									const response = await fetch(`https://compawnion-backend.onrender.com/application/${this.state.application.id}/approve`, {
 										method: 'POST',
 										headers: {
 											'Content-Type': 'application/json',
