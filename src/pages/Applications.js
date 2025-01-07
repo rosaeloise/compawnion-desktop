@@ -31,7 +31,8 @@ class Applications extends React.Component {
 				pending: [],
 				approved: [],
 				rejected: []
-			}
+			},
+			displayType: 'pending'
 		};
 	};
 
@@ -77,146 +78,6 @@ class Applications extends React.Component {
 				throw new Error('Network response was not ok');
 			}
 			const data = await response.json();
-			// {
-			// 	"pending": [
-			// 		{
-			// 	"id": "060",
-			// 	"termsAndCondission": true,
-			// 	"paymentAgreement": true,
-			// 	"applicationType": "Online Application",
-			// 	"applicationAppId": "060",
-			// 	"appPetID": null,
-			// 	"petId": "029",
-			// 	"applicant": {
-			// 		"name": {
-			// 			"firstName": "Ely Rose",
-			// 			"middleName": "Abaricio",
-			// 			"lastName": "Bosangit"
-			// 		},
-			// 		"birthdate": "2003-01-05",
-			// 		"occupation": "Sales Consultant`",
-			// 		"address": {
-			// 			"country": "Philippines",
-			// 			"province": "Rizal",
-			// 			"cityOrMunicipality": "Rodriguez",
-			// 			"baranggay": "San Jose",
-			// 			"street": "Sub-Urban Phase 1F Blk 3",
-			// 			"lot": "Lot 67"
-			// 		},
-			// 		"contact": {
-			// 			"email": "bosangitelyrose05@gmail.com",
-			// 			"phoneNumber": "91234567890",
-			// 			"facebook": ""
-			// 		}
-			// 	},
-			// 	"dwelling": {
-			// 		"type": "Single-Storey House/Bungalow",
-			// 		"ownership": "Owned",
-			// 		"numberOfHouseMembers": "4",
-			// 		"numberOfPets": "1-2",
-			// 		"petsAllowedInHouse": "No",
-			// 		"planningToMoveOut": "Yes"
-			// 	},
-			// 	"petCare": {
-			// 		"petOwnershipExperience": "Recent pet-owner (Owned a pet 3 years or less)",
-			// 		"veterinarian": "Pet Clinic"
-			// 	},
-			// 	"status": "Pending"
-			// }
-			// 	],
-			// 	"approved": [
-			// 		{
-			// 	"id": "060",
-			// 	"termsAndCondission": true,
-			// 	"paymentAgreement": true,
-			// 	"applicationType": "Online Application",
-			// 	"applicationAppId": "060",
-			// 	"appPetID": null,
-			// 	"petId": "029",
-			// 	"applicant": {
-			// 		"name": {
-			// 			"firstName": "Ely Rose",
-			// 			"middleName": "Abaricio",
-			// 			"lastName": "Bosangit"
-			// 		},
-			// 		"birthdate": "2003-01-05",
-			// 		"occupation": "Sales Consultant`",
-			// 		"address": {
-			// 			"country": "Philippines",
-			// 			"province": "Rizal",
-			// 			"cityOrMunicipality": "Rodriguez",
-			// 			"baranggay": "San Jose",
-			// 			"street": "Sub-Urban Phase 1F Blk 3",
-			// 			"lot": "Lot 67"
-			// 		},
-			// 		"contact": {
-			// 			"email": "bosangitelyrose05@gmail.com",
-			// 			"phoneNumber": "91234567890",
-			// 			"facebook": ""
-			// 		}
-			// 	},
-			// 	"dwelling": {
-			// 		"type": "Single-Storey House/Bungalow",
-			// 		"ownership": "Owned",
-			// 		"numberOfHouseMembers": "4",
-			// 		"numberOfPets": "1-2",
-			// 		"petsAllowedInHouse": "No",
-			// 		"planningToMoveOut": "Yes"
-			// 	},
-			// 	"petCare": {
-			// 		"petOwnershipExperience": "Recent pet-owner (Owned a pet 3 years or less)",
-			// 		"veterinarian": "Pet Clinic"
-			// 	},
-			// 	"status": "Pending"
-			// }
-			// 	],
-			// 	"rejected": [
-			// 		{
-			// 	"id": "060",
-			// 	"termsAndCondission": true,
-			// 	"paymentAgreement": true,
-			// 	"applicationType": "Online Application",
-			// 	"applicationAppId": "060",
-			// 	"appPetID": null,
-			// 	"petId": "029",
-			// 	"applicant": {
-			// 		"name": {
-			// 			"firstName": "Ely Rose",
-			// 			"middleName": "Abaricio",
-			// 			"lastName": "Bosangit"
-			// 		},
-			// 		"birthdate": "2003-01-05",
-			// 		"occupation": "Sales Consultant`",
-			// 		"address": {
-			// 			"country": "Philippines",
-			// 			"province": "Rizal",
-			// 			"cityOrMunicipality": "Rodriguez",
-			// 			"baranggay": "San Jose",
-			// 			"street": "Sub-Urban Phase 1F Blk 3",
-			// 			"lot": "Lot 67"
-			// 		},
-			// 		"contact": {
-			// 			"email": "bosangitelyrose05@gmail.com",
-			// 			"phoneNumber": "91234567890",
-			// 			"facebook": ""
-			// 		}
-			// 	},
-			// 	"dwelling": {
-			// 		"type": "Single-Storey House/Bungalow",
-			// 		"ownership": "Owned",
-			// 		"numberOfHouseMembers": "4",
-			// 		"numberOfPets": "1-2",
-			// 		"petsAllowedInHouse": "No",
-			// 		"planningToMoveOut": "Yes"
-			// 	},
-			// 	"petCare": {
-			// 		"petOwnershipExperience": "Recent pet-owner (Owned a pet 3 years or less)",
-			// 		"veterinarian": "Pet Clinic"
-			// 	},
-			// 	"status": "Pending"
-			// }
-			// 	]
-			// }
 			this.setState({
 				app: data,
 				filtered: data
@@ -252,17 +113,24 @@ class Applications extends React.Component {
 					<header id='header'>
 						<h4>Online Applications</h4>
 						<div>
-							<Button
-								title='Approved'
-								size='small'
-								href='#/applications/approved'
-							/>
-							<Button
-								title='Rejected'
-								size='small'
-								theme='dark'
-								href='#/applications/rejected'
-							/>
+							{
+								this.state.displayType === 'pending' &&
+								<Button
+									title='Rejected'
+									size='small'
+									theme='dark'
+									onClick={() => this.setState({ displayType: 'rejected' })}
+								/>
+							}
+							{
+								this.state.displayType === 'rejected' &&
+								<Button
+									title='Pending'
+									size='small'
+									theme='dark'
+									onClick={() => this.setState({ displayType: 'pending' })}
+								/>
+							}
 						</div>
 					</header>
 
@@ -290,7 +158,29 @@ class Applications extends React.Component {
 							</thead>
 							<tbody>
 								{
+									this.state.displayType == 'pending' &&
 									this.state.filtered.pending.map((app, index) => {
+										return (
+											<tr key={index}>
+												<td>{app.id}</td>
+												<td>{app.dateOfSubmission}</td>
+												<td>{app.applicant.name.firstName}</td>
+												<td>{app.applicationType}</td>
+												<td>{app.status}</td>
+												<td>
+													<Button
+														title='View'
+														size='small'
+														href={`#/applications/${app.id}`}
+													/>
+												</td>
+											</tr>
+										);
+									})
+								}
+								{
+									this.state.displayType == 'rejected' &&
+									this.state.filtered.rejected.map((app, index) => {
 										return (
 											<tr key={index}>
 												<td>{app.id}</td>
