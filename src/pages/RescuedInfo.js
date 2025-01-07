@@ -1156,6 +1156,61 @@ class AddRescuedPet extends React.Component {
 						<Button
 							title='Delete'
 							style={{ backgroundColor: 'red' }}
+
+							onClick={() => {
+								MySwal.fire({
+									icon: 'warning',
+									iconColor: 'red',
+									title: <h1>Are you sure you want to delete this rescued pet?</h1>,
+									width: '60rem',
+									showCancelButton: true,
+									confirmButtonColor: 'var(--primary-color)',
+									cancelButtonColor: 'red',
+									confirmButtonText: 'Yes, delete it',
+									cancelButtonText: 'No, cancel',
+									reverseButtons: true
+								}).then((result) => {
+									if (result.isConfirmed) {
+										fetch(`https://compawnion-backend.onrender.com/ra/${this.state.petID}`, {
+											method: 'DELETE',
+											headers: {
+												'Content-Type': 'application/json'
+											}
+										})
+											.then(res => res.json())
+											.then(res => {
+												if (res.message === 'Pet deleted successfully') {
+													MySwal.fire({
+														icon: 'success',
+														iconColor: 'var(--primary-color)',
+														title: <h1>Rescued pet deleted successfully.</h1>,
+														width: '60rem',
+														confirmButtonColor: 'var(--primary-color)'
+													});
+													window.location.hash = '/rescues';
+												} else {
+													MySwal.fire({
+														icon: 'error',
+														iconColor: 'red',
+														title: <h1>{res.message || 'Failed to delete rescued pet.'}</h1>,
+														width: '60rem',
+														confirmButtonColor: 'var(--primary-color)'
+													});
+												};
+											})
+											.catch(err => {
+												console.error(err);
+												MySwal.fire({
+													icon: 'error',
+													iconColor: 'red',
+													title: <h1>Failed to delete rescued pet.</h1>,
+													width: '60rem',
+													confirmButtonColor: 'var(--primary-color)'
+												});
+											});
+									};
+								});
+							}}
 						/>
 					</div>
 				</form>
