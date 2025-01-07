@@ -243,18 +243,53 @@ class CompawnionInfo extends React.Component {
 						<Button
 							title="Delete Account"
 							onClick={() => {
-								fetch(`https://compawnion-backend.onrender.com/compawnions/${compawnion.id}`, {
-									method: 'DELETE',
-									headers: {
-										'Content-Type': 'application',
-										'Authorization': `Bearer ${localStorage.getItem('token')}`
-									},
-								}).then(res => {
-									if (res.status === 200) {
-										alert('Compawnion account deleted successfully.');
-										window.location.hash = '/compawnions';
-									} else {
-										alert('Failed to delete Compawnion account.');
+								MySwal.fire({
+									title: <h4>Delete Account</h4>,
+									html: <>
+										<p>Please enter username and password to delete this account.</p>
+										<FormInput
+											label="Username"
+											type="text"
+											id="username"
+											name="username"
+										/>
+										<FormInput
+											label="Password"
+											type="password"
+											id="password"
+											name="password"
+										/>
+									</>,
+									width: '60rem',
+									icon: 'warning',
+									iconColor: 'var(--primary-color)',
+									showCancelButton: true,
+									confirmButtonText: 'Delete',
+									confirmButtonColor: 'var(--primary-color)',
+									cancelButtonText: 'Cancel',
+									cancelButtonColor: 'var(--primary-color)',
+									preConfirm: () => {
+										const username = document.getElementById('username').value;
+										const password = document.getElementById('password').value;
+
+										fetch(`https://compawnion-backend.onrender.com/Compawnions/${compawnion.id}`, {
+											method: 'DELETE',
+											headers: {
+												'Content-Type': 'application/json',
+												'Authorization': `Bearer ${localStorage.getItem('token')}`
+											},
+											body: JSON.stringify({
+												adminUsername: user.username,
+												adminPassword: password
+											})
+										}).then(res => {
+											if (res.status === 200) {
+												alert('Compawnion User deleted successfully.');
+												window.location.hash = '/compawnions';
+											} else {
+												alert('Failed to delete Compawnion User.');
+											}
+										});
 									}
 								});
 							}}
