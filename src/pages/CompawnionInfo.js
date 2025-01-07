@@ -55,14 +55,14 @@ class CompawnionInfo extends React.Component {
 					});
 				} catch (error) {
 					localStorage.removeItem('token');
-					window.location.href = '/login';
+					window.location.hash = '/login';
 				};
 			})
 			.catch(error => console.error('Error fetching admin data:', error));
 
 		// Get Compawnion ID from URL
 		const compawnionID = (() => {
-			const url = window.location.href;
+			const url = window.location.hash;
 			const id = url.split('/').pop();
 			return id;
 		})();

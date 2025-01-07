@@ -16,25 +16,21 @@ class AdminInfo extends React.Component {
 				avatar: '',
 				name: '',
 				branches: '',
-				username: ''
+				username: '',
+				id: '',
+				email: '',
+				phone: ''
+			},
+			aStaffInfo: {
+				Name: '',
+				Picture: '',
+				Username: '',
+				Password: '',
+				Email: '',
+				Mobilenumber: '',
+				Branches: ''
 			},
 			popupContent: <></>,
-			vaccinationCount: 1,
-			vaccination: [
-				{
-					name: null,
-					date: null,
-					expiry: null
-				}
-			],
-			medicalHistoryCount: 1,
-			medicalHistory: [
-				{
-					date: null,
-					procedure: null,
-					notes: null
-				}
-			],
 			petID: 0
 		};
 	};
@@ -54,141 +50,22 @@ class AdminInfo extends React.Component {
 							avatar: res.aStaffInfo.Picture,
 							name: res.aStaffInfo.Name,
 							branches: res.aStaffInfo.Branches,
-							username: res.aStaffInfo.Username
-						}
+							username: res.aStaffInfo.Username,
+							id: res.id,
+							email: res.aStaffInfo.Email,
+							phone: res.aStaffInfo.Mobilenumber
+						},
+						aStaffInfo: res.aStaffInfo
 					});
 				} catch (error) {
 					localStorage.removeItem('token');
-					window.location.href = '/login';
+					window.location.hash = '/login';
 				};
 			});
-
-		const saveButton = document.getElementById('save');
-		saveButton.addEventListener('click', () => {
-			const petID = document.getElementById('petID').value;
-			const name = document.getElementById('name').value;
-			const type = document.getElementById('type').value;
-			const gender = document.getElementById('gender').value;
-			const breed = document.getElementById('breed').value;
-			const ageYear = document.getElementById('ageYear').value;
-			const ageMonth = document.getElementById('ageMonth').value;
-
-			const attributes = document.getElementById('personality').value;
-			const rescueStory = document.getElementById('backgroundStory').value;
-			const rescueDate = document.getElementById('rescueDate').value;
-
-			const weight = document.getElementById('weight').value;
-			const size = document.getElementById('size').value;
-
-			if (!petID || !name || !type || !breed || !ageYear || !ageMonth || !attributes || !rescueStory || !rescueDate || !weight || !size) {
-				alert('Please fill out all fields.');
-				return;
-			}
-
-			const vaccination = [];
-			for (let i = 0; i < this.state.vaccinationCount; i++) {
-				const vaccinationName = document.getElementsByName('vaccinationName')[i].value;
-				const vaccinationDate = document.getElementsByName('vaccinationDate')[i].value;
-				const vaccinationExpiry = document.getElementsByName('vaccinationExpiry')[i].value;
-				vaccination.push({
-					name: vaccinationName,
-					date: vaccinationDate,
-					expiry: vaccinationExpiry
-				});
-			};
-
-			const medicalHistory = [];
-			for (let i = 0; i < this.state.medicalHistoryCount; i++) {
-				const medicalHistoryProcedure = document.getElementsByName('medicalHistoryProcedure')[i].value;
-				const medicalHistoryDate = document.getElementsByName('medicalHistoryDate')[i].value;
-				const medicalHistoryNotes = document.getElementsByName('medicalHistoryNotes')[i].value;
-				medicalHistory.push({
-					procedure: medicalHistoryProcedure,
-					date: medicalHistoryDate,
-					notes: medicalHistoryNotes
-				});
-			};
-
-			const rfidTag = document.getElementById('rfidTag').value;
-
-			if (!rfidTag) {
-				alert('Please scan RFID.');
-				return;
-			};
-
-			const image = document.getElementById('imageInput').files[0];
-			// Convert image to base64
-			const reader = new FileReader();
-			reader.readAsDataURL(image);
-			reader.onload = () => {
-				const imageBase64 = reader.result;
-
-				const data = {
-					personal: {
-						name: name,
-						type: type,
-						breed: breed,
-						age: {
-							year: ageYear,
-							month: ageMonth
-						},
-						picture: imageBase64,
-						gender: gender
-					},
-					background: {
-						attributes: attributes,
-						rescueStory: rescueStory,
-						rescueDate: rescueDate,
-						weight: weight,
-						size: size,
-						vaccination: vaccination,
-						medicalHistory: medicalHistory
-					},
-					rfidTag: rfidTag,
-				};
-
-				for (const key in data) {
-					if (data[key] === null) {
-						alert('Please fill out all fields.');
-						return;
-					};
-					if (typeof data[key] === 'object') {
-						for (const k in data[key]) {
-							if (data[key][k] === null) {
-								alert('Please fill out all fields.');
-								return;
-							};
-						};
-					};
-				};
-
-				console.log(data);
-
-				fetch('https://compawnion-backend.onrender.com/ra', {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json'
-					},
-					body: JSON.stringify(data)
-				}).then(res => res.json()).then(res => {
-					window.location.hash = '/rescues';
-				});
-			};
-		});
-
-		fetch('https://compawnion-backend.onrender.com/ra', {
-			method: 'GET',
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		}).then(res => res.json()).then(res => {
-			const petID = document.getElementById('petID');
-			const petIDValue = (res.length + 1).toString().padStart(4, '0');
-			this.setState({
-				petID: petIDValue
-			});
-		});
 	};
+
+	saveAdminInfo = async (e) => { };
+
 	render() {
 		return (
 			<>
@@ -211,6 +88,7 @@ class AdminInfo extends React.Component {
 							<Button
 								title='Save'
 								id='save'
+								onClick={this.saveAdminInfo}
 							/>
 						</div>
 					</header>
@@ -218,22 +96,29 @@ class AdminInfo extends React.Component {
 					<section id='basicInfo'>
 						<div id='image'>
 							<input type='file' name='imageInput' id='imageInput' accept="image/*" />
-							<div id='img' onClick={() => {
-								const imageInput = document.getElementById('imageInput');
-								imageInput.onchange = () => {
-									const file = imageInput.files[0];
-									const img = document.getElementById('img');
-									const reader = new FileReader();
+							<div
+								id='img'
+								onClick={() => {
+									const imageInput = document.getElementById('imageInput');
+									imageInput.onchange = () => {
+										const file = imageInput.files[0];
+										const img = document.getElementById('img');
+										const reader = new FileReader();
 
-									reader.onload = (e) => {
-										img.style.backgroundImage = `url(${e.target.result})`;
+										reader.onload = (e) => {
+											img.style.backgroundImage = `url(${e.target.result})`;
+										};
+
+										if (file) reader.readAsDataURL(file);
 									};
 
-									if (file) reader.readAsDataURL(file);
-								};
+									imageInput.click();
+								}}
 
-								imageInput.click();
-							}} />
+								style={{
+									backgroundImage: this.state.aStaffInfo.Picture ? `url(${this.state.aStaffInfo.Picture})` : ''
+								}}
+							/>
 							<Button
 								title='Upload Image'
 								theme='dark'
@@ -253,6 +138,8 @@ class AdminInfo extends React.Component {
 								id='name'
 								name='name'
 								placeholder='Name'
+								value={this.state.aStaffInfo.Name}
+								defaultValue={this.state.aStaffInfo.Name}
 							/>
 							<FormInput
 								label='Type'
@@ -260,7 +147,9 @@ class AdminInfo extends React.Component {
 								id='type'
 								name='type'
 								placeholder='Username'
-								disabled={true}	
+								disabled={true}
+								value={this.state.aStaffInfo.Username}
+								defaultValue={this.state.aStaffInfo.Username}
 							/>
 							<FormInput
 								label='Branch'
@@ -269,6 +158,8 @@ class AdminInfo extends React.Component {
 								name='ageYear'
 								placeholder='Branch'
 								disabled={true}
+								value={this.state.aStaffInfo.Branches}
+								defaultValue={this.state.aStaffInfo.Branches}
 							/>
 						</div>
 						<div>
@@ -277,8 +168,9 @@ class AdminInfo extends React.Component {
 								type='text'
 								id='petID'
 								name='petID'
-								value='###-###'
 								disabled={true}
+								value={this.state.petID}
+								defaultValue={this.state.petID}
 							/>
 							<FormInput
 								label='Email'
@@ -286,6 +178,8 @@ class AdminInfo extends React.Component {
 								id='breed'
 								name='breed'
 								placeholder='Email'
+								value={this.state.aStaffInfo.Email}
+								defaultValue={this.state.aStaffInfo.Email}
 							/>
 							<FormInput
 								label='Phone Number'
@@ -293,6 +187,8 @@ class AdminInfo extends React.Component {
 								id='gender'
 								name='gender'
 								placeholder='Phone Number'
+								value={this.state.aStaffInfo.Mobilenumber}
+								defaultValue={this.state.aStaffInfo.Mobilenumber}
 							/>
 						</div>
 					</section>

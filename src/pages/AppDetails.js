@@ -87,12 +87,12 @@ class AppDetails extends React.Component {
 					});
 				} catch (error) {
 					localStorage.removeItem('token');
-					window.location.href = '/login';
+					window.location.hash = '/login';
 				};
 			});
 
 		const appID = (() => {
-			const url = window.location.href;
+			const url = window.location.hash;
 			const id = url.split('/');
 			return id[id.length - 1];
 		})()

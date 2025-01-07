@@ -51,7 +51,7 @@ class Applications extends React.Component {
 					});
 				} catch (error) {
 					localStorage.removeItem('token');
-					window.location.href = '/login';
+					window.location.hash = '/login';
 				};
 			});
 
