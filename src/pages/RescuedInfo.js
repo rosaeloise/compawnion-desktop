@@ -391,6 +391,10 @@ class AddRescuedPet extends React.Component {
 								}}
 							/>
 							<Button
+								title='Archive'
+								theme='dark'
+							/>
+							<Button
 								title='Cancel'
 								theme='dark'
 
@@ -1148,6 +1152,12 @@ class AddRescuedPet extends React.Component {
 							/>
 						</div>
 					</section>
+					<div>
+						<Button
+							title='Delete'
+							style={{ backgroundColor: 'red' }}
+						/>
+					</div>
 				</form>
 			</>
 		)
