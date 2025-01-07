@@ -156,7 +156,7 @@ class Login extends React.Component {
 						<path d='M806.197 219.445C802.778 250.355 791.964 264.909 770.688 286.219C754.55 307.998 740.449 331.539 718.905 329.156C677.899 324.62 650.497 268.146 657.701 203.019C664.905 137.892 703.987 88.7728 744.993 93.3088C785.999 97.8447 813.401 154.318 806.197 219.445Z' fill='var(--primary-color)' />
 					</svg>
 
-					<p id='support'><a href='https://mail.google.com/mail/?fs=1&tf=cm&to=barkcodecompawnion@gmail.com' target="_blank">Contact Support</a></p>
+					<p id='support'><a href='https://mail.google.com/mail/u/0/?fs=1&tf=cm&to=barkcodecompawnion@gmail.com&su=Compawnion%20Admin%20Support' target="_blank">Contact Support</a></p>
 				</form>
 			</>
 		)

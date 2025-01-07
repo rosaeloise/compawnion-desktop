@@ -1,4 +1,4 @@
-const { app, BrowserWindow, protocol } = require('electron');
+const { app, BrowserWindow, protocol, shell } = require('electron');
 const path = require('node:path');
 const isDev = require('electron-is-dev');
 
@@ -18,7 +18,9 @@ const createWindow = () => {
 
 		webPreferences: {
 			preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
-			nodeIntegration: true
+			nodeIntegration: true,
+			contextIsolation: false,
+			enableRemoteModule: true
 		},
 		icon: path.join(__dirname, 'assets', 'icon.ico'),
 		title: 'Compawnion',
@@ -27,6 +29,15 @@ const createWindow = () => {
 
 	// and load the index.html of the app.
 	mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
+
+	mainWindow.webContents.on('new-window', function (e, url) {
+		e.preventDefault();
+		require('electron').shell.openExternal(url);
+	});
+	mainWindow.webContents.setWindowOpenHandler(({ url }) => {
+		shell.openExternal(url);
+		return { action: 'deny' };
+	});
 
 	const icon = path.join(__dirname, 'assets', 'icon.ico');
 	mainWindow.setIcon(icon);
@@ -55,6 +66,8 @@ protocol.registerSchemesAsPrivileged([
 		}
 	}
 ]);
+
+
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
