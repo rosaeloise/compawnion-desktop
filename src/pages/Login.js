@@ -17,6 +17,25 @@ class Login extends React.Component {
 		};
 	}
 
+	async componentDidMount() {
+		const token = localStorage.getItem('token');
+		if (token) {
+			document.getElementById('loginButton').disabled = true;
+			const response = await fetch('https://compawnion-backend.onrender.com/admins/me', {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					'Authorization': `Bearer ${localStorage.getItem('token')}`
+				}
+			});
+
+			if (!response.ok) return;
+			document.getElementById('loginButton').disabled = false;
+
+			window.location.hash = '/dashboard';
+		};
+	};
+
 	togglePasswordVisibility = () => {
 		this.setState(prevState => ({
 			showPassword: !prevState.showPassword,
@@ -121,6 +140,7 @@ class Login extends React.Component {
 					</div>
 
 					<Button
+						id='loginButton'
 						type='button'
 						theme='dark'
 						onClick={() => {

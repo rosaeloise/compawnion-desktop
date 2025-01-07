@@ -152,10 +152,10 @@ class Sidebar extends React.Component {
 							}).then((result) => {
 								if (result.isConfirmed) {
 									localStorage.removeItem('user');
+									localStorage.removeItem('token');
 									window.location.hash = '/';
 								}
-							}
-							)
+							})
 						}}
 					>
 						<svg viewBox='0 0 26 26'>
