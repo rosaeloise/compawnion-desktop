@@ -1,10 +1,13 @@
 import React from 'react';
-
 import Sidebar from '../components/Sidebar';
 import Input from '../components/Input';
-
 import '../css/compawnions.css';
 import Button from '../components/Button';
+
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+
+const MySwal = withReactContent(Swal);
 
 class Compawnions extends React.Component {
 	constructor(props) {
@@ -65,7 +68,7 @@ class Compawnions extends React.Component {
 					localStorage.removeItem('token');
 					await MySwal.fire({
 						title: <h4>Session Expired</h4>,
-						text: <p>Please login again.</p>,
+						html: <p>Please login again.</p>,
 						icon: 'error',
 						iconColor: 'var(--primary-color)',
 						confirmButtonColor: 'var(--primary-color)'
