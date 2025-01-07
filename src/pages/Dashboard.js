@@ -68,7 +68,7 @@ class Dashboard extends React.Component {
 					localStorage.removeItem('token');
 					await MySwal.fire({
 						title: <h4>Session Expired</h4>,
-						text: <p>Please login again.</p>,
+						html: <p>Please login again.</p>,
 						icon: 'error',
 						iconColor: 'var(--primary-color)',
 						confirmButtonColor: 'var(--primary-color)'
@@ -315,10 +315,30 @@ class Dashboard extends React.Component {
 				return {
 					id: application.id,
 					time: application.schedules.Time,
-					type: application.applicationType
+					type: application.applicationType,
+					link: null
 				};
 			});
-			console.log(schedule);
+			
+			const request = await fetch('https://compawnion-backend.onrender.com/compawnions/CompawnionSched/today');
+			if (!request.ok) {
+				throw new Error('Network response was not ok');
+			};
+			const data2 = (await request.json()).data;
+			const schedule2 = data2.map((application) => {
+				return {
+					id: application.id,
+					time: application.CSTime,
+					type: application.type,
+					link: application.GmeetRoom
+				};
+			});
+			for (const sched of schedule2) {
+				sched.id = '-';
+				sched.type = 'Compawnion Interview';
+				sched.time = sched.time.split(' ')[0];
+				schedule.push(sched);
+			};
 
 			this.setState({
 				pending,
@@ -371,7 +391,14 @@ class Dashboard extends React.Component {
 											<tr key={index}>
 												<td>{schedule.id}</td>
 												<td>{schedule.time}</td>
-												<td>{schedule.type}</td>
+												<td>
+													{
+														schedule.link ?
+															<a href={schedule.link} target='_blank' rel='noreferrer'>{schedule.type}</a>
+															:
+															schedule.type
+													}
+												</td>
 											</tr>
 										)
 									})

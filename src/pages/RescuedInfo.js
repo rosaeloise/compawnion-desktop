@@ -106,7 +106,7 @@ class AddRescuedPet extends React.Component {
 					localStorage.removeItem('token');
 					await MySwal.fire({
 						title: <h4>Session Expired</h4>,
-						text: <p>Please login again.</p>,
+						html: <p>Please login again.</p>,
 						icon: 'error',
 						iconColor: 'var(--primary-color)',
 						confirmButtonColor: 'var(--primary-color)'

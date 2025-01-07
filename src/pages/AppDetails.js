@@ -7,6 +7,11 @@ import FormInput from '../components/FormInput';
 
 import '../css/appDetails.css';
 
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+
+const MySwal = withReactContent(Swal);
+
 class AppDetails extends React.Component {
 	constructor(props) {
 		super(props);
@@ -89,7 +94,7 @@ class AppDetails extends React.Component {
 					localStorage.removeItem('token');
 					await MySwal.fire({
 						title: <h4>Session Expired</h4>,
-						text: <p>Please login again.</p>,
+						html: <p>Please login again.</p>,
 						icon: 'error',
 						iconColor: 'var(--primary-color)',
 						confirmButtonColor: 'var(--primary-color)'

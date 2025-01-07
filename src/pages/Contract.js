@@ -4,6 +4,11 @@ import '../css/contract.css';
 
 import Button from '../components/Button';
 
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+
+const MySwal = withReactContent(Swal);
+
 export default class Contract extends React.Component {
 	constructor(props) {
 		super(props);

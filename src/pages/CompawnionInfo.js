@@ -7,6 +7,11 @@ import FormInput from '../components/FormInput';
 
 import '../css/appDetails.css';
 
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+
+const MySwal = withReactContent(Swal);
+
 class CompawnionInfo extends React.Component {
 	constructor(props) {
 		super(props);
@@ -74,7 +79,7 @@ class CompawnionInfo extends React.Component {
 					localStorage.removeItem('token');
 					await MySwal.fire({
 						title: <h4>Session Expired</h4>,
-						text: <p>Please login again.</p>,
+						html: <p>Please login again.</p>,
 						icon: 'error',
 						iconColor: 'var(--primary-color)',
 						confirmButtonColor: 'var(--primary-color)'
@@ -258,7 +263,57 @@ class CompawnionInfo extends React.Component {
 
 						<Button
 							title="Delete Account"
-							onClick={() => alert('Account deletion is not yet implemented.')}
+							onClick={() => {
+								MySwal.fire({
+									title: <h4>Delete Account</h4>,
+									html: <>
+										<p>Please enter username and password to delete this account.</p>
+										<FormInput
+											label="Username"
+											type="text"
+											id="username"
+											name="username"
+										/>
+										<FormInput
+											label="Password"
+											type="password"
+											id="password"
+											name="password"
+										/>
+									</>,
+									width: '60rem',
+									icon: 'warning',
+									iconColor: 'var(--primary-color)',
+									showCancelButton: true,
+									confirmButtonText: 'Delete',
+									confirmButtonColor: 'var(--primary-color)',
+									cancelButtonText: 'Cancel',
+									cancelButtonColor: 'var(--primary-color)',
+									preConfirm: () => {
+										const username = document.getElementById('username').value;
+										const password = document.getElementById('password').value;
+
+										fetch(`https://compawnion-backend.onrender.com/Compawnions/${compawnion.id}`, {
+											method: 'DELETE',
+											headers: {
+												'Content-Type': 'application/json',
+												'Authorization': `Bearer ${localStorage.getItem('token')}`
+											},
+											body: JSON.stringify({
+												adminUsername: user.username,
+												adminPassword: password
+											})
+										}).then(res => {
+											if (res.status === 200) {
+												alert('Compawnion User deleted successfully.');
+												window.location.hash = '/compawnions';
+											} else {
+												alert('Failed to delete Compawnion User.');
+											}
+										});
+									}
+								});
+							}}
 						/>
 					</section>
 				</form>
