@@ -4,6 +4,11 @@ import Sidebar from '../components/Sidebar';
 
 import '../css/dashboard.css';
 
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+
+const MySwal = withReactContent(Swal);
+
 class Dashboard extends React.Component {
 	constructor(props) {
 		super(props);
@@ -49,7 +54,7 @@ class Dashboard extends React.Component {
 			}
 		})
 			.then(res => res.json())
-			.then(res => {
+			.then(async res => {
 				try {
 					this.setState({
 						user: {
@@ -61,6 +66,13 @@ class Dashboard extends React.Component {
 					});
 				} catch (error) {
 					localStorage.removeItem('token');
+					await MySwal.fire({
+						title: <h4>Session Expired</h4>,
+						text: <p>Please login again.</p>,
+						icon: 'error',
+						iconColor: 'var(--primary-color)',
+						confirmButtonColor: 'var(--primary-color)'
+					});
 					window.location.hash = '/login';
 				};
 			});

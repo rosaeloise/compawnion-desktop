@@ -43,7 +43,7 @@ class CompawnionInfo extends React.Component {
 			}
 		})
 			.then(res => res.json())
-			.then(res => {
+			.then(async res => {
 				try {
 					this.setState({
 						user: {
@@ -55,6 +55,13 @@ class CompawnionInfo extends React.Component {
 					});
 				} catch (error) {
 					localStorage.removeItem('token');
+					await MySwal.fire({
+						title: <h4>Session Expired</h4>,
+						text: <p>Please login again.</p>,
+						icon: 'error',
+						iconColor: 'var(--primary-color)',
+						confirmButtonColor: 'var(--primary-color)'
+					});
 					window.location.hash = '/login';
 				};
 			})
