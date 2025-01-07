@@ -342,7 +342,7 @@ class AddRescuedPet extends React.Component {
 						width: '60rem',
 						confirmButtonColor: 'var(--primary-color)'
 					});
-					window.location.hash = '/rescues';
+					window.location.reload();
 				} else {
 					MySwal.fire({
 						icon: 'error',
@@ -393,6 +393,57 @@ class AddRescuedPet extends React.Component {
 							<Button
 								title='Archive'
 								theme='dark'
+
+								onClick={() => {
+									MySwal.fire({
+										icon: 'warning',
+										iconColor: 'var(--primary-color)',
+										title: <h1>Are you sure you want to archive this rescued pet?</h1>,
+										width: '60rem',
+										showCancelButton: true,
+										confirmButtonColor: 'var(--primary-color)',
+										cancelButtonColor: 'var(--primary-color)',
+										confirmButtonText: 'Yes, archive it.'
+									}).then(async (result) => {
+										if (result.isConfirmed) {
+											const response = await fetch(`https://compawnion-backend.onrender.com/ra/archived/${this.state.petID}`, {
+												method: 'POST',
+												headers: {
+													'Content-Type': 'application/json'
+												}
+											});
+											if (!response.ok) {
+												MySwal.fire({
+													icon: 'error',
+													iconColor: 'red',
+													title: <h1>Failed to archive rescued pet.</h1>,
+													width: '60rem',
+													confirmButtonColor: 'var(--primary-color)'
+												});
+												return;
+											};
+											const result = await response.json();
+											if (result.message === 'Pet archived successfully') {
+												MySwal.fire({
+													icon: 'success',
+													iconColor: 'var(--primary-color)',
+													title: <h1>Rescued pet archived successfully.</h1>,
+													width: '60rem',
+													confirmButtonColor: 'var(--primary-color)'
+												});
+												window.location.hash = '/rescues';
+											} else {
+												MySwal.fire({
+													icon: 'error',
+													iconColor: 'red',
+													title: <h1>{result.message || 'Failed to archive rescued pet.'}</h1>,
+													width: '60rem',
+													confirmButtonColor: 'var(--primary-color)'
+												});
+											};
+										};
+									});
+								}}
 							/>
 							<Button
 								title='Cancel'
