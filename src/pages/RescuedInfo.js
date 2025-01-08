@@ -430,24 +430,23 @@ class AddRescuedPet extends React.Component {
 												return;
 											};
 											const result = await response.json();
-											if (result.message === 'Pet archived successfully') {
-												MySwal.fire({
-													icon: 'success',
-													iconColor: 'var(--primary-color)',
-													title: <h1>Rescued pet archived successfully.</h1>,
-													width: '60rem',
-													confirmButtonColor: 'var(--primary-color)'
-												});
-												window.location.hash = '/rescues';
-											} else {
+											if (!result.message) {
 												MySwal.fire({
 													icon: 'error',
 													iconColor: 'red',
-													title: <h1>{result.message || 'Failed to archive rescued pet.'}</h1>,
+													title: <h1>Failed to archive rescued pet.</h1>,
 													width: '60rem',
 													confirmButtonColor: 'var(--primary-color)'
 												});
+												return;
 											};
+											MySwal.fire({
+												icon: 'success',
+												iconColor: 'var(--primary-color)',
+												title: <h1>Rescued pet archived successfully.</h1>,
+												width: '60rem',
+												confirmButtonColor: 'var(--primary-color)'
+											});
 										};
 									});
 								}}
