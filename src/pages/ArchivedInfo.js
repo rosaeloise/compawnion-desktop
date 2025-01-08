@@ -398,7 +398,7 @@ class ArchivedPet extends React.Component {
 								}}
 							/>
 							<Button
-								title='Archive'
+								title='Unarchive'
 								theme='dark'
 
 								onClick={() => {
@@ -413,7 +413,7 @@ class ArchivedPet extends React.Component {
 										confirmButtonText: 'Yes, archive it.'
 									}).then(async (result) => {
 										if (result.isConfirmed) {
-											const response = await fetch(`https://compawnion-backend.onrender.com/ra/archived/${this.state.petID}`, {
+											const response = await fetch(`https://compawnion-backend.onrender.com/ra/unarchived/${this.state.petID}`, {
 												method: 'POST',
 												headers: {
 													'Content-Type': 'application/json'
@@ -423,18 +423,18 @@ class ArchivedPet extends React.Component {
 												MySwal.fire({
 													icon: 'error',
 													iconColor: 'red',
-													title: <h1>Failed to archive archived pet.</h1>,
+													title: <h1>Failed to unarchive pet.</h1>,
 													width: '60rem',
 													confirmButtonColor: 'var(--primary-color)'
 												});
 												return;
 											};
 											const result = await response.json();
-											if (result.message === 'Pet archived successfully') {
-												MySwal.fire({
+											if (result.message === 'Pet successfully restored to RescuedAnimals') {
+												await MySwal.fire({
 													icon: 'success',
 													iconColor: 'var(--primary-color)',
-													title: <h1>Archived pet archived successfully.</h1>,
+													title: <h1>Archived pet unarchived successfully.</h1>,
 													width: '60rem',
 													confirmButtonColor: 'var(--primary-color)'
 												});
@@ -443,12 +443,12 @@ class ArchivedPet extends React.Component {
 												MySwal.fire({
 													icon: 'error',
 													iconColor: 'red',
-													title: <h1>{result.message || 'Failed to archive archived pet.'}</h1>,
+													title: <h1>{result.message || 'Failed to unarchive pet.'}</h1>,
 													width: '60rem',
 													confirmButtonColor: 'var(--primary-color)'
 												});
 											};
-										};
+										}
 									});
 								}}
 							/>
