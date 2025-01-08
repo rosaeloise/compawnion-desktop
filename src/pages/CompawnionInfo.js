@@ -236,7 +236,7 @@ class CompawnionInfo extends React.Component {
 								const date = document.getElementById('date').value;
 								const time = document.getElementById('time').value;
 
-								fetch(`https://compawnion-backend.onrender.com/Compawnions/addCompawnionSched/${compawnion.CompawnionUser.appPetID}`, {
+								fetch(`https://compawnion-backend.onrender.com/Compawnions/addCompawnionSched/${compawnion.id}`, {
 									method: 'POST',
 									headers: {
 										'Content-Type': 'application/json',
