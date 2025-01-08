@@ -361,7 +361,7 @@ class Rescues extends React.Component {
 						image: res[of].personal.picture,
 						name: res[of].personal.name,
 						description: res[of].background.attributes,
-						href: '#/archive/' + res[of].petId,
+						href: '#/archived/' + res[of].petId,
 						rfid: res[of].rfidTag,
 						petId: res[of].id,
 						type: res[of].personal.type,

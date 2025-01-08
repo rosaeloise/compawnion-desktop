@@ -21,6 +21,7 @@ import AdminInfo from './pages/AdminInfo';
 import Contract from './pages/Contract';
 import Adopted from './pages/Adopted';
 import AdoptedInfo from './pages/AdoptedInfo';
+import ArchivedPet from './pages/ArchivedInfo';
 
 class App extends
 	React.Component {
@@ -35,6 +36,7 @@ class App extends
 					<Route path='/rescues' element={<Rescues />} />
 					<Route path='/rescues/add' element={<AddRescuedPet />} />
 					<Route path='/rescues/:id' element={<RescuedInfo />} />
+					<Route path='/archived/:id' element={<ArchivedPet />} />
 
 					<Route path='/applications' element={<Applications />} />
 					<Route path='/applications/:id' element={<AppDetails />} />
