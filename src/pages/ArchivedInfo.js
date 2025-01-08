@@ -121,7 +121,7 @@ class ArchivedPet extends React.Component {
 	async fetchArchivedInfo() {
 		const petIDFromURL = window.location.hash.split('/').pop();
 		if (!petIDFromURL) return;
-		const response = await fetch(`https://compawnion-backend.onrender.com/ra/archived/archived/${petIDFromURL}`, {
+		const response = await fetch(`https://compawnion-backend.onrender.com/ra/archived/${petIDFromURL}`, {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json'
