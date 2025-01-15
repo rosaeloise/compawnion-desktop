@@ -60,76 +60,260 @@ class Dashboard extends React.Component {
 				});
 			});
 
-		setTimeout(() => {
-			this.setState({
-				shedule: {
-					total: [
-						{
-							id: 1,
-							time: '6:30 PM',
-							type: 'Onsite Interview'
-						},
-						{
-							id: 2,
-							time: '7:00 PM',
-							type: 'Online Interview'
-						},
-						{
-							id: 3,
-							time: '7:30 PM',
-							type: 'Onsite Interview'
-						}
-					]
-				}
-			});
-		}, 2000);
-		setTimeout(() => {
-			this.setState({
-				pending: [
-					{
-						id: 1,
-						time: '8:00 PM',
-						type: 'Onsite Interview'
-					},
-					{
-						id: 2,
-						time: '8:30 PM',
-						type: 'Online Interview'
-					},
-					{
-						id: 3,
-						time: '9:00 PM',
-						type: 'Onsite Interview'
-					},
-					{
-						id: 4,
-						time: '9:30 PM',
-						type: 'Online Interview'
-					},
-					{
-						id: 5,
-						time: '10:00 PM',
-						type: 'Onsite Interview'
-					},
-					{
-						id: 6,
-						time: '10:30 PM',
-						type: 'Online Interview'
-					},
-					{
-						id: 7,
-						time: '11:00 PM',
-						type: 'Onsite Interview'
-					},
-					{
-						id: 8,
-						time: '11:30 PM',
-						type: 'Online Interview'
-					}
-				]
-			});
-		}, 3000);
+		// setTimeout(() => {
+		// 	this.setState({
+		// 		shedule: {
+		// 			total: [
+		// 				{
+		// 					id: 1,
+		// 					time: '6:30 PM',
+		// 					type: 'Onsite Interview'
+		// 				},
+		// 				{
+		// 					id: 2,
+		// 					time: '7:00 PM',
+		// 					type: 'Online Interview'
+		// 				},
+		// 				{
+		// 					id: 3,
+		// 					time: '7:30 PM',
+		// 					type: 'Onsite Interview'
+		// 				}
+		// 			]
+		// 		}
+		// 	});
+		// }, 2000);
+		// setTimeout(() => {
+		// 	this.setState({
+		// 		pending: [
+		// 			{
+		// 				id: 1,
+		// 				time: '8:00 PM',
+		// 				type: 'Onsite Interview'
+		// 			},
+		// 			{
+		// 				id: 2,
+		// 				time: '8:30 PM',
+		// 				type: 'Online Interview'
+		// 			},
+		// 			{
+		// 				id: 3,
+		// 				time: '9:00 PM',
+		// 				type: 'Onsite Interview'
+		// 			},
+		// 			{
+		// 				id: 4,
+		// 				time: '9:30 PM',
+		// 				type: 'Online Interview'
+		// 			},
+		// 			{
+		// 				id: 5,
+		// 				time: '10:00 PM',
+		// 				type: 'Onsite Interview'
+		// 			},
+		// 			{
+		// 				id: 6,
+		// 				time: '10:30 PM',
+		// 				type: 'Online Interview'
+		// 			},
+		// 			{
+		// 				id: 7,
+		// 				time: '11:00 PM',
+		// 				type: 'Onsite Interview'
+		// 			},
+		// 			{
+		// 				id: 8,
+		// 				time: '11:30 PM',
+		// 				type: 'Online Interview'
+		// 			}
+		// 		]
+		// 	});
+		// }, 3000);
+
+		this.fetchApp();
 	};
+
+	fetchApp = async () => {
+		try {
+			const response = await fetch('https://compawnion-backend.onrender.com/application/all');
+			if (!response.ok) {
+				throw new Error('Network response was not ok');
+			}
+			const data = await response.json();
+			// {
+			// 	"pending": [
+			// 		{
+			// 	"id": "060",
+			// 	"termsAndCondission": true,
+			// 	"paymentAgreement": true,
+			// 	"applicationType": "Online Application",
+			// 	"applicationAppId": "060",
+			// 	"appPetID": null,
+			// 	"petId": "029",
+			// 	"applicant": {
+			// 		"name": {
+			// 			"firstName": "Ely Rose",
+			// 			"middleName": "Abaricio",
+			// 			"lastName": "Bosangit"
+			// 		},
+			// 		"birthdate": "2003-01-05",
+			// 		"occupation": "Sales Consultant`",
+			// 		"address": {
+			// 			"country": "Philippines",
+			// 			"province": "Rizal",
+			// 			"cityOrMunicipality": "Rodriguez",
+			// 			"baranggay": "San Jose",
+			// 			"street": "Sub-Urban Phase 1F Blk 3",
+			// 			"lot": "Lot 67"
+			// 		},
+			// 		"contact": {
+			// 			"email": "bosangitelyrose05@gmail.com",
+			// 			"phoneNumber": "91234567890",
+			// 			"facebook": ""
+			// 		}
+			// 	},
+			// 	"dwelling": {
+			// 		"type": "Single-Storey House/Bungalow",
+			// 		"ownership": "Owned",
+			// 		"numberOfHouseMembers": "4",
+			// 		"numberOfPets": "1-2",
+			// 		"petsAllowedInHouse": "No",
+			// 		"planningToMoveOut": "Yes"
+			// 	},
+			// 	"petCare": {
+			// 		"petOwnershipExperience": "Recent pet-owner (Owned a pet 3 years or less)",
+			// 		"veterinarian": "Pet Clinic"
+			// 	},
+			// 	"status": "Pending"
+			// }
+			// 	],
+			// 	"approved": [
+			// 		{
+			// 	"id": "060",
+			// 	"termsAndCondission": true,
+			// 	"paymentAgreement": true,
+			// 	"applicationType": "Online Application",
+			// 	"applicationAppId": "060",
+			// 	"appPetID": null,
+			// 	"petId": "029",
+			// 	"applicant": {
+			// 		"name": {
+			// 			"firstName": "Ely Rose",
+			// 			"middleName": "Abaricio",
+			// 			"lastName": "Bosangit"
+			// 		},
+			// 		"birthdate": "2003-01-05",
+			// 		"occupation": "Sales Consultant`",
+			// 		"address": {
+			// 			"country": "Philippines",
+			// 			"province": "Rizal",
+			// 			"cityOrMunicipality": "Rodriguez",
+			// 			"baranggay": "San Jose",
+			// 			"street": "Sub-Urban Phase 1F Blk 3",
+			// 			"lot": "Lot 67"
+			// 		},
+			// 		"contact": {
+			// 			"email": "bosangitelyrose05@gmail.com",
+			// 			"phoneNumber": "91234567890",
+			// 			"facebook": ""
+			// 		}
+			// 	},
+			// 	"dwelling": {
+			// 		"type": "Single-Storey House/Bungalow",
+			// 		"ownership": "Owned",
+			// 		"numberOfHouseMembers": "4",
+			// 		"numberOfPets": "1-2",
+			// 		"petsAllowedInHouse": "No",
+			// 		"planningToMoveOut": "Yes"
+			// 	},
+			// 	"petCare": {
+			// 		"petOwnershipExperience": "Recent pet-owner (Owned a pet 3 years or less)",
+			// 		"veterinarian": "Pet Clinic"
+			// 	},
+			// 	"status": "Pending"
+			// }
+			// 	],
+			// 	"rejected": [
+			// 		{
+			// 	"id": "060",
+			// 	"termsAndCondission": true,
+			// 	"paymentAgreement": true,
+			// 	"applicationType": "Online Application",
+			// 	"applicationAppId": "060",
+			// 	"appPetID": null,
+			// 	"petId": "029",
+			// 	"applicant": {
+			// 		"name": {
+			// 			"firstName": "Ely Rose",
+			// 			"middleName": "Abaricio",
+			// 			"lastName": "Bosangit"
+			// 		},
+			// 		"birthdate": "2003-01-05",
+			// 		"occupation": "Sales Consultant`",
+			// 		"address": {
+			// 			"country": "Philippines",
+			// 			"province": "Rizal",
+			// 			"cityOrMunicipality": "Rodriguez",
+			// 			"baranggay": "San Jose",
+			// 			"street": "Sub-Urban Phase 1F Blk 3",
+			// 			"lot": "Lot 67"
+			// 		},
+			// 		"contact": {
+			// 			"email": "bosangitelyrose05@gmail.com",
+			// 			"phoneNumber": "91234567890",
+			// 			"facebook": ""
+			// 		}
+			// 	},
+			// 	"dwelling": {
+			// 		"type": "Single-Storey House/Bungalow",
+			// 		"ownership": "Owned",
+			// 		"numberOfHouseMembers": "4",
+			// 		"numberOfPets": "1-2",
+			// 		"petsAllowedInHouse": "No",
+			// 		"planningToMoveOut": "Yes"
+			// 	},
+			// 	"petCare": {
+			// 		"petOwnershipExperience": "Recent pet-owner (Owned a pet 3 years or less)",
+			// 		"veterinarian": "Pet Clinic"
+			// 	},
+			// 	"status": "Pending"
+			// }
+			// 	]
+			// }
+			const pending = data.pending.map((application) => {
+				return {
+					id: application.id,
+					type: application.applicationType
+				};
+			});
+			const schedule = data.pending.filter((application) => {
+				return application.schedules;
+			}).filter((application) => {
+				const epoch = new Date(0).setUTCSeconds(application.schedules.meetingDate._seconds);
+				const now = new Date().getTime();
+				const epocMonthYearDate = new Date(epoch).toLocaleDateString('en-US', { month: 'long', year: 'numeric', day: 'numeric' });
+				const nowMonthYearDate = new Date(now).toLocaleDateString('en-US', { month: 'long', year: 'numeric', day: 'numeric' });
+				return epocMonthYearDate === nowMonthYearDate;
+			}).map((application) => {
+				return {
+					id: application.id,
+					time: application.schedules.Time,
+					type: application.applicationType
+				};
+			});
+			console.log(schedule);
+
+			this.setState({
+				pending,
+				shedule: {
+					total: schedule
+				}
+			});	
+		} catch (error) {
+			console.error('Error fetching applications:', error);
+		}
+	};
+
 	render() {
 		return (
 			<>
@@ -158,6 +342,7 @@ class Dashboard extends React.Component {
 						<table>
 							<thead>
 								<tr>
+									<th>ID</th>
 									<th>Time</th>
 									<th>Application Type</th>
 								</tr>
@@ -167,6 +352,7 @@ class Dashboard extends React.Component {
 									this.state.shedule.total.map((schedule, index) => {
 										return (
 											<tr key={index}>
+												<td>{schedule.id}</td>
 												<td>{schedule.time}</td>
 												<td>{schedule.type}</td>
 											</tr>
@@ -194,7 +380,7 @@ class Dashboard extends React.Component {
 						<table>
 							<thead>
 								<tr>
-									<th>Time</th>
+									<th>ID</th>
 									<th>Application Type</th>
 								</tr>
 							</thead>
@@ -204,7 +390,7 @@ class Dashboard extends React.Component {
 										if (index >= 5) return;
 										return (
 											<tr key={index}>
-												<td>{pending.time}</td>
+												<td>{pending.id}</td>
 												<td>{pending.type}</td>
 											</tr>
 										)
